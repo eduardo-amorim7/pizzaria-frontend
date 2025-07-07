@@ -1,0 +1,347 @@
+<div class="novo-pedido-container" ng-controller="NovoPedidoController">
+
+    <!-- Header -->
+    <div class="novo-pedido-header">
+        <button class="tab">
+            Pedido Roberto Silva
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="tab-inactive">Visualização de Pedidos</button>
+        <button class="tab-inactive">Pedidos</button>
+        
+        <div style="margin-left: auto;">
+            <span style="color: #bdc3c7;">Pizza Sportello - Trindade</span>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="novo-pedido-content">
+        
+        <!-- Coluna Esquerda - Formulário -->
+        <div class="novo-pedido-left">
+            
+            <!-- Cliente -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Cliente:</label>
+                    <div class="cliente-input-group">
+                        <input type="text" class="form-control" placeholder="3255-6030" ng-model="pedido.cliente.telefone">
+                        <input type="text" class="form-control" placeholder="Roberto Silva" ng-model="pedido.cliente.nome">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="btn btn-success">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Localização -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Localização:</label>
+                    <div class="localizacao-group">
+                        <input type="text" class="form-control" 
+                               placeholder="Rua Dorcílio Luz s/n, Potecas, São José - SC"
+                               ng-model="pedido.cliente.endereco.completo">
+                        <button class="map-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modalidade -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Modalidade:</label>
+                    <div class="modalidade-buttons">
+                        <button class="modalidade-btn" 
+                                ng-class="{'active': pedido.tipo === 'entrega'}"
+                                ng-click="selecionarModalidade('entrega')">
+                            <i class="fas fa-motorcycle"></i><br>
+                            Entrega
+                        </button>
+                        <button class="modalidade-btn"
+                                ng-class="{'active': pedido.tipo === 'retirada'}"
+                                ng-click="selecionarModalidade('retirada')">
+                            <i class="fas fa-walking"></i><br>
+                            Retirada
+                        </button>
+                        <button class="modalidade-btn"
+                                ng-class="{'active': pedido.tipo === 'balcao'}"
+                                ng-click="selecionarModalidade('balcao')">
+                            <i class="fas fa-utensils"></i><br>
+                            Balcão
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combo -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Combo:</label>
+                    <div class="combo-buttons">
+                        <button class="combo-btn"
+                                ng-class="{'active': comboSelecionado === 'teste'}"
+                                ng-click="selecionarCombo('teste')">
+                            Combo de Teste
+                        </button>
+                        <button class="combo-btn"
+                                ng-class="{'active': comboSelecionado === 'gigante'}"
+                                ng-click="selecionarCombo('gigante')">
+                            Combo gigante
+                        </button>
+                        <button class="combo-btn"
+                                ng-class="{'active': comboSelecionado === 'image'}"
+                                ng-click="selecionarCombo('image')">
+                            TEST IMAGE
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Produto:</label>
+                    <div class="produto-buttons">
+                        <button class="produto-btn"
+                                ng-class="{'active': produtoSelecionado === 'pizza'}"
+                                ng-click="selecionarProduto('pizza')">
+                            <i class="fas fa-pizza-slice"></i> Pizza
+                        </button>
+                        <button class="produto-btn"
+                                ng-class="{'active': produtoSelecionado === 'acompanhamentos'}"
+                                ng-click="selecionarProduto('acompanhamentos')">
+                            <i class="fas fa-drumstick-bite"></i> Acompanhamentos
+                        </button>
+                        <button class="produto-btn"
+                                ng-class="{'active': produtoSelecionado === 'burger'}"
+                                ng-click="selecionarProduto('burger')">
+                            <i class="fas fa-hamburger"></i> Burger
+                        </button>
+                        <button class="produto-btn"
+                                ng-class="{'active': produtoSelecionado === 'pastel'}"
+                                ng-click="selecionarProduto('pastel')">
+                            <i class="fas fa-cookie-bite"></i> Pastel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tamanho (apenas para Pizza) -->
+            <div class="form-section" ng-show="produtoSelecionado === 'pizza'">
+                <div class="form-group">
+                    <label>Tamanho:</label>
+                    <div class="tamanho-buttons">
+                        <button class="tamanho-btn"
+                                ng-class="{'active': tamanhoSelecionado === 'gigante'}"
+                                ng-click="selecionarTamanho('gigante')">
+                            Gigante
+                        </button>
+                        <button class="tamanho-btn"
+                                ng-class="{'active': tamanhoSelecionado === 'grande'}"
+                                ng-click="selecionarTamanho('grande')">
+                            Grande
+                        </button>
+                        <button class="tamanho-btn"
+                                ng-class="{'active': tamanhoSelecionado === 'media'}"
+                                ng-click="selecionarTamanho('media')">
+                            Média
+                        </button>
+                        <button class="tamanho-btn"
+                                ng-class="{'active': tamanhoSelecionado === 'so_minha'}"
+                                ng-click="selecionarTamanho('so_minha')">
+                            Só minha
+                        </button>
+                        <button class="tamanho-btn"
+                                ng-class="{'active': tamanhoSelecionado === 'brotinho'}"
+                                ng-click="selecionarTamanho('brotinho')">
+                            Brotinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sabores (apenas para Pizza) -->
+            <div class="form-section" ng-show="produtoSelecionado === 'pizza'">
+                <div class="form-group">
+                    <label>Sabores:</label>
+                    <input type="text" class="sabor-search" 
+                           placeholder="Buscar sabor..." 
+                           ng-model="buscaSabor">
+                    
+                    <div class="sabores-grid">
+                        <button class="sabor-btn"
+                                ng-repeat="sabor in saboresDisponiveis | filter:buscaSabor"
+                                ng-class="{'active': saboresSelecionados.indexOf(sabor.nome) !== -1}"
+                                ng-click="toggleSabor(sabor.nome)">
+                            {{sabor.nome}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adicionais (apenas para Pizza) -->
+            <div class="form-section" ng-show="produtoSelecionado === 'pizza'">
+                <div class="form-group">
+                    <label>Adicionais:</label>
+                    <div class="adicionais-grid">
+                        <button class="adicional-btn"
+                                ng-repeat="adicional in adicionaisDisponiveis"
+                                ng-class="{'active': adicionaisSelecionados.indexOf(adicional.nome) !== -1}"
+                                ng-click="toggleAdicional(adicional.nome)">
+                            {{adicional.nome}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção especial de sabores -->
+            <div class="sabores-section" ng-show="produtoSelecionado === 'pizza'">
+                <h6>Selecione um sabor</h6>
+                <div class="sabores-opcoes">
+                    <button class="sabor-opcao-btn"
+                            ng-class="{'active': opcaoSaborSelecionada === 'sem_bebidas'}"
+                            ng-click="selecionarOpcaoSabor('sem_bebidas')">
+                        Sem Bebidas
+                    </button>
+                    <button class="sabor-opcao-btn"
+                            ng-class="{'active': opcaoSaborSelecionada === 'guarana'}"
+                            ng-click="selecionarOpcaoSabor('guarana')">
+                        Guaraná
+                    </button>
+                    <button class="sabor-opcao-btn"
+                            ng-class="{'active': opcaoSaborSelecionada === 'coca_cola'}"
+                            ng-click="selecionarOpcaoSabor('coca_cola')">
+                        Coca Cola
+                    </button>
+                    <button class="sabor-opcao-btn"
+                            ng-class="{'active': opcaoSaborSelecionada === 'coca_zero'}"
+                            ng-click="selecionarOpcaoSabor('coca_zero')">
+                        Coca Zero
+                    </button>
+                    <button class="sabor-opcao-btn"
+                            ng-class="{'active': opcaoSaborSelecionada === 'fanta'}"
+                            ng-click="selecionarOpcaoSabor('fanta')">
+                        Fanta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="form-actions">
+                <button class="btn-secondary" ng-click="cancelar()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn-primary" ng-click="adicionarItem()">
+                    <i class="fas fa-plus"></i> Adicionar ao Pedido
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Coluna Direita - Resumo do Pedido -->
+        <div class="novo-pedido-right">
+            
+            <!-- Itens do Pedido -->
+            <div class="itens-pedido">
+                <h5>Itens do Pedido</h5>
+                
+                <div ng-show="pedido.itens.length === 0" style="text-align: center; color: #999; font-style: italic;">
+                    <i class="fas fa-pizza-slice" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
+                    Pizza (Gigante)<br>
+                    <small>Sem sabores<br>Sem Borda</small>
+                    <div style="text-align: right; margin-top: 10px; font-weight: bold;">R$ 0,00</div>
+                </div>
+
+                <div class="item-pedido" ng-repeat="item in pedido.itens">
+                    <div class="item-header">
+                        <span class="item-nome">{{item.quantidade}}x {{item.nome}}</span>
+                        <span class="item-preco">R$ {{item.preco | number:2}}</span>
+                    </div>
+                    <div class="item-detalhes" ng-if="item.sabores.length > 0">
+                        Sabores: {{item.sabores.join(', ')}}
+                    </div>
+                    <div class="item-detalhes" ng-if="item.adicionais.length > 0">
+                        Adicionais: {{item.adicionais.join(', ')}}
+                    </div>
+                    <div class="item-detalhes" ng-if="item.observacoes">
+                        Obs: {{item.observacoes}}
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-edit" ng-click="editarItem(item)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-remove" ng-click="removerItem(item)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bebidas -->
+            <div class="bebidas-section">
+                <h6>Bebidas</h6>
+                <div class="sem-bebidas">Sem bebidas</div>
+            </div>
+
+            <!-- Resumo Financeiro -->
+            <div class="resumo-pedido">
+                <div class="resumo-item">
+                    <label>Taxa de Entrega:</label>
+                    <div>
+                        <span style="background-color: #95a5a6; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">R$</span>
+                        <span class="valor">{{pedido.taxaEntrega | number:2}}</span>
+                    </div>
+                </div>
+                
+                <div class="resumo-item">
+                    <label>Desconto:</label>
+                    <div>
+                        <span style="background-color: #95a5a6; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">R$</span>
+                        <span class="valor">{{pedido.desconto | number:2}}</span>
+                    </div>
+                </div>
+                
+                <div class="resumo-item">
+                    <label>Cupom:</label>
+                    <input type="text" class="form-control" style="width: 100px; padding: 4px 8px; font-size: 12px;" ng-model="pedido.cupom">
+                </div>
+                
+                <div class="resumo-total">
+                    <span>Total do Pedido:</span>
+                    <span>R$ {{calcularTotal() | number:2}}</span>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="observacoes-section">
+                <h6>Observações para o entregador...</h6>
+                <textarea ng-model="pedido.observacoesEntregador" 
+                          placeholder="Observações para o entregador..."></textarea>
+                
+                <h6 style="margin-top: 15px;">Observações do pedido...</h6>
+                <textarea ng-model="pedido.observacoesPedido" 
+                          placeholder="Observações do pedido..."></textarea>
+            </div>
+
+            <!-- Botões finais -->
+            <div class="form-actions">
+                <button class="btn-secondary" ng-click="cancelarPedido()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn-primary" ng-click="finalizarPedido()">
+                    <i class="fas fa-check"></i> Finalizar Pedido
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

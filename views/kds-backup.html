@@ -1,0 +1,318 @@
+<div class="kds-container">
+    <!-- Filtros e Controles -->
+    <div class="kds-filters">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <label for="setor" class="form-label">Setor:</label>
+                <select 
+                    id="setor" 
+                    class="form-select" 
+                    ng-model="filtros.setor" 
+                    ng-change="alterarSetor()">
+                    <option ng-repeat="setor in setores" value="{{setor.value}}">
+                        {{setor.label}}
+                    </option>
+                </select>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="form-check form-switch">
+                    <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="alertaSonoro"
+                        ng-model="alertaSonoro"
+                        ng-change="toggleAlertaSonoro()">
+                    <label class="form-check-label" for="alertaSonoro">
+                        <i class="fas fa-volume-up me-1"></i>
+                        Alerta Sonoro
+                    </label>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <button 
+                    class="btn btn-outline-primary" 
+                    ng-click="carregarPedidos()"
+                    ng-disabled="isLoading">
+                    <i class="fas fa-sync-alt me-1" ng-class="{'fa-spin': isLoading}"></i>
+                    Atualizar
+                </button>
+            </div>
+            
+            <div class="col-md-3 text-end">
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>
+                    Atualização automática a cada 30s
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel KDS -->
+    <div class="row">
+        <!-- Aguardando Preparo -->
+        <div class="col-lg-3 col-md-6 kds-column">
+            <div class="kds-header" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
+                <i class="fas fa-clock me-2"></i>
+                Aguardando Preparo
+                <span class="badge bg-light text-dark ms-2">{{pedidos.aguardando_preparo.length}}</span>
+            </div>
+            
+            <div class="kds-pedido fade-in" 
+                 ng-repeat="pedido in pedidos.aguardando_preparo track by pedido._id"
+                 ng-class="{'atrasado': pedido.atrasado}">
+                
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="pedido-numero">#{{pedido.numero}}</div>
+                    <div class="d-flex gap-1">
+                        <span class="badge canal-badge" ng-class="'canal-' + pedido.canal">
+                            {{pedido.canal | canalText}}
+                        </span>
+                        <span class="badge tipo-badge" ng-class="'tipo-' + pedido.tipo">
+                            {{pedido.tipo | tipoText}}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="pedido-tempo" ng-class="pedido.classeTempoDecorrido">
+                    <i class="fas fa-stopwatch me-1"></i>
+                    {{formatarTempo(pedido.tempo_decorrido_minutos)}}
+                </div>
+                
+                <div class="pedido-cliente">
+                    <i class="fas fa-user me-1"></i>
+                    {{pedido.cliente.nome}}
+                    <span ng-if="pedido.cliente.telefone"> - {{pedido.cliente.telefone}}</span>
+                </div>
+                
+                <div class="pedido-itens">
+                    <div class="item-pizza" ng-repeat="item in pedido.itens">
+                        <div class="item-sabor">
+                            {{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})
+                        </div>
+                        <div class="item-detalhes" ng-if="item.sabores.length > 0">
+                            Sabores: {{item.sabores.join(', ')}}
+                        </div>
+                        <div class="item-detalhes" ng-if="item.borda && item.borda.tipo">
+                            Borda: {{item.borda.tipo}}
+                        </div>
+                        <div class="item-detalhes" ng-if="item.observacoes">
+                            Obs: {{item.observacoes}}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pedido-actions" ng-if="podeAtualizarStatus('em_preparo')">
+                    <button 
+                        class="btn btn-kds" 
+                        ng-class="getClasseBotaoStatus(pedido.status)"
+                        ng-click="atualizarStatusPedido(pedido, getProximoStatus(pedido.status))">
+                        <i class="fas fa-play me-1"></i>
+                        {{getTextoProximoStatus(pedido.status)}}
+                    </button>
+                </div>
+            </div>
+            
+            <div ng-if="pedidos.aguardando_preparo.length === 0" class="text-center text-muted py-4">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <p>Nenhum pedido aguardando</p>
+            </div>
+        </div>
+
+        <!-- Em Preparo -->
+        <div class="col-lg-3 col-md-6 kds-column">
+            <div class="kds-header" style="background: linear-gradient(135deg, #fd7e14, #e8590c);">
+                <i class="fas fa-fire me-2"></i>
+                Em Preparo
+                <span class="badge bg-light text-dark ms-2">{{pedidos.em_preparo.length}}</span>
+            </div>
+            
+            <div class="kds-pedido fade-in" 
+                 ng-repeat="pedido in pedidos.em_preparo track by pedido._id"
+                 ng-class="{'atrasado': pedido.atrasado}">
+                
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="pedido-numero">#{{pedido.numero}}</div>
+                    <div class="d-flex gap-1">
+                        <span class="badge canal-badge" ng-class="'canal-' + pedido.canal">
+                            {{pedido.canal | canalText}}
+                        </span>
+                        <span class="badge tipo-badge" ng-class="'tipo-' + pedido.tipo">
+                            {{pedido.tipo | tipoText}}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="pedido-tempo" ng-class="pedido.classeTempoDecorrido">
+                    <i class="fas fa-stopwatch me-1"></i>
+                    {{formatarTempo(pedido.tempo_decorrido_minutos)}}
+                </div>
+                
+                <div class="pedido-cliente">
+                    <i class="fas fa-user me-1"></i>
+                    {{pedido.cliente.nome}}
+                </div>
+                
+                <div class="pedido-itens">
+                    <div class="item-pizza" ng-repeat="item in pedido.itens">
+                        <div class="item-sabor">
+                            {{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})
+                        </div>
+                        <div class="item-detalhes" ng-if="item.sabores.length > 0">
+                            Sabores: {{item.sabores.join(', ')}}
+                        </div>
+                        <div class="item-detalhes" ng-if="item.borda && item.borda.tipo">
+                            Borda: {{item.borda.tipo}}
+                        </div>
+                        <div class="item-detalhes" ng-if="item.observacoes">
+                            Obs: {{item.observacoes}}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pedido-actions" ng-if="podeAtualizarStatus('pronto')">
+                    <button 
+                        class="btn btn-kds" 
+                        ng-class="getClasseBotaoStatus(pedido.status)"
+                        ng-click="atualizarStatusPedido(pedido, getProximoStatus(pedido.status))">
+                        <i class="fas fa-check me-1"></i>
+                        {{getTextoProximoStatus(pedido.status)}}
+                    </button>
+                </div>
+            </div>
+            
+            <div ng-if="pedidos.em_preparo.length === 0" class="text-center text-muted py-4">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <p>Nenhum pedido em preparo</p>
+            </div>
+        </div>
+
+        <!-- Pronto -->
+        <div class="col-lg-3 col-md-6 kds-column">
+            <div class="kds-header" style="background: linear-gradient(135deg, #28a745, #1e7e34);">
+                <i class="fas fa-check-circle me-2"></i>
+                Pronto
+                <span class="badge bg-light text-dark ms-2">{{pedidos.pronto.length}}</span>
+            </div>
+            
+            <div class="kds-pedido fade-in" 
+                 ng-repeat="pedido in pedidos.pronto track by pedido._id"
+                 ng-class="{'atrasado': pedido.atrasado}">
+                
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="pedido-numero">#{{pedido.numero}}</div>
+                    <div class="d-flex gap-1">
+                        <span class="badge canal-badge" ng-class="'canal-' + pedido.canal">
+                            {{pedido.canal | canalText}}
+                        </span>
+                        <span class="badge tipo-badge" ng-class="'tipo-' + pedido.tipo">
+                            {{pedido.tipo | tipoText}}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="pedido-tempo" ng-class="pedido.classeTempoDecorrido">
+                    <i class="fas fa-stopwatch me-1"></i>
+                    {{formatarTempo(pedido.tempo_decorrido_minutos)}}
+                </div>
+                
+                <div class="pedido-cliente">
+                    <i class="fas fa-user me-1"></i>
+                    {{pedido.cliente.nome}}
+                    <span ng-if="pedido.tipo === 'entrega' && pedido.cliente.endereco">
+                        <br><small>{{pedido.cliente.endereco.rua}}, {{pedido.cliente.endereco.numero}}</small>
+                    </span>
+                </div>
+                
+                <div class="pedido-itens">
+                    <div class="item-pizza" ng-repeat="item in pedido.itens">
+                        <div class="item-sabor">
+                            {{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pedido-actions" ng-if="podeAtualizarStatus('despachado')">
+                    <button 
+                        class="btn btn-kds" 
+                        ng-class="getClasseBotaoStatus(pedido.status)"
+                        ng-click="atualizarStatusPedido(pedido, getProximoStatus(pedido.status))">
+                        <i class="fas fa-truck me-1"></i>
+                        {{getTextoProximoStatus(pedido.status)}}
+                    </button>
+                </div>
+            </div>
+            
+            <div ng-if="pedidos.pronto.length === 0" class="text-center text-muted py-4">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <p>Nenhum pedido pronto</p>
+            </div>
+        </div>
+
+        <!-- Despachado -->
+        <div class="col-lg-3 col-md-6 kds-column">
+            <div class="kds-header" style="background: linear-gradient(135deg, #007bff, #0056b3);">
+                <i class="fas fa-truck me-2"></i>
+                Despachado
+                <span class="badge bg-light text-dark ms-2">{{pedidos.despachado.length}}</span>
+            </div>
+            
+            <div class="kds-pedido fade-in" 
+                 ng-repeat="pedido in pedidos.despachado track by pedido._id"
+                 ng-class="{'atrasado': pedido.atrasado}">
+                
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="pedido-numero">#{{pedido.numero}}</div>
+                    <div class="d-flex gap-1">
+                        <span class="badge canal-badge" ng-class="'canal-' + pedido.canal">
+                            {{pedido.canal | canalText}}
+                        </span>
+                        <span class="badge tipo-badge" ng-class="'tipo-' + pedido.tipo">
+                            {{pedido.tipo | tipoText}}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="pedido-tempo" ng-class="pedido.classeTempoDecorrido">
+                    <i class="fas fa-stopwatch me-1"></i>
+                    {{formatarTempo(pedido.tempo_decorrido_minutos)}}
+                </div>
+                
+                <div class="pedido-cliente">
+                    <i class="fas fa-user me-1"></i>
+                    {{pedido.cliente.nome}}
+                    <span ng-if="pedido.cliente.telefone"> - {{pedido.cliente.telefone}}</span>
+                    <span ng-if="pedido.tipo === 'entrega' && pedido.cliente.endereco">
+                        <br><small>{{pedido.cliente.endereco.rua}}, {{pedido.cliente.endereco.numero}}</small>
+                        <br><small>{{pedido.cliente.endereco.bairro}}</small>
+                    </span>
+                </div>
+                
+                <div class="pedido-itens">
+                    <div class="item-pizza" ng-repeat="item in pedido.itens">
+                        <div class="item-sabor">
+                            {{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pedido-actions" ng-if="podeAtualizarStatus('entregue')">
+                    <button 
+                        class="btn btn-kds" 
+                        ng-class="getClasseBotaoStatus(pedido.status)"
+                        ng-click="atualizarStatusPedido(pedido, getProximoStatus(pedido.status))">
+                        <i class="fas fa-check-double me-1"></i>
+                        {{getTextoProximoStatus(pedido.status)}}
+                    </button>
+                </div>
+            </div>
+            
+            <div ng-if="pedidos.despachado.length === 0" class="text-center text-muted py-4">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <p>Nenhum pedido despachado</p>
+            </div>
+        </div>
+    </div>
+</div>
+

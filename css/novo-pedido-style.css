@@ -1,0 +1,547 @@
+/* Novo Pedido - Baseado na imagem de referência */
+
+.novo-pedido-container {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.novo-pedido-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.novo-pedido-header .tab {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.novo-pedido-header .tab-inactive {
+    background-color: #7f8c8d;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.novo-pedido-content {
+    display: flex;
+    height: calc(100vh - 60px);
+    gap: 0;
+}
+
+.novo-pedido-left {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #ddd;
+}
+
+.novo-pedido-right {
+    width: 350px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Seções do formulário */
+.form-section {
+    margin-bottom: 25px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.form-section h6 {
+    margin: 0 0 15px 0;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+    font-size: 13px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Cliente e localização */
+.cliente-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+}
+
+.cliente-input-group .form-control {
+    flex: 1;
+}
+
+.cliente-input-group .btn {
+    padding: 8px 12px;
+    white-space: nowrap;
+}
+
+.localizacao-group {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+}
+
+.localizacao-group .form-control {
+    flex: 1;
+}
+
+.map-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Modalidade */
+.modalidade-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.modalidade-btn {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.modalidade-btn.active {
+    border-color: #27ae60;
+    background-color: #27ae60;
+    color: white;
+}
+
+.modalidade-btn:hover {
+    border-color: #3498db;
+}
+
+/* Combo e Produto */
+.combo-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.combo-btn {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.combo-btn.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.produto-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.produto-btn {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.produto-btn.active {
+    background-color: #27ae60;
+    color: white;
+    border-color: #27ae60;
+}
+
+/* Tamanho */
+.tamanho-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tamanho-btn {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s;
+    min-width: 80px;
+    text-align: center;
+}
+
+.tamanho-btn.active {
+    border-color: #27ae60;
+    background-color: #27ae60;
+    color: white;
+}
+
+/* Sabores */
+.sabores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.sabor-btn {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.sabor-btn.active {
+    background-color: #e74c3c;
+    color: white;
+    border-color: #e74c3c;
+}
+
+.sabor-btn:hover {
+    border-color: #3498db;
+}
+
+.sabor-search {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* Adicionais */
+.adicionais-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+}
+
+.adicional-btn {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.adicional-btn.active {
+    background-color: #9b59b6;
+    color: white;
+    border-color: #9b59b6;
+}
+
+/* Seção de sabores especial */
+.sabores-section {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.sabores-section h6 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    text-align: center;
+    font-size: 14px;
+}
+
+.sabores-opcoes {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.sabor-opcao-btn {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.sabor-opcao-btn.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* Painel direito - Itens do Pedido */
+.itens-pedido {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.itens-pedido h5 {
+    margin: 0 0 15px 0;
+    text-align: center;
+    color: #856404;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.item-pedido {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.item-pedido .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.item-pedido .item-nome {
+    font-weight: bold;
+    font-size: 13px;
+    color: #2c3e50;
+}
+
+.item-pedido .item-preco {
+    font-weight: bold;
+    color: #27ae60;
+    font-size: 13px;
+}
+
+.item-pedido .item-detalhes {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.item-pedido .item-actions {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.item-pedido .btn-edit,
+.item-pedido .btn-remove {
+    padding: 2px 6px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.item-pedido .btn-edit {
+    background-color: #3498db;
+    color: white;
+}
+
+.item-pedido .btn-remove {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Bebidas */
+.bebidas-section {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.bebidas-section h6 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.sem-bebidas {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* Resumo do pedido */
+.resumo-pedido {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.resumo-item label {
+    color: #555;
+}
+
+.resumo-item .valor {
+    font-weight: 500;
+}
+
+.resumo-total {
+    border-top: 2px solid #ddd;
+    padding-top: 10px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Observações */
+.observacoes-section {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.observacoes-section textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    font-size: 13px;
+}
+
+/* Botões de ação */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.btn-primary {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary:hover {
+    background-color: #229954;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .novo-pedido-content {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .novo-pedido-right {
+        width: 100%;
+    }
+    
+    .sabores-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .tamanho-buttons {
+        justify-content: center;
+    }
+}
+

@@ -1,0 +1,362 @@
+/* Estilos gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: white;
+}
+
+/* Cards de pedidos */
+.pedido-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.pedido-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Status do pedido */
+.status-badge {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-aguardando_preparo {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.status-em_preparo {
+    background-color: #fd7e14;
+    color: #fff;
+}
+
+.status-pronto {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.status-despachado {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.status-entregue {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.status-cancelado {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Painel KDS */
+.kds-container {
+    padding: 0;
+}
+
+.kds-column {
+    min-height: 80vh;
+    padding: 15px;
+    border-right: 2px solid #dee2e6;
+}
+
+.kds-column:last-child {
+    border-right: none;
+}
+
+.kds-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.kds-pedido {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #007bff;
+    transition: all 0.3s ease;
+}
+
+.kds-pedido:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.kds-pedido.atrasado {
+    border-left-color: #dc3545;
+    background-color: #fff5f5;
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+    50% { box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); }
+    100% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+}
+
+.pedido-numero {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.pedido-tempo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.tempo-normal {
+    color: #28a745;
+}
+
+.tempo-atencao {
+    color: #ffc107;
+}
+
+.tempo-atrasado {
+    color: #dc3545;
+}
+
+.pedido-itens {
+    margin-bottom: 15px;
+}
+
+.item-pizza {
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-left: 3px solid #007bff;
+}
+
+.item-sabor {
+    font-weight: 600;
+    color: #495057;
+}
+
+.item-detalhes {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 3px;
+}
+
+.pedido-cliente {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.pedido-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-kds {
+    flex: 1;
+    min-width: 120px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-kds:hover {
+    transform: translateY(-1px);
+}
+
+/* Filtros KDS */
+.kds-filters {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulários */
+.form-section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h5 {
+    color: #007bff;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+/* Tabelas */
+.table-custom {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-custom thead {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+}
+
+.table-custom tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Botões personalizados */
+.btn-custom {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-1px);
+}
+
+/* Toast customizado */
+.toast-success {
+    border-left: 4px solid #28a745;
+}
+
+.toast-error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast-warning {
+    border-left: 4px solid #ffc107;
+}
+
+.toast-info {
+    border-left: 4px solid #17a2b8;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .kds-column {
+        border-right: none;
+        border-bottom: 2px solid #dee2e6;
+        min-height: auto;
+    }
+    
+    .pedido-actions {
+        flex-direction: column;
+    }
+    
+    .btn-kds {
+        min-width: auto;
+    }
+    
+    .pedido-numero {
+        font-size: 1.3rem;
+    }
+}
+
+/* Animações */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Login page */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.login-card {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-logo i {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+/* Indicadores de canal */
+.canal-badge {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.canal-balcao { background-color: #e3f2fd; color: #1976d2; }
+.canal-telefone { background-color: #f3e5f5; color: #7b1fa2; }
+.canal-ifood { background-color: #fff3e0; color: #f57c00; }
+.canal-site { background-color: #e8f5e8; color: #388e3c; }
+.canal-whatsapp { background-color: #e0f2f1; color: #00796b; }
+
+/* Tipo de pedido */
+.tipo-badge {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.tipo-entrega { background-color: #fff3e0; color: #f57c00; }
+.tipo-retirada { background-color: #e3f2fd; color: #1976d2; }
+.tipo-consumo_local { background-color: #e8f5e8; color: #388e3c; }
+

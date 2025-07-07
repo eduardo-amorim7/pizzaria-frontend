@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Pedido - Sistema de Gestão</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="css/novo-pedido-style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="novo-pedido-container">
+
+    <!-- Header -->
+    <div class="novo-pedido-header">
+        <button class="tab">
+            Pedido Roberto Silva
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="tab-inactive">Visualização de Pedidos</button>
+        <button class="tab-inactive">Pedidos</button>
+        
+        <div style="margin-left: auto;">
+            <span style="color: #bdc3c7;">Pizza Sportello - Trindade</span>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="novo-pedido-content">
+        
+        <!-- Coluna Esquerda - Formulário -->
+        <div class="novo-pedido-left">
+            
+            <!-- Cliente -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Cliente:</label>
+                    <div class="cliente-input-group">
+                        <input type="text" class="form-control" placeholder="3255-6030" value="3255-6030">
+                        <input type="text" class="form-control" placeholder="Roberto Silva" value="Roberto Silva">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="btn btn-success">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Localização -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Localização:</label>
+                    <div class="localizacao-group">
+                        <input type="text" class="form-control" 
+                               placeholder="Rua Dorcílio Luz s/n, Potecas, São José - SC"
+                               value="Rua Dorcílio Luz s/n, Potecas, São José - SC">
+                        <button class="map-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modalidade -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Modalidade:</label>
+                    <div class="modalidade-buttons">
+                        <button class="modalidade-btn active">
+                            <i class="fas fa-motorcycle"></i><br>
+                            Entrega
+                        </button>
+                        <button class="modalidade-btn">
+                            <i class="fas fa-walking"></i><br>
+                            Retirada
+                        </button>
+                        <button class="modalidade-btn">
+                            <i class="fas fa-utensils"></i><br>
+                            Balcão
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combo -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Combo:</label>
+                    <div class="combo-buttons">
+                        <button class="combo-btn">Combo de Teste</button>
+                        <button class="combo-btn">Combo gigante</button>
+                        <button class="combo-btn">TEST IMAGE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Produto:</label>
+                    <div class="produto-buttons">
+                        <button class="produto-btn active">
+                            <i class="fas fa-pizza-slice"></i> Pizza
+                        </button>
+                        <button class="produto-btn">
+                            <i class="fas fa-drumstick-bite"></i> Acompanhamentos
+                        </button>
+                        <button class="produto-btn">
+                            <i class="fas fa-hamburger"></i> Burger
+                        </button>
+                        <button class="produto-btn">
+                            <i class="fas fa-cookie-bite"></i> Pastel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tamanho -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Tamanho:</label>
+                    <div class="tamanho-buttons">
+                        <button class="tamanho-btn active">Gigante</button>
+                        <button class="tamanho-btn">Grande</button>
+                        <button class="tamanho-btn">Média</button>
+                        <button class="tamanho-btn">Só minha</button>
+                        <button class="tamanho-btn">Brotinho</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sabores -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Sabores:</label>
+                    <input type="text" class="sabor-search" placeholder="Selecione um novo sabor">
+                    
+                    <div class="sabores-grid">
+                        <button class="sabor-btn">Alho poró</button>
+                        <button class="sabor-btn">Belíssima</button>
+                        <button class="sabor-btn">Abobrinha</button>
+                        <button class="sabor-btn">Alho</button>
+                        <button class="sabor-btn">Bolonha</button>
+                        <button class="sabor-btn">Capira</button>
+                        <button class="sabor-btn">Calabresa Picante</button>
+                        <button class="sabor-btn">Canadense</button>
+                        <button class="sabor-btn">Com Bacon</button>
+                        <button class="sabor-btn">Filé com Catupiry</button>
+                        <button class="sabor-btn">Filé Mignon</button>
+                        <button class="sabor-btn">Florentina</button>
+                        <button class="sabor-btn">Frango cheddar</button>
+                        <button class="sabor-btn">Hawaiana</button>
+                        <button class="sabor-btn">Lombo ao Creme</button>
+                        <button class="sabor-btn">Madre</button>
+                        <button class="sabor-btn">Mexicana</button>
+                        <button class="sabor-btn">Mineira</button>
+                        <button class="sabor-btn">Napolitana</button>
+                        <button class="sabor-btn">Nápoles</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adicionais -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Adicionais:</label>
+                    <div class="adicionais-grid">
+                        <button class="adicional-btn active">Sem Borda</button>
+                        <button class="adicional-btn">Borda de Catupiry</button>
+                        <button class="adicional-btn">Borda cheddar</button>
+                        <button class="adicional-btn">Borda cream cheese</button>
+                        <button class="adicional-btn">Borda chocolate preto</button>
+                        <button class="adicional-btn">Borda chocolate branco</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção especial de sabores -->
+            <div class="sabores-section">
+                <h6>Selecione um sabor</h6>
+                <div class="sabores-opcoes">
+                    <button class="sabor-opcao-btn active">Sem Bebidas</button>
+                    <button class="sabor-opcao-btn">Guaraná</button>
+                    <button class="sabor-opcao-btn">Coca Cola</button>
+                    <button class="sabor-opcao-btn">Coca Zero</button>
+                    <button class="sabor-opcao-btn">Fanta</button>
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="form-actions">
+                <button class="btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn-primary">
+                    <i class="fas fa-plus"></i> Adicionar ao Pedido
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Coluna Direita - Resumo do Pedido -->
+        <div class="novo-pedido-right">
+            
+            <!-- Itens do Pedido -->
+            <div class="itens-pedido">
+                <h5>Itens do Pedido</h5>
+                
+                <div style="text-align: center; color: #999; font-style: italic;">
+                    <i class="fas fa-pizza-slice" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
+                    Pizza (Gigante)<br>
+                    <small>Sem sabores<br>Sem Borda</small>
+                    <div style="text-align: right; margin-top: 10px; font-weight: bold;">R$ 0,00</div>
+                </div>
+            </div>
+
+            <!-- Bebidas -->
+            <div class="bebidas-section">
+                <h6>Bebidas</h6>
+                <div class="sem-bebidas">Sem bebidas</div>
+            </div>
+
+            <!-- Resumo Financeiro -->
+            <div class="resumo-pedido">
+                <div class="resumo-item">
+                    <label>Taxa de Entrega:</label>
+                    <div>
+                        <span style="background-color: #95a5a6; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">R$</span>
+                        <span class="valor">0,00</span>
+                    </div>
+                </div>
+                
+                <div class="resumo-item">
+                    <label>Desconto:</label>
+                    <div>
+                        <span style="background-color: #95a5a6; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">R$</span>
+                        <span class="valor">0,00</span>
+                    </div>
+                </div>
+                
+                <div class="resumo-item">
+                    <label>Cupom:</label>
+                    <input type="text" class="form-control" style="width: 100px; padding: 4px 8px; font-size: 12px;">
+                </div>
+                
+                <div class="resumo-total">
+                    <span>Total do Pedido:</span>
+                    <span>R$ 0,00</span>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="observacoes-section">
+                <h6>Observações para o entregador...</h6>
+                <textarea placeholder="Observações para o entregador..."></textarea>
+                
+                <h6 style="margin-top: 15px;">Observações do pedido...</h6>
+                <textarea placeholder="Observações do pedido..."></textarea>
+            </div>
+
+            <!-- Botões finais -->
+            <div class="form-actions">
+                <button class="btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn-primary">
+                    <i class="fas fa-check"></i> Finalizar Pedido
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// JavaScript simples para interatividade básica
+document.addEventListener('DOMContentLoaded', function() {
+    // Modalidade buttons
+    document.querySelectorAll('.modalidade-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.modalidade-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Combo buttons
+    document.querySelectorAll('.combo-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.combo-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Produto buttons
+    document.querySelectorAll('.produto-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.produto-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Tamanho buttons
+    document.querySelectorAll('.tamanho-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tamanho-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Sabor buttons (multiple selection)
+    document.querySelectorAll('.sabor-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+    });
+
+    // Adicional buttons (multiple selection)
+    document.querySelectorAll('.adicional-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+    });
+
+    // Sabor opcao buttons
+    document.querySelectorAll('.sabor-opcao-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.sabor-opcao-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+</script>
+
+</body>
+</html>
+

@@ -18,19 +18,14 @@ angular.module('pizzariaApp', ['ngRoute'])
             controller: 'PedidosController',
             requireAuth: true
         })
-        .when('/pedidos/novo', {
-            templateUrl: 'views/novo-pedido.html',
-            controller: 'NovoPedidoController',
+        .when("/pedidos/novo", {
+            templateUrl: "views/novo-pedido.html",
+            controller: "NovoPedidoController",
             requireAuth: true
         })
-        .when('/novo-pedido', {
-      templateUrl: 'views/novo-pedido.html',
-      controller: 'NovoPedidoController'
-    })
-    .when('/kds', {
-      templateUrl: 'views/kds.html',
-      controller: 'KdsController'
-    })ller',
+        .when("/kds", {
+            templateUrl: "views/kds.html",
+            controller: "KdsController",
             requireAuth: true
         })
         .when('/produtos', {

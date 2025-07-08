@@ -19,6 +19,58 @@ angular.module('pizzariaApp', ['ngRoute'])
                 }
             }
         })
+        .when('/novo-pedido', {
+            templateUrl: 'views/novo-pedido.html',
+            controller: 'NovoPedidoController',
+            resolve: {
+                auth: function(AuthService, $location) {
+                    if (!AuthService.isAuthenticated()) {
+                        $location.path('/login');
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        })
+        .when('/pedidos', {
+            templateUrl: 'views/pedidos.html',
+            controller: 'PedidosController',
+            resolve: {
+                auth: function(AuthService, $location) {
+                    if (!AuthService.isAuthenticated()) {
+                        $location.path('/login');
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        })
+        .when('/kds', {
+            templateUrl: 'views/kds.html',
+            controller: 'KdsController',
+            resolve: {
+                auth: function(AuthService, $location) {
+                    if (!AuthService.isAuthenticated()) {
+                        $location.path('/login');
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        })
+        .when('/relatorios', {
+            templateUrl: 'views/relatorios.html',
+            controller: 'RelatoriosController',
+            resolve: {
+                auth: function(AuthService, $location) {
+                    if (!AuthService.isAuthenticated()) {
+                        $location.path('/login');
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        })
         .otherwise({
             redirectTo: '/'
         });

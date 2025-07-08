@@ -1,4 +1,4 @@
-angular.module('pizzariaApp').controller('MainDashboardController', ['$scope', '$interval', '$location', 'ApiService', 'ToastService', function($scope, $interval, $location, ApiService, ToastService) {
+angular.module('pizzariaApp').controller('MainDashboardController', ['$scope', '$interval', '$location', 'ApiService', 'ToastService', 'ModalService', function($scope, $interval, $location, ApiService, ToastService, ModalService) {
     
     // Estado inicial
     $scope.orders = [];
@@ -280,28 +280,46 @@ angular.module('pizzariaApp').controller('MainDashboardController', ['$scope', '
 
     $scope.finishOrder = function(order, event) {
         event.stopPropagation();
-        order.status = 'pronto';
-        ToastService.success('Pedido #' + order.numero + ' finalizado');
+        
+        ModalService.confirmFinish(order.numero).then(function(confirmed) {
+            if (confirmed) {
+                order.status = 'pronto';
+                ToastService.success('Pedido #' + order.numero + ' finalizado');
+            }
+        });
     };
 
     $scope.cancelOrder = function(order, event) {
         event.stopPropagation();
-        if (confirm('Tem certeza que deseja cancelar o pedido #' + order.numero + '?')) {
-            order.status = 'cancelado';
-            ToastService.warning('Pedido #' + order.numero + ' cancelado');
-        }
+        
+        ModalService.confirmDelete('o pedido #' + order.numero).then(function(confirmed) {
+            if (confirmed) {
+                order.status = 'cancelado';
+                ToastService.warning('Pedido #' + order.numero + ' cancelado');
+            }
+        });
     };
 
     $scope.deliverOrder = function(order, event) {
         event.stopPropagation();
-        order.status = 'entregue';
-        ToastService.success('Pedido #' + order.numero + ' entregue');
+        
+        ModalService.confirmDeliver(order.numero).then(function(confirmed) {
+            if (confirmed) {
+                order.status = 'entregue';
+                ToastService.success('Pedido #' + order.numero + ' entregue');
+            }
+        });
     };
 
     $scope.dispatchOrder = function(order, event) {
         event.stopPropagation();
-        order.status = 'despachado';
-        ToastService.success('Pedido #' + order.numero + ' despachado');
+        
+        ModalService.confirmDispatch(order.numero).then(function(confirmed) {
+            if (confirmed) {
+                order.status = 'despachado';
+                ToastService.success('Pedido #' + order.numero + ' despachado');
+            }
+        });
     };
 
     $scope.startScheduledOrder = function(order, event) {
@@ -336,7 +354,7 @@ angular.module('pizzariaApp').controller('MainDashboardController', ['$scope', '
 
     $scope.novoPedido = function() {
         ToastService.info('Redirecionando para novo pedido...');
-        // Aqui você pode implementar navegação para tela de novo pedido
+        $location.path('/novo-pedido');
     };
 
     $scope.showUserMenu = function() {

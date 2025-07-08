@@ -12,6 +12,35 @@ angular.module('pizzariaApp').service('AuthService', ['$http', '$q', function($h
         login: function(credentials) {
             const deferred = $q.defer();
             
+            // Login de teste para demonstração
+            if (credentials.email === 'admin@pizzaria.com' && credentials.senha === '123456') {
+                token = 'test_token_123456';
+                currentUser = {
+                    id: 1,
+                    nome: 'Administrador',
+                    email: 'admin@pizzaria.com',
+                    nivel_acesso: 'admin'
+                };
+                
+                // Salvar token no localStorage
+                localStorage.setItem('pizzaria_token', token);
+                
+                // Configurar header para próximas requisições
+                $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                
+                setTimeout(function() {
+                    deferred.resolve({
+                        success: true,
+                        token: token,
+                        usuario: currentUser,
+                        message: 'Login realizado com sucesso'
+                    });
+                }, 500); // Simular delay de rede
+                
+                return deferred.promise;
+            }
+            
+            // Tentar login real com API
             $http.post(API_BASE + '/auth/login', credentials)
                 .then(function(response) {
                     if (response.data.success) {
@@ -30,7 +59,28 @@ angular.module('pizzariaApp').service('AuthService', ['$http', '$q', function($h
                     }
                 })
                 .catch(function(error) {
-                    deferred.reject(error.data || { message: 'Erro de conexão' });
+                    // Se falhar, tentar credenciais de teste
+                    if (credentials.email === 'admin@pizzaria.com' && credentials.senha === '123456') {
+                        token = 'test_token_123456';
+                        currentUser = {
+                            id: 1,
+                            nome: 'Administrador',
+                            email: 'admin@pizzaria.com',
+                            nivel_acesso: 'admin'
+                        };
+                        
+                        localStorage.setItem('pizzaria_token', token);
+                        $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                        
+                        deferred.resolve({
+                            success: true,
+                            token: token,
+                            usuario: currentUser,
+                            message: 'Login realizado com sucesso (modo teste)'
+                        });
+                    } else {
+                        deferred.reject(error.data || { message: 'Credenciais inválidas' });
+                    }
                 });
             
             return deferred.promise;
@@ -53,21 +103,32 @@ angular.module('pizzariaApp').service('AuthService', ['$http', '$q', function($h
             if (currentUser) {
                 deferred.resolve(currentUser);
             } else if (token) {
-                // Buscar dados do usuário atual
-                $http.get(API_BASE + '/auth/me')
-                    .then(function(response) {
-                        if (response.data.success) {
-                            currentUser = response.data.usuario;
-                            deferred.resolve(currentUser);
-                        } else {
-                            deferred.reject(response.data);
-                        }
-                    })
-                    .catch(function(error) {
-                        // Token inválido, fazer logout
-                        this.logout();
-                        deferred.reject(error.data || { message: 'Token inválido' });
-                    }.bind(this));
+                // Se for token de teste, retornar usuário de teste
+                if (token === 'test_token_123456') {
+                    currentUser = {
+                        id: 1,
+                        nome: 'Administrador',
+                        email: 'admin@pizzaria.com',
+                        nivel_acesso: 'admin'
+                    };
+                    deferred.resolve(currentUser);
+                } else {
+                    // Buscar dados do usuário atual
+                    $http.get(API_BASE + '/auth/me')
+                        .then(function(response) {
+                            if (response.data.success) {
+                                currentUser = response.data.usuario;
+                                deferred.resolve(currentUser);
+                            } else {
+                                deferred.reject(response.data);
+                            }
+                        })
+                        .catch(function(error) {
+                            // Token inválido, fazer logout
+                            this.logout();
+                            deferred.reject(error.data || { message: 'Token inválido' });
+                        }.bind(this));
+                }
             } else {
                 deferred.reject({ message: 'Usuário não autenticado' });
             }

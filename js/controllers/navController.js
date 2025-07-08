@@ -27,6 +27,11 @@ function($scope, $location, AuthService, SocketService, ToastService) {
         }
     };
 
+    // Verificar se está na tela principal (dashboard KDS)
+    $scope.isMainDashboard = function() {
+        return $location.path() === '/' && $scope.isAuthenticated;
+    };
+
     $scope.logout = function() {
         AuthService.logout();
         SocketService.disconnect();
@@ -57,6 +62,12 @@ function($scope, $location, AuthService, SocketService, ToastService) {
 
     $scope.$on('auth:logout', function() {
         $scope.logout();
+    });
+
+    // Escutar mudanças de rota
+    $scope.$on('$routeChangeSuccess', function() {
+        // Atualizar estado quando a rota mudar
+        $scope.$apply();
     });
 
     // Escutar eventos de socket

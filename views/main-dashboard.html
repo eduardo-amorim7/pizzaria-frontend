@@ -1,0 +1,337 @@
+<div class="kds-layout" ng-controller="MainDashboardController">
+
+    <!-- Header do KDS -->
+    <div class="kds-header">
+        <div class="kds-header-left">
+            <button class="menu-btn" ng-click="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <button class="tab">
+                Pedidos <i class="fas fa-times" style="margin-left: 8px;" ng-click="closeTab()"></i>
+            </button>
+        </div>
+        
+        <div class="kds-header-center">
+            <button class="filter-btn" ng-class="{active: activeFilter === 'entrega'}" ng-click="setFilter('entrega')">
+                <i class="fas fa-motorcycle"></i>
+                Entrega
+            </button>
+            <button class="filter-btn" ng-class="{active: activeFilter === 'retirada'}" ng-click="setFilter('retirada')">
+                <i class="fas fa-walking"></i>
+                Retirada
+            </button>
+            <button class="filter-btn" ng-class="{active: activeFilter === 'balcao'}" ng-click="setFilter('balcao')">
+                <i class="fas fa-utensils"></i>
+                Balcão
+            </button>
+            <button class="filter-btn" ng-class="{active: activeFilter === 'mesa'}" ng-click="setFilter('mesa')">
+                <i class="fas fa-chair"></i>
+                Mesa
+            </button>
+        </div>
+        
+        <div class="kds-header-right">
+            <button class="action-btn" ng-class="{'btn-green': siteAberto, 'btn-red': !siteAberto}" ng-click="toggleSite()">
+                <i class="fas fa-globe"></i>
+                {{siteAberto ? 'Site Aberto' : 'Site Fechado'}}
+            </button>
+            <button class="action-btn" ng-class="{'btn-green': caixaAberto, 'btn-red': !caixaAberto}" ng-click="toggleCaixa()">
+                <i class="fas fa-cash-register"></i>
+                {{caixaAberto ? 'Caixa Aberto' : 'Caixa Fechado'}}
+            </button>
+            <button class="action-btn" ng-class="{'btn-blue': caixaDetalhado, 'btn-gray': !caixaDetalhado}" ng-click="toggleCaixaDetalhado()">
+                <i class="fas fa-list-alt"></i>
+                Caixa Detalhado
+            </button>
+            <button class="action-btn btn-dark" ng-click="novoPedido()">
+                <i class="fas fa-plus"></i>
+                Novo Pedido
+            </button>
+            <div class="time-display">
+                <i class="fas fa-clock"></i>
+                <span>{{currentTime | date:'HH:mm'}}</span>
+            </div>
+            <div class="user-info" ng-click="showUserMenu()">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container principal do KDS -->
+    <div class="kds-container">
+        
+        <!-- Coluna: Novos -->
+        <div class="kds-column">
+            <div class="kds-column-header">
+                <span>
+                    <i class="fas fa-bell"></i>
+                    Novos
+                </span>
+                <span class="count-badge">{{getOrdersByStatus('novo').length}}</span>
+            </div>
+            <div class="kds-column-content">
+                
+                <div class="kds-order-card status-novo" ng-repeat="order in getOrdersByStatus('novo')" ng-click="selectOrder(order)">
+                    <div class="kds-card-header">
+                        <div class="kds-order-number">{{order.numero}}</div>
+                        <div class="kds-order-type" ng-class="order.tipo">
+                            <i class="fas" ng-class="getTypeIcon(order.tipo)"></i>
+                            {{getTypeLabel(order.tipo)}}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="kds-channel-badge" ng-class="order.canal">{{order.canal.toUpperCase()}}</span>
+                    </div>
+                    
+                    <div class="kds-customer-info">
+                        <div class="kds-customer-name">{{order.cliente.nome}}</div>
+                        <div class="kds-customer-phone" ng-if="order.cliente.telefone">
+                            <i class="fas fa-phone"></i> {{order.cliente.telefone}}
+                        </div>
+                        <div class="kds-customer-address" ng-if="order.tipo === 'entrega' && order.cliente.endereco">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{order.cliente.endereco.rua}}, {{order.cliente.endereco.numero}} - {{order.cliente.endereco.bairro}}
+                        </div>
+                    </div>
+                    
+                    <div class="kds-order-items">
+                        <div class="kds-order-item" ng-repeat="item in order.itens">
+                            <div class="kds-item-name">{{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})</div>
+                            <div class="kds-item-details" ng-if="item.sabores.length > 0">{{item.sabores.join(', ')}}</div>
+                            <div class="kds-item-details" ng-if="item.borda">{{item.borda}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kds-card-footer">
+                        <div class="kds-time-info">
+                            <span><i class="fas fa-clock"></i> {{order.data_criacao | date:'HH:mm'}}</span>
+                            <span class="kds-time-elapsed">{{getElapsedTime(order.data_criacao)}}min</span>
+                        </div>
+                        <div class="kds-card-actions">
+                            <button class="kds-action-btn btn-green" title="Iniciar Preparo" ng-click="startOrder(order, $event)">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="kds-action-btn btn-red" title="Cancelar" ng-click="cancelOrder(order, $event)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Coluna: Processando -->
+        <div class="kds-column">
+            <div class="kds-column-header">
+                <span>
+                    <i class="fas fa-fire"></i>
+                    Processando
+                </span>
+                <span class="count-badge">{{getOrdersByStatus('processando').length}}</span>
+            </div>
+            <div class="kds-column-content">
+                
+                <div class="kds-order-card status-processando" ng-repeat="order in getOrdersByStatus('processando')" ng-click="selectOrder(order)" ng-class="{urgent: isUrgent(order)}">
+                    <div class="kds-card-header">
+                        <div class="kds-order-number">{{order.numero}}</div>
+                        <div class="kds-order-type" ng-class="order.tipo">
+                            <i class="fas" ng-class="getTypeIcon(order.tipo)"></i>
+                            {{getTypeLabel(order.tipo)}}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="kds-channel-badge" ng-class="order.canal">{{order.canal.toUpperCase()}}</span>
+                    </div>
+                    
+                    <div class="kds-customer-info">
+                        <div class="kds-customer-name">{{order.cliente.nome}}</div>
+                        <div class="kds-customer-phone" ng-if="order.cliente.telefone">
+                            <i class="fas fa-phone"></i> {{order.cliente.telefone}}
+                        </div>
+                        <div class="kds-customer-address" ng-if="order.tipo === 'entrega' && order.cliente.endereco">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{order.cliente.endereco.rua}}, {{order.cliente.endereco.numero}} - {{order.cliente.endereco.bairro}}
+                        </div>
+                    </div>
+                    
+                    <div class="kds-order-items">
+                        <div class="kds-order-item" ng-repeat="item in order.itens">
+                            <div class="kds-item-name">{{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})</div>
+                            <div class="kds-item-details" ng-if="item.sabores.length > 0">{{item.sabores.join(', ')}}</div>
+                            <div class="kds-item-details" ng-if="item.borda">{{item.borda}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kds-card-footer">
+                        <div class="kds-time-info">
+                            <span><i class="fas fa-clock"></i> {{order.data_criacao | date:'HH:mm'}}</span>
+                            <span class="kds-time-elapsed">{{getElapsedTime(order.data_criacao)}}min</span>
+                        </div>
+                        <div class="kds-card-actions">
+                            <button class="kds-action-btn btn-green" title="Marcar como Pronto" ng-click="finishOrder(order, $event)">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="kds-action-btn btn-red" title="Cancelar" ng-click="cancelOrder(order, $event)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Coluna: Prontos -->
+        <div class="kds-column">
+            <div class="kds-column-header">
+                <span>
+                    <i class="fas fa-check-circle"></i>
+                    Prontos
+                </span>
+                <span class="count-badge">{{getOrdersByStatus('pronto').length}}</span>
+            </div>
+            <div class="kds-column-content">
+                
+                <div class="kds-order-card status-pronto" ng-repeat="order in getOrdersByStatus('pronto')" ng-click="selectOrder(order)" ng-class="{urgent: isUrgent(order)}">
+                    <div class="kds-card-header">
+                        <div class="kds-order-number">{{order.numero}}</div>
+                        <div class="kds-order-type" ng-class="order.tipo">
+                            <i class="fas" ng-class="getTypeIcon(order.tipo)"></i>
+                            {{getTypeLabel(order.tipo)}}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="kds-channel-badge" ng-class="order.canal">{{order.canal.toUpperCase()}}</span>
+                    </div>
+                    
+                    <div class="kds-customer-info">
+                        <div class="kds-customer-name">{{order.cliente.nome}}</div>
+                        <div class="kds-customer-phone" ng-if="order.cliente.telefone">
+                            <i class="fas fa-phone"></i> {{order.cliente.telefone}}
+                        </div>
+                        <div class="kds-customer-address" ng-if="order.tipo === 'entrega' && order.cliente.endereco">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{order.cliente.endereco.rua}}, {{order.cliente.endereco.numero}} - {{order.cliente.endereco.bairro}}
+                        </div>
+                    </div>
+                    
+                    <div class="kds-order-items">
+                        <div class="kds-order-item" ng-repeat="item in order.itens">
+                            <div class="kds-item-name">{{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})</div>
+                            <div class="kds-item-details" ng-if="item.sabores.length > 0">{{item.sabores.join(', ')}}</div>
+                            <div class="kds-item-details" ng-if="item.borda">{{item.borda}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kds-card-footer">
+                        <div class="kds-time-info">
+                            <span><i class="fas fa-clock"></i> {{order.data_criacao | date:'HH:mm'}}</span>
+                            <span class="kds-time-elapsed">{{getElapsedTime(order.data_criacao)}}min</span>
+                        </div>
+                        <div class="kds-card-actions">
+                            <button class="kds-action-btn btn-green" title="Marcar como Entregue" ng-click="deliverOrder(order, $event)" ng-if="order.tipo === 'retirada'">
+                                <i class="fas fa-handshake"></i>
+                            </button>
+                            <button class="kds-action-btn btn-blue" title="Despachar" ng-click="dispatchOrder(order, $event)" ng-if="order.tipo === 'entrega'">
+                                <i class="fas fa-shipping-fast"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Coluna: Agendados -->
+        <div class="kds-column">
+            <div class="kds-column-header">
+                <span>
+                    <i class="fas fa-calendar-alt"></i>
+                    Agendados
+                </span>
+                <span class="count-badge">{{getOrdersByStatus('agendado').length}}</span>
+            </div>
+            <div class="kds-column-content">
+                
+                <div class="kds-order-card status-agendado" ng-repeat="order in getOrdersByStatus('agendado')" ng-click="selectOrder(order)">
+                    <div class="kds-card-header">
+                        <div class="kds-order-number">{{order.horario_agendado | date:'HH:mm'}}</div>
+                        <div class="kds-order-type" ng-class="order.tipo">
+                            <i class="fas" ng-class="getTypeIcon(order.tipo)"></i>
+                            {{getTypeLabel(order.tipo)}}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="badge bg-primary">
+                            <i class="fas fa-clock"></i>
+                            {{order.horario_agendado | date:'HH:mm'}}
+                        </span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="kds-channel-badge" ng-class="order.canal">{{order.canal.toUpperCase()}}</span>
+                    </div>
+                    
+                    <div class="kds-customer-info">
+                        <div class="kds-customer-name">{{order.cliente.nome}}</div>
+                        <div class="kds-customer-phone" ng-if="order.cliente.telefone">
+                            <i class="fas fa-phone"></i> {{order.cliente.telefone}}
+                        </div>
+                        <div class="kds-customer-address" ng-if="order.tipo === 'entrega' && order.cliente.endereco">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{order.cliente.endereco.rua}}, {{order.cliente.endereco.numero}} - {{order.cliente.endereco.bairro}}
+                        </div>
+                    </div>
+                    
+                    <div class="kds-order-items">
+                        <div class="kds-order-item" ng-repeat="item in order.itens">
+                            <div class="kds-item-name">{{item.quantidade}}x {{item.produto.nome}} ({{item.tamanho}})</div>
+                            <div class="kds-item-details" ng-if="item.sabores.length > 0">{{item.sabores.join(', ')}}</div>
+                            <div class="kds-item-details" ng-if="item.borda">{{item.borda}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kds-card-footer">
+                        <div class="kds-time-info">
+                            <span><i class="fas fa-calendar"></i> Agendado</span>
+                        </div>
+                        <div class="kds-card-actions">
+                            <button class="kds-action-btn btn-green" title="Iniciar Agora" ng-click="startScheduledOrder(order, $event)">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer do KDS -->
+    <div class="kds-footer">
+        <div class="kds-footer-left">
+            <button class="kds-footer-btn" ng-click="configurePickup()">
+                <i class="fas fa-exclamation-triangle"></i>
+                Retirada: {{retiradaConfigurada ? 'Configurado' : 'Não configurado'}}
+            </button>
+            <button class="kds-footer-btn" ng-click="adjustDeliveryTime()">
+                <i class="fas fa-clock"></i>
+                Ajustar tempo de entrega
+            </button>
+        </div>
+        <div class="kds-footer-right">
+            <button class="kds-footer-btn" ng-click="refreshOrders()">
+                <i class="fas fa-sync-alt"></i>
+                Atualizar
+            </button>
+        </div>
+    </div>
+
+</div>
+

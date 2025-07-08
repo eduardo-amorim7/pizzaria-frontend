@@ -1,7 +1,16 @@
-/* Estilos gerais */
+/* Estilos gerais da aplicação */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
+}
+
+/* Classe para tela cheia (sem navbar) */
+.full-screen {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Loading Overlay */
@@ -23,241 +32,11 @@ body {
     color: white;
 }
 
-/* Cards de pedidos */
-.pedido-card {
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    transition: transform 0.2s ease-in-out;
+/* Toast Styles */
+.toast-container {
+    z-index: 10000;
 }
 
-.pedido-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Status do pedido */
-.status-badge {
-    font-size: 0.9rem;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.status-aguardando_preparo {
-    background-color: #ffc107;
-    color: #000;
-}
-
-.status-em_preparo {
-    background-color: #fd7e14;
-    color: #fff;
-}
-
-.status-pronto {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.status-despachado {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.status-entregue {
-    background-color: #6c757d;
-    color: #fff;
-}
-
-.status-cancelado {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-/* Painel KDS */
-.kds-container {
-    padding: 0;
-}
-
-.kds-column {
-    min-height: 80vh;
-    padding: 15px;
-    border-right: 2px solid #dee2e6;
-}
-
-.kds-column:last-child {
-    border-right: none;
-}
-
-.kds-header {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.kds-pedido {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #007bff;
-    transition: all 0.3s ease;
-}
-
-.kds-pedido:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.kds-pedido.atrasado {
-    border-left-color: #dc3545;
-    background-color: #fff5f5;
-    animation: pulse-red 2s infinite;
-}
-
-@keyframes pulse-red {
-    0% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
-    50% { box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); }
-    100% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
-}
-
-.pedido-numero {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 10px;
-}
-
-.pedido-tempo {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.tempo-normal {
-    color: #28a745;
-}
-
-.tempo-atencao {
-    color: #ffc107;
-}
-
-.tempo-atrasado {
-    color: #dc3545;
-}
-
-.pedido-itens {
-    margin-bottom: 15px;
-}
-
-.item-pizza {
-    background-color: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    border-left: 3px solid #007bff;
-}
-
-.item-sabor {
-    font-weight: 600;
-    color: #495057;
-}
-
-.item-detalhes {
-    font-size: 0.9rem;
-    color: #6c757d;
-    margin-top: 3px;
-}
-
-.pedido-cliente {
-    font-size: 0.9rem;
-    color: #6c757d;
-    margin-bottom: 10px;
-}
-
-.pedido-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.btn-kds {
-    flex: 1;
-    min-width: 120px;
-    padding: 8px 16px;
-    border-radius: 5px;
-    border: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-kds:hover {
-    transform: translateY(-1px);
-}
-
-/* Filtros KDS */
-.kds-filters {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Formulários */
-.form-section {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-section h5 {
-    color: #007bff;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e9ecef;
-}
-
-/* Tabelas */
-.table-custom {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.table-custom thead {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: white;
-}
-
-.table-custom tbody tr:hover {
-    background-color: #f8f9fa;
-}
-
-/* Botões personalizados */
-.btn-custom {
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-custom:hover {
-    transform: translateY(-1px);
-}
-
-/* Toast customizado */
 .toast-success {
     border-left: 4px solid #28a745;
 }
@@ -274,89 +53,210 @@ body {
     border-left: 4px solid #17a2b8;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .kds-column {
-        border-right: none;
-        border-bottom: 2px solid #dee2e6;
-        min-height: auto;
-    }
-    
-    .pedido-actions {
-        flex-direction: column;
-    }
-    
-    .btn-kds {
-        min-width: auto;
-    }
-    
-    .pedido-numero {
-        font-size: 1.3rem;
-    }
+/* Card Styles */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: box-shadow 0.15s ease-in-out;
 }
 
-/* Animações */
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
 }
 
-/* Login page */
+/* Button Styles */
+.btn {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.15s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Form Styles */
+.form-control {
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Table Styles */
+.table {
+    background-color: white;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Badge Styles */
+.badge {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+/* Navbar Styles */
+.navbar-brand {
+    font-weight: 600;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+/* Login Page Styles */
 .login-container {
     min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #007bff, #0056b3);
 }
 
 .login-card {
     background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    overflow: hidden;
     max-width: 400px;
+    width: 100%;
 }
 
-.login-logo {
+.login-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
     text-align: center;
-    margin-bottom: 30px;
 }
 
-.login-logo i {
-    font-size: 3rem;
-    color: #007bff;
-    margin-bottom: 10px;
+.login-body {
+    padding: 2rem;
 }
 
-/* Indicadores de canal */
-.canal-badge {
-    font-size: 0.8rem;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: 500;
+.login-footer {
+    background-color: #f8f9fa;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
 }
 
-.canal-balcao { background-color: #e3f2fd; color: #1976d2; }
-.canal-telefone { background-color: #f3e5f5; color: #7b1fa2; }
-.canal-ifood { background-color: #fff3e0; color: #f57c00; }
-.canal-site { background-color: #e8f5e8; color: #388e3c; }
-.canal-whatsapp { background-color: #e0f2f1; color: #00796b; }
-
-/* Tipo de pedido */
-.tipo-badge {
-    font-size: 0.8rem;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: 500;
+/* Dashboard Styles */
+.dashboard-stats {
+    margin-bottom: 2rem;
 }
 
-.tipo-entrega { background-color: #fff3e0; color: #f57c00; }
-.tipo-retirada { background-color: #e3f2fd; color: #1976d2; }
-.tipo-consumo_local { background-color: #e8f5e8; color: #388e3c; }
+.stat-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.15s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-card {
+        margin: 1rem;
+    }
+    
+    .login-header,
+    .login-body {
+        padding: 1.5rem;
+    }
+    
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Utility Classes */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.border-0 {
+    border: 0 !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.rounded {
+    border-radius: 0.375rem !important;
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 

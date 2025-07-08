@@ -38,27 +38,9 @@
                         </a>
                     </li>
                     <li class="nav-item" ng-if="isAuthenticated">
-                        <a class="nav-link" href="#/pedidos">
-                            <i class="fas fa-clipboard-list me-1"></i>
-                            Pedidos
-                        </a>
-                    </li>
-                    <li class="nav-item" ng-if="isAuthenticated">
-                        <a class="nav-link" href="#/kds">
-                            <i class="fas fa-tv me-1"></i>
-                            Painel KDS
-                        </a>
-                    </li>
-                    <li class="nav-item" ng-if="isAuthenticated && canManageProducts()">
-                        <a class="nav-link" href="#/produtos">
-                            <i class="fas fa-pizza-slice me-1"></i>
-                            Produtos
-                        </a>
-                    </li>
-                    <li class="nav-item" ng-if="isAuthenticated && canViewReports()">
-                        <a class="nav-link" href="#/relatorios">
-                            <i class="fas fa-chart-bar me-1"></i>
-                            Relatórios
+                        <a class="nav-link" href="#/novo-pedido">
+                            <i class="fas fa-plus-circle me-1"></i>
+                            Novo Pedido
                         </a>
                     </li>
                 </ul>
@@ -70,11 +52,6 @@
                             {{currentUser.nome}}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#/perfil">
-                                <i class="fas fa-user-cog me-1"></i>
-                                Perfil
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#" ng-click="logout()">
                                 <i class="fas fa-sign-out-alt me-1"></i>
                                 Sair
@@ -87,7 +64,7 @@
     </nav>
 
     <!-- Main Content -->
-    <div >
+    <div>
         <div ng-view></div>
     </div>
 
@@ -135,12 +112,8 @@
     <script src="js/services/modalService.js"></script>
     <script src="js/controllers/navController.js"></script>
     <script src="js/controllers/loginController.js"></script>
-    <script src="js/controllers/pedidosController.js"></script>
-    <script src="js/controllers/kdsController.js"></script>
     <script src="js/controllers/mainDashboardController.js"></script>
     <script src="js/controllers/novoPedidoController.js"></script>
-    <script src="js/controllers/produtosController.js"></script>
-    <script src="js/controllers/relatoriosController.js"></script>
 </body>
 </html>
 

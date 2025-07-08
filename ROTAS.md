@@ -36,37 +36,6 @@ Este documento lista todas as rotas disponíveis no sistema de gestão da pizzar
   - Configuração de entrega/retirada
   - Cálculo de valores
 
-### 📋 **Gestão de Pedidos**
-- **URL:** `#!/pedidos`
-- **Template:** `views/pedidos.html`
-- **Controller:** `PedidosController`
-- **Descrição:** Lista e gestão completa de pedidos
-- **Acesso:** Requer autenticação
-- **Funcionalidades:**
-  - Listagem de todos os pedidos
-  - Filtros e busca
-  - Edição de pedidos
-  - Histórico de status
-
-### 📺 **Painel KDS (Alternativo)**
-- **URL:** `#!/kds`
-- **Template:** `views/kds.html`
-- **Controller:** `KdsController`
-- **Descrição:** Painel KDS alternativo (versão anterior)
-- **Acesso:** Requer autenticação
-- **Status:** Mantido para compatibilidade
-
-### 📊 **Relatórios**
-- **URL:** `#!/relatorios`
-- **Template:** `views/relatorios.html`
-- **Controller:** `RelatoriosController`
-- **Descrição:** Relatórios e métricas do sistema
-- **Acesso:** Requer autenticação e permissão específica
-- **Funcionalidades:**
-  - Relatórios de vendas
-  - Métricas de tempo de preparo
-  - Análise de performance
-
 ## 🔄 **Redirecionamentos**
 
 ### **Rota Não Encontrada**
@@ -102,11 +71,10 @@ resolve: {
 
 ### **A partir do Dashboard Principal:**
 - **Novo Pedido:** Botão "Novo Pedido" → `#!/novo-pedido`
-- **Menu do usuário:** Acesso via dropdown no header (quando navbar visível)
+- **Menu do usuário:** Acesso via dropdown no header
 
 ### **A partir de outras telas:**
-- **Voltar ao Dashboard:** Link "Dashboard" na navbar
-- **Navegação livre:** Através da navbar superior
+- **Voltar ao Dashboard:** Link "Dashboard" na navbar ou botão de fechar aba
 
 ## 📱 **Comportamento Responsivo**
 
@@ -116,7 +84,7 @@ resolve: {
 - **Controle:** Via `ng-hide="isMainDashboard()"` no `NavController`
 
 ### **Layout**
-- **Tela cheia:** Dashboard principal (`class="full-screen"`)
+- **Tela cheia:** Dashboard principal e novo pedido (`class="full-screen"`)
 - **Container padrão:** Demais rotas (`class="container-fluid mt-3"`)
 
 ## 🔧 **Configurações Técnicas**
@@ -132,17 +100,11 @@ frontend/
 ├── views/
 │   ├── login.html
 │   ├── main-dashboard.html
-│   ├── novo-pedido.html
-│   ├── pedidos.html
-│   ├── kds.html
-│   └── relatorios.html
+│   └── novo-pedido.html
 ├── js/controllers/
 │   ├── loginController.js
 │   ├── mainDashboardController.js
-│   ├── novoPedidoController.js
-│   ├── pedidosController.js
-│   ├── kdsController.js
-│   └── relatoriosController.js
+│   └── novoPedidoController.js
 └── js/app.js (configuração das rotas)
 ```
 
@@ -153,15 +115,11 @@ Assumindo que a aplicação está rodando em `http://localhost:8080`:
 - **Login:** http://localhost:8080/#!/login
 - **Dashboard:** http://localhost:8080/#!/
 - **Novo Pedido:** http://localhost:8080/#!/novo-pedido
-- **Pedidos:** http://localhost:8080/#!/pedidos
-- **KDS:** http://localhost:8080/#!/kds
-- **Relatórios:** http://localhost:8080/#!/relatorios
 
 ## 📝 **Notas Importantes**
 
 1. **Rota Padrão:** O dashboard principal (`#!/`) é a primeira tela após login
 2. **Autenticação:** Mantida via localStorage com token JWT
-3. **Permissões:** Algumas rotas podem ter restrições baseadas no nível de acesso do usuário
-4. **Estado:** O estado da aplicação é mantido entre navegações
-5. **Logout:** Remove token e redireciona para login automaticamente
+3. **Estado:** O estado da aplicação é mantido entre navegações
+4. **Logout:** Remove token e redireciona para login automaticamente
 

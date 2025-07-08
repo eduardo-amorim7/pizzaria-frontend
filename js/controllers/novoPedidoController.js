@@ -1,4 +1,4 @@
-angular.module('pizzariaApp').controller('NovoPedidoController', function($scope, $location, ApiService, ToastService) {
+angular.module('pizzariaApp').controller('NovoPedidoController', function($scope, $location, ApiService, ToastService, $interval) {
     
     // Inicialização
     $scope.pedido = {
@@ -26,6 +26,62 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
     $scope.adicionaisSelecionados = ['Sem Borda'];
     $scope.opcaoSaborSelecionada = 'sem_bebidas';
     $scope.buscaSabor = '';
+
+    // Configurações do header
+    $scope.activeFilter = 'entrega';
+    $scope.siteAberto = true;
+    $scope.caixaAberto = true;
+    $scope.caixaDetalhado = false;
+    $scope.currentTime = formatTime(new Date());
+
+    // Atualizar relógio a cada segundo
+    var clockTimer = $interval(function() {
+        $scope.currentTime = formatTime(new Date());
+    }, 1000);
+
+    // Limpar timer quando o controller for destruído
+    $scope.$on('$destroy', function() {
+        if (clockTimer) {
+            $interval.cancel(clockTimer);
+        }
+    });
+
+    // Funções do header
+    $scope.toggleMenu = function() {
+        // Implementação do toggle menu
+    };
+
+    $scope.closeTab = function() {
+        $location.path('/');
+    };
+
+    $scope.setFilter = function(filter) {
+        $scope.activeFilter = filter;
+    };
+
+    $scope.toggleSiteAberto = function() {
+        $scope.siteAberto = !$scope.siteAberto;
+    };
+
+    $scope.toggleCaixaAberto = function() {
+        $scope.caixaAberto = !$scope.caixaAberto;
+    };
+
+    $scope.toggleCaixaDetalhado = function() {
+        $scope.caixaDetalhado = !$scope.caixaDetalhado;
+    };
+
+    $scope.novoPedido = function() {
+        // Já estamos na tela de novo pedido
+        ToastService.show('info', 'Você já está na tela de novo pedido');
+    };
+
+    // Função para formatar o tempo
+    function formatTime(date) {
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        return hours + ':' + minutes;
+    }
 
     // Dados disponíveis
     $scope.saboresDisponiveis = [
@@ -213,12 +269,12 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
 
     // Ações do pedido
     $scope.cancelar = function() {
-        $location.path('/pedidos');
+        $location.path('/');
     };
 
     $scope.cancelarPedido = function() {
         if (confirm('Tem certeza que deseja cancelar este pedido?')) {
-            $location.path('/pedidos');
+            $location.path('/');
         }
     };
 
@@ -256,7 +312,7 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
         ApiService.post('/pedidos', pedidoParaEnvio)
             .then(function(response) {
                 ToastService.show('success', 'Pedido criado com sucesso!');
-                $location.path('/kds');
+                $location.path('/');
             })
             .catch(function(error) {
                 console.error('Erro ao criar pedido:', error);

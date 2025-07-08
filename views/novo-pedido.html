@@ -1,16 +1,58 @@
 <div class="novo-pedido-container" ng-controller="NovoPedidoController">
 
     <!-- Header -->
-    <div class="novo-pedido-header">
-        <button class="tab">
-            Pedido Roberto Silva
-            <i class="fas fa-times"></i>
-        </button>
-        <button class="tab-inactive">Visualização de Pedidos</button>
-        <button class="tab-inactive">Pedidos</button>
+    <div class="kds-header">
+        <div class="kds-header-left">
+            <button class="menu-btn" ng-click="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <button class="tab">
+                Pedidos <i class="fas fa-times" style="margin-left: 8px;" ng-click="closeTab()"></i>
+            </button>
+        </div>
         
-        <div style="margin-left: auto;">
-            <span style="color: #bdc3c7;">Pizza Sportello - Trindade</span>
+        <div class="kds-header-center">
+            <button class="filter-btn" ng-class="{active: activeFilter === 'entrega'}" ng-click="setFilter('entrega')">
+                <i class="fas fa-motorcycle"></i>
+                Entrega
+            </button>
+            <button class="filter-btn" ng-class="{active: activeFilter === 'retirada'}" ng-click="setFilter('retirada')">
+                <i class="fas fa-walking"></i>
+                Retirada
+            </button>
+            <button class="filter-btn" ng-class="{active: activeFilter === 'balcao'}" ng-click="setFilter('balcao')">
+                <i class="fas fa-utensils"></i>
+                Balcão
+            </button>
+            <button class="filter-btn" ng-class="{active: activeFilter === 'mesa'}" ng-click="setFilter('mesa')">
+                <i class="fas fa-chair"></i>
+                Mesa
+            </button>
+        </div>
+        
+        <div class="kds-header-right">
+            <button class="action-btn" ng-class="{active: siteAberto}" ng-click="toggleSiteAberto()">
+                <i class="fas fa-globe"></i>
+                Site Aberto
+            </button>
+            <button class="action-btn" ng-class="{active: caixaAberto}" ng-click="toggleCaixaAberto()">
+                <i class="fas fa-cash-register"></i>
+                Caixa Aberto
+            </button>
+            <button class="action-btn" ng-class="{active: caixaDetalhado}" ng-click="toggleCaixaDetalhado()">
+                <i class="fas fa-receipt"></i>
+                Caixa Detalhado
+            </button>
+            <button class="action-btn" ng-click="novoPedido()">
+                <i class="fas fa-plus"></i>
+                Novo Pedido
+            </button>
+            <div class="clock">
+                {{currentTime}}
+            </div>
+            <div class="user-menu">
+                <i class="fas fa-user-circle"></i>
+            </div>
         </div>
     </div>
 

@@ -3,10 +3,10 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
     // Inicialização
     $scope.pedido = {
         cliente: {
-            nome: 'Roberto Silva',
-            telefone: '3255-6030',
+            nome: '',
+            telefone: '',
             endereco: {
-                completo: 'Rua Dorcílio Luz s/n, Potecas, São José - SC'
+                completo: ''
             }
         },
         tipo: 'entrega',
@@ -26,6 +26,7 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
     $scope.adicionaisSelecionados = ['Sem Borda'];
     $scope.opcaoSaborSelecionada = 'sem_bebidas';
     $scope.buscaSabor = '';
+    $scope.mostrarClientesDropdown = false;
 
     // Configurações do header
     $scope.activeFilter = 'entrega';
@@ -45,6 +46,21 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
             $interval.cancel(clockTimer);
         }
     });
+
+    // Dados de clientes para o dropdown
+    $scope.clientesDisponiveis = [
+        { nome: 'Carlos', telefone: '(48) 9 8456-3255', endereco: 'Rua das Flores, 123 - Centro' },
+        { nome: 'Fabio Maria', telefone: '(48) 9 8493-2550', endereco: 'Av. Principal, 456 - Bairro Novo' },
+        { nome: 'Gica', telefone: '(48) 9 9932-5582', endereco: 'Rua dos Girassóis, 321 - Barreiros' },
+        { nome: 'Ingrid', telefone: '(48) 9 8496-3255', endereco: 'Rua das Palmeiras, 789 - Campinas' },
+        { nome: 'Ivanir Izidorio', telefone: '(48) 3065-3255', endereco: 'Rua das Acácias, 654 - Campinas' },
+        { nome: 'L', telefone: '(48) 3325-5555', endereco: 'Av. Beira Mar, 1000 - Centro' },
+        { nome: 'Shirlei Padilha', telefone: '(48) 3243-2552', endereco: 'Rua das Margaridas, 741 - Barreiros' },
+        { nome: 'Tiago Raupp', telefone: '(48) 9 9832-5586', endereco: 'Rua Dorcílio Luz s/n, Potecas, São José - SC' }
+    ];
+
+    // Filtrar clientes com base no telefone ou nome
+    $scope.clientesFiltrados = [];
 
     // Funções do header
     $scope.toggleMenu = function() {
@@ -83,6 +99,44 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
         return hours + ':' + minutes;
     }
 
+    // Funções para o dropdown de clientes
+    $scope.filtrarClientes = function() {
+        var termo = $scope.pedido.cliente.telefone || $scope.pedido.cliente.nome || '';
+        if (termo.length < 3) {
+            $scope.clientesFiltrados = [];
+            $scope.mostrarClientesDropdown = false;
+            return;
+        }
+
+        termo = termo.toLowerCase();
+        $scope.clientesFiltrados = $scope.clientesDisponiveis.filter(function(cliente) {
+            return cliente.nome.toLowerCase().includes(termo) || 
+                   cliente.telefone.includes(termo);
+        });
+
+        $scope.mostrarClientesDropdown = $scope.clientesFiltrados.length > 0;
+    };
+
+    $scope.selecionarCliente = function(cliente) {
+        $scope.pedido.cliente.nome = cliente.nome;
+        $scope.pedido.cliente.telefone = cliente.telefone;
+        $scope.pedido.cliente.endereco.completo = cliente.endereco;
+        $scope.mostrarClientesDropdown = false;
+    };
+
+    // Observar mudanças no campo de telefone ou nome para filtrar clientes
+    $scope.$watch('pedido.cliente.telefone', function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.filtrarClientes();
+        }
+    });
+
+    $scope.$watch('pedido.cliente.nome', function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.filtrarClientes();
+        }
+    });
+
     // Dados disponíveis
     $scope.saboresDisponiveis = [
         { nome: 'Alho poró', preco: 0 },
@@ -91,6 +145,7 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
         { nome: 'Alho', preco: 0 },
         { nome: 'Bolonha', preco: 0 },
         { nome: 'Capira', preco: 0 },
+        { nome: 'Calabresa', preco: 0 },
         { nome: 'Calabresa Picante', preco: 0 },
         { nome: 'Canadense', preco: 0 },
         { nome: 'Com Bacon', preco: 0 },
@@ -119,6 +174,15 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
     // Funções de seleção
     $scope.selecionarModalidade = function(tipo) {
         $scope.pedido.tipo = tipo;
+        
+        // Atualizar taxa de entrega
+        if (tipo === 'entrega') {
+            $scope.pedido.taxaEntrega = 5.00;
+        } else {
+            $scope.pedido.taxaEntrega = 0.00;
+        }
+        
+        $scope.atualizarTotal();
     };
 
     $scope.selecionarCombo = function(combo) {
@@ -131,6 +195,8 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
         if (produto !== 'pizza') {
             $scope.saboresSelecionados = [];
             $scope.adicionaisSelecionados = [];
+        } else if ($scope.adicionaisSelecionados.length === 0) {
+            $scope.adicionaisSelecionados = ['Sem Borda'];
         }
     };
 
@@ -218,6 +284,18 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
         }
     };
 
+    $scope.aumentarQuantidade = function(item) {
+        item.quantidade++;
+        $scope.atualizarTotal();
+    };
+
+    $scope.diminuirQuantidade = function(item) {
+        if (item.quantidade > 1) {
+            item.quantidade--;
+            $scope.atualizarTotal();
+        }
+    };
+
     // Cálculos
     function calcularPrecoPizza() {
         var precoBase = 0;
@@ -261,10 +339,15 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
             subtotal += item.preco * item.quantidade;
         });
         
-        subtotal += $scope.pedido.taxaEntrega || 0;
-        subtotal -= $scope.pedido.desconto || 0;
+        subtotal += parseFloat($scope.pedido.taxaEntrega) || 0;
+        subtotal -= parseFloat($scope.pedido.desconto) || 0;
         
         return Math.max(0, subtotal);
+    };
+
+    $scope.atualizarTotal = function() {
+        // Apenas para forçar a atualização do total na view
+        // O cálculo real é feito em calcularTotal()
     };
 
     // Ações do pedido
@@ -308,16 +391,19 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
             dataHora: new Date()
         };
 
-        // Enviar para API
-        ApiService.post('/pedidos', pedidoParaEnvio)
-            .then(function(response) {
-                ToastService.show('success', 'Pedido criado com sucesso!');
-                $location.path('/');
-            })
-            .catch(function(error) {
-                console.error('Erro ao criar pedido:', error);
-                ToastService.show('error', 'Erro ao criar pedido. Tente novamente.');
-            });
+        // Mostrar modal de confirmação
+        if (confirm('Confirmar pedido no valor de R$ ' + $scope.calcularTotal().toFixed(2) + '?')) {
+            // Enviar para API
+            ApiService.post('/pedidos', pedidoParaEnvio)
+                .then(function(response) {
+                    ToastService.show('success', 'Pedido criado com sucesso!');
+                    $location.path('/');
+                })
+                .catch(function(error) {
+                    console.error('Erro ao criar pedido:', error);
+                    ToastService.show('error', 'Erro ao criar pedido. Tente novamente.');
+                });
+        }
     };
 
     // Inicializar com borda padrão selecionada
@@ -325,5 +411,9 @@ angular.module('pizzariaApp').controller('NovoPedidoController', function($scope
         $scope.adicionaisSelecionados.push('Sem Borda');
     }
 
+    // Inicializar taxa de entrega
+    if ($scope.pedido.tipo === 'entrega') {
+        $scope.pedido.taxaEntrega = 5.00;
+    }
 });
 

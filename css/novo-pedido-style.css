@@ -1,90 +1,57 @@
-/* Novo Pedido - Baseado na imagem de referência */
+/* Novo Pedido - Baseado no mockup fornecido */
 
 .novo-pedido-container {
-    background-color: #f5f5f5;
+    background-color: #2c3e50;
     min-height: 100vh;
     padding: 0;
     margin: 0;
-}
-
-.novo-pedido-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 8px 15px;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    position: relative;
 }
 
-.novo-pedido-header .tab {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 3px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.novo-pedido-header .tab-inactive {
-    background-color: #7f8c8d;
-    color: white;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 3px;
-    font-size: 14px;
-    margin-left: 5px;
-}
-
+/* Conteúdo Principal */
 .novo-pedido-content {
     display: flex;
-    height: calc(100vh - 60px);
-    gap: 0;
+    flex: 1;
+    gap: 20px;
+    padding: 20px;
+    background-color: #e9ecef;
+    margin-top: 0;
 }
 
 .novo-pedido-left {
     flex: 1;
-    background-color: white;
-    padding: 20px;
+    background-color: #e9ecef;
+    padding-right: 0;
     overflow-y: auto;
-    border-right: 1px solid #ddd;
 }
 
 .novo-pedido-right {
     width: 350px;
-    background-color: #f8f9fa;
-    padding: 20px;
+    background-color: #e9ecef;
     overflow-y: auto;
 }
 
 /* Seções do formulário */
 .form-section {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     background-color: white;
-    border: 1px solid #e0e0e0;
     border-radius: 5px;
     padding: 15px;
-}
-
-.form-section h6 {
-    margin: 0 0 15px 0;
-    font-weight: bold;
-    color: #2c3e50;
-    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: 500;
-    color: #555;
-    font-size: 13px;
+    color: #333;
+    font-size: 14px;
 }
 
 .form-control {
@@ -92,48 +59,70 @@
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 14px;
 }
 
-.form-control:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-}
-
-/* Cliente e localização */
+/* Cliente e inputs com ícones */
 .cliente-input-group {
     display: flex;
     gap: 10px;
-    align-items: end;
 }
 
-.cliente-input-group .form-control {
+.input-with-icon {
+    position: relative;
     flex: 1;
 }
 
-.cliente-input-group .btn {
-    padding: 8px 12px;
-    white-space: nowrap;
+.input-with-icon i:first-child {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
 }
 
-.localizacao-group {
-    display: flex;
-    gap: 10px;
-    align-items: end;
-}
-
-.localizacao-group .form-control {
-    flex: 1;
-}
-
-.map-btn {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
+.input-with-icon i:last-child {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
     cursor: pointer;
+}
+
+.input-with-icon input {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+/* Dropdown de clientes */
+.clientes-dropdown {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 100;
+    margin-top: 5px;
+}
+
+.cliente-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.cliente-item:hover {
+    background-color: #f5f5f5;
+}
+
+.cliente-endereco {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 3px;
 }
 
 /* Modalidade */
@@ -145,30 +134,30 @@
 .modalidade-btn {
     flex: 1;
     padding: 10px;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     background-color: white;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
-    font-size: 13px;
-    transition: all 0.3s;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .modalidade-btn.active {
-    border-color: #27ae60;
     background-color: #27ae60;
     color: white;
+    border-color: #27ae60;
 }
 
-.modalidade-btn:hover {
-    border-color: #3498db;
+.modalidade-btn i {
+    margin-right: 5px;
 }
 
 /* Combo e Produto */
 .combo-buttons {
     display: flex;
     gap: 10px;
-    margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .combo-btn {
@@ -177,8 +166,8 @@
     background-color: white;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 13px;
-    transition: all 0.3s;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .combo-btn.active {
@@ -199,14 +188,18 @@
     background-color: white;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 13px;
-    transition: all 0.3s;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .produto-btn.active {
     background-color: #27ae60;
     color: white;
     border-color: #27ae60;
+}
+
+.produto-btn i {
+    margin-right: 5px;
 }
 
 /* Tamanho */
@@ -218,21 +211,28 @@
 
 .tamanho-btn {
     padding: 10px 15px;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     background-color: white;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.3s;
+    font-size: 14px;
+    transition: all 0.2s;
     min-width: 80px;
     text-align: center;
+    position: relative;
 }
 
 .tamanho-btn.active {
-    border-color: #27ae60;
     background-color: #27ae60;
     color: white;
+    border-color: #27ae60;
+}
+
+.tamanho-btn i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Sabores */
@@ -249,9 +249,9 @@
     background-color: white;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .sabor-btn.active {
@@ -260,17 +260,17 @@
     border-color: #e74c3c;
 }
 
-.sabor-btn:hover {
-    border-color: #3498db;
+.sabor-search-container {
+    margin-top: 10px;
 }
 
 .sabor-search {
     width: 100%;
     padding: 8px 12px;
+    padding-left: 30px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
-    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 /* Adicionais */
@@ -286,15 +286,23 @@
     background-color: white;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    position: relative;
 }
 
 .adicional-btn.active {
     background-color: #9b59b6;
     color: white;
     border-color: #9b59b6;
+}
+
+.adicional-btn i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Seção de sabores especial */
@@ -304,6 +312,7 @@
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .sabores-section h6 {
@@ -311,13 +320,14 @@
     color: #2c3e50;
     text-align: center;
     font-size: 14px;
+    font-weight: 500;
 }
 
 .sabores-opcoes {
     display: flex;
     gap: 10px;
     justify-content: center;
-    margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .sabor-opcao-btn {
@@ -327,6 +337,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 13px;
+    transition: all 0.2s;
 }
 
 .sabor-opcao-btn.active {
@@ -338,10 +349,10 @@
 /* Painel direito - Itens do Pedido */
 .itens-pedido {
     background-color: #fff3cd;
-    border: 1px solid #ffeaa7;
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .itens-pedido h5 {
@@ -352,61 +363,119 @@
     font-weight: bold;
 }
 
-.item-pedido {
+.item-placeholder {
     background-color: white;
-    border: 1px solid #ddd;
     border-radius: 4px;
     padding: 10px;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-.item-pedido .item-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    gap: 10px;
 }
 
-.item-pedido .item-nome {
+.item-placeholder-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-placeholder-arrows i {
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.item-quantity {
     font-weight: bold;
-    font-size: 13px;
+    margin: 5px 0;
+}
+
+.item-placeholder-content {
+    flex: 1;
+}
+
+.item-placeholder-title {
+    font-weight: bold;
+    font-size: 14px;
     color: #2c3e50;
 }
 
-.item-pedido .item-preco {
+.item-placeholder-details {
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+.item-placeholder-price {
     font-weight: bold;
     color: #27ae60;
-    font-size: 13px;
 }
 
-.item-pedido .item-detalhes {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.item-pedido .item-actions {
+.item-placeholder-actions {
     display: flex;
     gap: 5px;
-    justify-content: flex-end;
 }
 
-.item-pedido .btn-edit,
-.item-pedido .btn-remove {
-    padding: 2px 6px;
-    border: none;
-    border-radius: 3px;
+.item-pedido {
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-quantity-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-quantity-control i {
     cursor: pointer;
-    font-size: 11px;
+    color: #7f8c8d;
 }
 
-.item-pedido .btn-edit {
+.item-content {
+    flex: 1;
+}
+
+.item-header {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.item-detalhes {
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #27ae60;
+}
+
+.item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-edit, .btn-remove {
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-edit {
     background-color: #3498db;
     color: white;
 }
 
-.item-pedido .btn-remove {
+.btn-remove {
     background-color: #e74c3c;
     color: white;
 }
@@ -414,47 +483,80 @@
 /* Bebidas */
 .bebidas-section {
     background-color: white;
-    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-}
-
-.bebidas-section h6 {
-    margin: 0 0 10px 0;
-    color: #2c3e50;
-    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .sem-bebidas {
     text-align: center;
-    color: #999;
+    color: #7f8c8d;
     font-style: italic;
-    font-size: 13px;
+    font-size: 14px;
+    padding: 10px;
 }
 
 /* Resumo do pedido */
 .resumo-pedido {
     background-color: white;
-    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .resumo-item {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 13px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .resumo-item label {
-    color: #555;
+    color: #333;
+    font-size: 14px;
 }
 
-.resumo-item .valor {
-    font-weight: 500;
+.valor-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.valor-prefix {
+    background-color: #95a5a6;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.valor-input {
+    width: 80px;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.valor-dropdown {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+    cursor: pointer;
+}
+
+.cupom-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .resumo-total {
@@ -471,9 +573,17 @@
 /* Observações */
 .observacoes-section {
     background-color: white;
-    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.observacoes-section h6 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .observacoes-section textarea {
@@ -483,7 +593,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 /* Botões de ação */
@@ -492,8 +602,6 @@
     gap: 10px;
     justify-content: flex-end;
     margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
 }
 
 .btn-primary {
@@ -505,6 +613,7 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
+    transition: all 0.2s;
 }
 
 .btn-secondary {
@@ -515,33 +624,79 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    transition: all 0.2s;
 }
 
 .btn-primary:hover {
-    background-color: #229954;
+    background-color: #219653;
 }
 
 .btn-secondary:hover {
     background-color: #7f8c8d;
 }
 
+/* Botão de Registrar Pedido */
+.registrar-pedido-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.registrar-pedido-btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.registrar-pedido-btn:hover {
+    background-color: #219653;
+    box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+}
+
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .novo-pedido-content {
         flex-direction: column;
-        height: auto;
+    }
+    
+    .novo-pedido-left {
+        padding-right: 0;
+        margin-bottom: 20px;
     }
     
     .novo-pedido-right {
         width: 100%;
     }
     
-    .sabores-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    .registrar-pedido-container {
+        position: static;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
     
-    .tamanho-buttons {
+    .registrar-pedido-btn {
+        width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .modalidade-buttons,
+    .tamanho-buttons,
+    .sabores-grid,
+    .adicionais-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }
 

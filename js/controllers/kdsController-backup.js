@@ -1,226 +1,176 @@
-angular.module('pizzariaApp').controller('KdsController', ['$scope', '$interval', 'ApiService', 'SocketService', 'AuthService', 'ToastService',
-function($scope, $interval, ApiService, SocketService, AuthService, ToastService) {
+angular.module('pizzariaApp').controller('KdsController', ['$scope', '$interval', 'ApiService', 'SocketService', 'ToastService', '$window',
+function($scope, $interval, ApiService, SocketService, ToastService, $window) {
     
-    $scope.pedidos = {
-        aguardando_preparo: [],
-        em_preparo: [],
-        pronto: [],
-        despachado: []
-    };
-    
+    // Dados do escopo
+    $scope.pedidos = [];
+    $scope.currentTime = new Date();
     $scope.filtros = {
-        setor: 'todos',
-        mostrar_entregues: false
+        tipo: '',
+        canal: '',
+        status: ''
     };
     
-    $scope.setores = [
-        { value: 'todos', label: 'Todos os Setores' },
-        { value: 'preparo', label: 'Preparo' },
-        { value: 'expedição', label: 'Expedição' },
-        { value: 'entrega', label: 'Entrega' }
-    ];
+    // Configurações
+    $scope.tempoLimiteUrgente = 30; // minutos
+    $scope.autoRefreshInterval = 30000; // 30 segundos
     
-    $scope.isLoading = false;
-    $scope.alertaSonoro = true;
-    $scope.tempoLimiteAtencao = 20; // minutos
-    $scope.tempoLimiteAtraso = 30; // minutos
-    
-    let intervaloPedidos = null;
-    let audioAlerta = null;
-
+    // Inicialização
     $scope.init = function() {
-        $scope.configurarAudio();
         $scope.carregarPedidos();
-        $scope.iniciarAtualizacaoAutomatica();
-        $scope.configurarSocketEvents();
-        
-        // Entrar na sala do setor selecionado
-        SocketService.joinSetor($scope.filtros.setor);
+        $scope.conectarSocket();
+        $scope.iniciarRelogio();
+        $scope.iniciarAutoRefresh();
     };
 
-    $scope.configurarAudio = function() {
-        // Criar elemento de áudio para alertas
-        audioAlerta = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT');
-    };
-
+    // Carregar pedidos da API
     $scope.carregarPedidos = function() {
-        $scope.isLoading = true;
+        const filtros = {
+            ativo: true,
+            status: ['aguardando_preparo', 'em_preparo', 'pronto', 'despachado']
+        };
         
-        ApiService.getPedidosKds($scope.filtros.setor)
+        // Aplicar filtros se definidos
+        if ($scope.filtros.tipo) {
+            filtros.tipo = $scope.filtros.tipo;
+        }
+        if ($scope.filtros.canal) {
+            filtros.canal = $scope.filtros.canal;
+        }
+        
+        ApiService.get('/pedidos', filtros)
             .then(function(response) {
-                $scope.organizarPedidos(response.pedidos);
-                $scope.verificarPedidosAtrasados();
+                $scope.pedidos = response.pedidos || [];
+                console.log('Pedidos carregados:', $scope.pedidos.length);
             })
             .catch(function(error) {
-                ToastService.error('Erro ao carregar pedidos: ' + (error.message || 'Erro desconhecido'));
-            })
-            .finally(function() {
-                $scope.isLoading = false;
+                console.error('Erro ao carregar pedidos:', error);
+                ToastService.error('Erro ao carregar pedidos');
             });
     };
 
-    $scope.organizarPedidos = function(pedidos) {
-        // Limpar arrays
-        $scope.pedidos.aguardando_preparo = [];
-        $scope.pedidos.em_preparo = [];
-        $scope.pedidos.pronto = [];
-        $scope.pedidos.despachado = [];
+    // Conectar ao Socket.IO para atualizações em tempo real
+    $scope.conectarSocket = function() {
+        SocketService.connect();
         
-        // Organizar pedidos por status
-        pedidos.forEach(function(pedido) {
-            if ($scope.pedidos[pedido.status]) {
-                $scope.pedidos[pedido.status].push(pedido);
-            }
+        // Escutar eventos de novos pedidos
+        SocketService.on('novo_pedido', function(pedido) {
+            $scope.$apply(function() {
+                $scope.pedidos.unshift(pedido);
+                ToastService.success('Novo pedido #' + pedido.numero);
+                $scope.reproduzirSomNotificacao();
+            });
         });
-    };
-
-    $scope.verificarPedidosAtrasados = function() {
-        Object.keys($scope.pedidos).forEach(function(status) {
-            $scope.pedidos[status].forEach(function(pedido) {
-                const tempoDecorrido = pedido.tempo_decorrido_minutos || 0;
-                
-                if (tempoDecorrido > $scope.tempoLimiteAtraso) {
-                    pedido.atrasado = true;
-                    pedido.classeTempoDecorrido = 'tempo-atrasado';
-                } else if (tempoDecorrido > $scope.tempoLimiteAtencao) {
-                    pedido.atencao = true;
-                    pedido.classeTempoDecorrido = 'tempo-atencao';
-                } else {
-                    pedido.classeTempoDecorrido = 'tempo-normal';
+        
+        // Escutar atualizações de status
+        SocketService.on('status_atualizado', function(data) {
+            $scope.$apply(function() {
+                const index = $scope.pedidos.findIndex(p => p._id === data.pedidoId);
+                if (index !== -1) {
+                    $scope.pedidos[index] = data.pedido;
                 }
             });
         });
+        
+        // Escutar pedidos cancelados
+        SocketService.on('pedido_cancelado', function(data) {
+            $scope.$apply(function() {
+                $scope.pedidos = $scope.pedidos.filter(p => p._id !== data.pedidoId);
+            });
+        });
     };
 
-    $scope.atualizarStatusPedido = function(pedido, novoStatus) {
-        if (!$scope.podeAtualizarStatus(novoStatus)) {
-            ToastService.warning('Você não tem permissão para esta ação');
-            return;
-        }
+    // Obter pedidos por status
+    $scope.getPedidosPorStatus = function(status) {
+        return $scope.pedidos.filter(function(pedido) {
+            const matchStatus = pedido.status === status;
+            const matchTipo = !$scope.filtros.tipo || pedido.tipo === $scope.filtros.tipo;
+            const matchCanal = !$scope.filtros.canal || pedido.canal === $scope.filtros.canal;
+            
+            return matchStatus && matchTipo && matchCanal;
+        });
+    };
 
-        ApiService.atualizarStatusPedido(pedido._id, novoStatus)
+    // Obter pedidos agendados (simulação - pode ser implementado no backend)
+    $scope.getPedidosAgendados = function() {
+        // Por enquanto, retorna array vazio
+        // Pode ser implementado para pedidos com horário_agendado
+        return $scope.pedidos.filter(function(pedido) {
+            return pedido.horario_agendado && new Date(pedido.horario_agendado) > new Date();
+        });
+    };
+
+    // Atualizar status do pedido
+    $scope.atualizarStatus = function(pedido, novoStatus) {
+        ApiService.put('/pedidos/' + pedido._id + '/status', { status: novoStatus })
             .then(function(response) {
-                ToastService.success('Status atualizado com sucesso');
+                pedido.status = novoStatus;
                 
-                // Emitir evento via socket
-                SocketService.emitPedidoStatusUpdate({
-                    pedido_id: pedido._id,
-                    status_anterior: pedido.status,
-                    status_novo: novoStatus,
-                    setor: $scope.filtros.setor
-                });
+                // Atualizar tempos
+                const agora = new Date();
+                if (novoStatus === 'em_preparo' && !pedido.tempos.preparo_iniciado) {
+                    pedido.tempos.preparo_iniciado = agora;
+                } else if (novoStatus === 'pronto' && !pedido.tempos.preparo_concluido) {
+                    pedido.tempos.preparo_concluido = agora;
+                } else if (novoStatus === 'despachado' && !pedido.tempos.despachado) {
+                    pedido.tempos.despachado = agora;
+                } else if (novoStatus === 'entregue' && !pedido.tempos.entregue) {
+                    pedido.tempos.entregue = agora;
+                }
                 
-                // Recarregar pedidos
-                $scope.carregarPedidos();
+                ToastService.success('Status atualizado para: ' + $scope.getStatusText(novoStatus));
             })
             .catch(function(error) {
-                ToastService.error('Erro ao atualizar status: ' + (error.message || 'Erro desconhecido'));
+                console.error('Erro ao atualizar status:', error);
+                ToastService.error('Erro ao atualizar status');
             });
     };
 
-    $scope.podeAtualizarStatus = function(status) {
-        if (status === 'em_preparo' || status === 'pronto') {
-            return AuthService.canUpdatePreparationStatus();
+    // Cancelar pedido
+    $scope.cancelarPedido = function(pedido) {
+        if (!confirm('Tem certeza que deseja cancelar o pedido #' + pedido.numero + '?')) {
+            return;
         }
-        if (status === 'despachado' || status === 'entregue') {
-            return AuthService.canUpdateDeliveryStatus();
+        
+        ApiService.delete('/pedidos/' + pedido._id)
+            .then(function(response) {
+                $scope.pedidos = $scope.pedidos.filter(p => p._id !== pedido._id);
+                ToastService.success('Pedido cancelado com sucesso');
+            })
+            .catch(function(error) {
+                console.error('Erro ao cancelar pedido:', error);
+                ToastService.error('Erro ao cancelar pedido');
+            });
+    };
+
+    // Iniciar pedido agendado
+    $scope.iniciarPedidoAgendado = function(pedido) {
+        $scope.atualizarStatus(pedido, 'aguardando_preparo');
+    };
+
+    // Toggle de filtros
+    $scope.toggleFiltro = function(tipo, valor) {
+        if ($scope.filtros[tipo] === valor) {
+            $scope.filtros[tipo] = '';
+        } else {
+            $scope.filtros[tipo] = valor;
         }
-        return true;
-    };
-
-    $scope.getProximoStatus = function(statusAtual) {
-        const fluxoStatus = {
-            'aguardando_preparo': 'em_preparo',
-            'em_preparo': 'pronto',
-            'pronto': 'despachado',
-            'despachado': 'entregue'
-        };
-        return fluxoStatus[statusAtual];
-    };
-
-    $scope.getTextoProximoStatus = function(statusAtual) {
-        const textos = {
-            'aguardando_preparo': 'Iniciar Preparo',
-            'em_preparo': 'Marcar Pronto',
-            'pronto': 'Despachar',
-            'despachado': 'Entregar'
-        };
-        return textos[statusAtual] || 'Avançar';
-    };
-
-    $scope.getClasseBotaoStatus = function(statusAtual) {
-        const classes = {
-            'aguardando_preparo': 'btn-warning',
-            'em_preparo': 'btn-success',
-            'pronto': 'btn-primary',
-            'despachado': 'btn-info'
-        };
-        return classes[statusAtual] || 'btn-secondary';
-    };
-
-    $scope.alterarSetor = function() {
-        // Sair da sala anterior
-        SocketService.leaveSetor($scope.filtros.setor);
-        
-        // Entrar na nova sala
-        SocketService.joinSetor($scope.filtros.setor);
-        
-        // Recarregar pedidos
         $scope.carregarPedidos();
     };
 
-    $scope.toggleAlertaSonoro = function() {
-        $scope.alertaSonoro = !$scope.alertaSonoro;
-        ToastService.info('Alerta sonoro ' + ($scope.alertaSonoro ? 'ativado' : 'desativado'));
-    };
-
-    $scope.tocarAlerta = function() {
-        if ($scope.alertaSonoro && audioAlerta) {
-            audioAlerta.play().catch(function(error) {
-                console.log('Erro ao tocar alerta:', error);
-            });
+    // Calcular tempo decorrido em minutos
+    $scope.calcularTempoDecorrido = function(pedido) {
+        if (!pedido.tempos || !pedido.tempos.pedido_criado) {
+            return 0;
         }
+        
+        const inicio = new Date(pedido.tempos.pedido_criado);
+        const agora = new Date();
+        const diffMinutos = Math.round((agora - inicio) / (1000 * 60));
+        
+        return Math.max(0, diffMinutos);
     };
 
-    $scope.iniciarAtualizacaoAutomatica = function() {
-        // Atualizar a cada 30 segundos
-        intervaloPedidos = $interval(function() {
-            $scope.carregarPedidos();
-        }, 30000);
-    };
-
-    $scope.pararAtualizacaoAutomatica = function() {
-        if (intervaloPedidos) {
-            $interval.cancel(intervaloPedidos);
-            intervaloPedidos = null;
-        }
-    };
-
-    $scope.configurarSocketEvents = function() {
-        // Novo pedido
-        $scope.$on('pedido:novo', function(event, pedido) {
-            ToastService.info('Novo pedido recebido: #' + pedido.numero);
-            $scope.tocarAlerta();
-            $scope.carregarPedidos();
-        });
-
-        // Pedido atualizado
-        $scope.$on('pedido:atualizado', function(event, data) {
-            $scope.carregarPedidos();
-        });
-
-        // Alerta de novo pedido
-        $scope.$on('pedido:alerta', function(event, pedido) {
-            $scope.tocarAlerta();
-        });
-
-        // Pedido atrasado
-        $scope.$on('pedido:atrasado', function(event, pedido) {
-            ToastService.warning('Pedido #' + pedido.numero + ' está atrasado!');
-            $scope.tocarAlerta();
-        });
-    };
-
+    // Formatar tempo para exibição
     $scope.formatarTempo = function(minutos) {
         if (!minutos && minutos !== 0) return '0min';
         
@@ -233,22 +183,117 @@ function($scope, $interval, ApiService, SocketService, AuthService, ToastService
         }
     };
 
-    $scope.getCorStatus = function(status) {
-        const cores = {
-            'aguardando_preparo': '#ffc107',
-            'em_preparo': '#fd7e14',
-            'pronto': '#28a745',
-            'despachado': '#007bff'
-        };
-        return cores[status] || '#6c757d';
+    // Verificar se pedido está atrasado/urgente
+    $scope.isUrgent = function(pedido) {
+        const tempoDecorrido = $scope.calcularTempoDecorrido(pedido);
+        return tempoDecorrido > $scope.tempoLimiteUrgente;
     };
 
-    // Cleanup ao sair da página
+    // Obter ícone do tipo de pedido
+    $scope.getTypeIcon = function(tipo) {
+        const icons = {
+            'entrega': 'fa-motorcycle',
+            'retirada': 'fa-walking',
+            'consumo_local': 'fa-utensils',
+            'mesa': 'fa-chair'
+        };
+        return icons[tipo] || 'fa-question';
+    };
+
+    // Obter texto do status
+    $scope.getStatusText = function(status) {
+        const texts = {
+            'aguardando_preparo': 'Aguardando Preparo',
+            'em_preparo': 'Em Preparo',
+            'pronto': 'Pronto',
+            'despachado': 'Despachado',
+            'entregue': 'Entregue',
+            'cancelado': 'Cancelado'
+        };
+        return texts[status] || status;
+    };
+
+    // Novo pedido
+    $scope.novoPedido = function() {
+        $window.location.href = '#!/pedidos/novo';
+    };
+
+    // Atualizar pedidos manualmente
+    $scope.atualizarPedidos = function() {
+        $scope.carregarPedidos();
+        ToastService.info('Pedidos atualizados');
+    };
+
+    // Reproduzir som de notificação
+    $scope.reproduzirSomNotificacao = function() {
+        try {
+            // Criar um beep simples usando Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        } catch (error) {
+            console.log('Não foi possível reproduzir som de notificação');
+        }
+    };
+
+    // Iniciar relógio
+    $scope.iniciarRelogio = function() {
+        $interval(function() {
+            $scope.currentTime = new Date();
+        }, 1000);
+    };
+
+    // Auto-refresh
+    $scope.iniciarAutoRefresh = function() {
+        $interval(function() {
+            $scope.carregarPedidos();
+        }, $scope.autoRefreshInterval);
+    };
+
+    // Cleanup ao sair da tela
     $scope.$on('$destroy', function() {
-        $scope.pararAtualizacaoAutomatica();
-        SocketService.leaveSetor($scope.filtros.setor);
+        SocketService.disconnect();
     });
 
+    // Inicializar
     $scope.init();
 }]);
+
+// Filtros personalizados
+angular.module('pizzariaApp').filter('tipoText', function() {
+    return function(tipo) {
+        const texts = {
+            'entrega': 'Entrega',
+            'retirada': 'Retirada',
+            'consumo_local': 'Balcão',
+            'mesa': 'Mesa'
+        };
+        return texts[tipo] || tipo;
+    };
+});
+
+angular.module('pizzariaApp').filter('canalText', function() {
+    return function(canal) {
+        const texts = {
+            'balcao': 'Balcão',
+            'telefone': 'Telefone',
+            'ifood': 'iFood',
+            'site': 'Site',
+            'whatsapp': 'WhatsApp'
+        };
+        return texts[canal] || canal;
+    };
+});
 

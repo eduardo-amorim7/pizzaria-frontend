@@ -1,46 +1,32 @@
-angular.module('pizzariaApp').controller('KdsController', ['$scope', '$interval', 'ApiService', 'SocketService', 'ToastService', '$window',
-function($scope, $interval, ApiService, SocketService, ToastService, $window) {
+angular.module('pizzariaApp').controller('KdsController', ['$scope', '$interval', '$location', 'ApiService', 'SocketService', 'ToastService', function($scope, $interval, $location, ApiService, SocketService, ToastService) {
     
-    // Dados do escopo
+    // Estado do KDS
     $scope.pedidos = [];
     $scope.currentTime = new Date();
+    
     $scope.filtros = {
-        tipo: '',
-        canal: '',
-        status: ''
-    };
-    
-    // Configurações
-    $scope.tempoLimiteUrgente = 30; // minutos
-    $scope.autoRefreshInterval = 30000; // 30 segundos
-    
-    // Inicialização
-    $scope.init = function() {
-        $scope.carregarPedidos();
-        $scope.conectarSocket();
-        $scope.iniciarRelogio();
-        $scope.iniciarAutoRefresh();
+        tipo: null // null = todos, 'entrega', 'retirada', 'consumo_local', 'mesa'
     };
 
-    // Carregar pedidos da API
+    // Estado do modal
+    $scope.showModalAcoes = false;
+    $scope.pedidoSelecionado = null;
+    $scope.mostrarHistorico = false;
+
+    // Atualizar relógio
+    $scope.atualizarRelogio = function() {
+        $scope.currentTime = new Date();
+    };
+
+    // Carregar pedidos
     $scope.carregarPedidos = function() {
-        const filtros = {
-            ativo: true,
-            status: ['aguardando_preparo', 'em_preparo', 'pronto', 'despachado']
-        };
-        
-        // Aplicar filtros se definidos
-        if ($scope.filtros.tipo) {
-            filtros.tipo = $scope.filtros.tipo;
-        }
-        if ($scope.filtros.canal) {
-            filtros.canal = $scope.filtros.canal;
-        }
-        
-        ApiService.get('/pedidos', filtros)
+        ApiService.get('/pedidos')
             .then(function(response) {
-                $scope.pedidos = response.pedidos || [];
-                console.log('Pedidos carregados:', $scope.pedidos.length);
+                if (response.success) {
+                    $scope.pedidos = response.pedidos || [];
+                } else {
+                    console.error('Erro ao carregar pedidos:', response.message);
+                }
             })
             .catch(function(error) {
                 console.error('Erro ao carregar pedidos:', error);
@@ -48,131 +34,65 @@ function($scope, $interval, ApiService, SocketService, ToastService, $window) {
             });
     };
 
-    // Conectar ao Socket.IO para atualizações em tempo real
-    $scope.conectarSocket = function() {
-        SocketService.connect();
-        
-        // Escutar eventos de novos pedidos
-        SocketService.on('novo_pedido', function(pedido) {
-            $scope.$apply(function() {
-                $scope.pedidos.unshift(pedido);
-                ToastService.success('Novo pedido #' + pedido.numero);
-                $scope.reproduzirSomNotificacao();
-            });
-        });
-        
-        // Escutar atualizações de status
-        SocketService.on('status_atualizado', function(data) {
-            $scope.$apply(function() {
-                const index = $scope.pedidos.findIndex(p => p._id === data.pedidoId);
-                if (index !== -1) {
-                    $scope.pedidos[index] = data.pedido;
-                }
-            });
-        });
-        
-        // Escutar pedidos cancelados
-        SocketService.on('pedido_cancelado', function(data) {
-            $scope.$apply(function() {
-                $scope.pedidos = $scope.pedidos.filter(p => p._id !== data.pedidoId);
-            });
-        });
-    };
-
     // Obter pedidos por status
     $scope.getPedidosPorStatus = function(status) {
-        return $scope.pedidos.filter(function(pedido) {
-            const matchStatus = pedido.status === status;
-            const matchTipo = !$scope.filtros.tipo || pedido.tipo === $scope.filtros.tipo;
-            const matchCanal = !$scope.filtros.canal || pedido.canal === $scope.filtros.canal;
-            
-            return matchStatus && matchTipo && matchCanal;
+        if (!$scope.pedidos) return [];
+        
+        let pedidosFiltrados = $scope.pedidos.filter(function(pedido) {
+            return pedido.status === status;
         });
+
+        // Aplicar filtro de tipo se selecionado
+        if ($scope.filtros.tipo) {
+            pedidosFiltrados = pedidosFiltrados.filter(function(pedido) {
+                return pedido.tipo === $scope.filtros.tipo;
+            });
+        }
+
+        return pedidosFiltrados;
     };
 
-    // Obter pedidos agendados (simulação - pode ser implementado no backend)
+    // Obter pedidos agendados
     $scope.getPedidosAgendados = function() {
-        // Por enquanto, retorna array vazio
-        // Pode ser implementado para pedidos com horário_agendado
-        return $scope.pedidos.filter(function(pedido) {
+        if (!$scope.pedidos) return [];
+        
+        let pedidosAgendados = $scope.pedidos.filter(function(pedido) {
             return pedido.horario_agendado && new Date(pedido.horario_agendado) > new Date();
         });
-    };
 
-    // Atualizar status do pedido
-    $scope.atualizarStatus = function(pedido, novoStatus) {
-        ApiService.put('/pedidos/' + pedido._id + '/status', { status: novoStatus })
-            .then(function(response) {
-                pedido.status = novoStatus;
-                
-                // Atualizar tempos
-                const agora = new Date();
-                if (novoStatus === 'em_preparo' && !pedido.tempos.preparo_iniciado) {
-                    pedido.tempos.preparo_iniciado = agora;
-                } else if (novoStatus === 'pronto' && !pedido.tempos.preparo_concluido) {
-                    pedido.tempos.preparo_concluido = agora;
-                } else if (novoStatus === 'despachado' && !pedido.tempos.despachado) {
-                    pedido.tempos.despachado = agora;
-                } else if (novoStatus === 'entregue' && !pedido.tempos.entregue) {
-                    pedido.tempos.entregue = agora;
-                }
-                
-                ToastService.success('Status atualizado para: ' + $scope.getStatusText(novoStatus));
-            })
-            .catch(function(error) {
-                console.error('Erro ao atualizar status:', error);
-                ToastService.error('Erro ao atualizar status');
+        // Aplicar filtro de tipo se selecionado
+        if ($scope.filtros.tipo) {
+            pedidosAgendados = pedidosAgendados.filter(function(pedido) {
+                return pedido.tipo === $scope.filtros.tipo;
             });
-    };
-
-    // Cancelar pedido
-    $scope.cancelarPedido = function(pedido) {
-        if (!confirm('Tem certeza que deseja cancelar o pedido #' + pedido.numero + '?')) {
-            return;
         }
-        
-        ApiService.delete('/pedidos/' + pedido._id)
-            .then(function(response) {
-                $scope.pedidos = $scope.pedidos.filter(p => p._id !== pedido._id);
-                ToastService.success('Pedido cancelado com sucesso');
-            })
-            .catch(function(error) {
-                console.error('Erro ao cancelar pedido:', error);
-                ToastService.error('Erro ao cancelar pedido');
-            });
+
+        return pedidosAgendados;
     };
 
-    // Iniciar pedido agendado
-    $scope.iniciarPedidoAgendado = function(pedido) {
-        $scope.atualizarStatus(pedido, 'aguardando_preparo');
-    };
-
-    // Toggle de filtros
-    $scope.toggleFiltro = function(tipo, valor) {
-        if ($scope.filtros[tipo] === valor) {
-            $scope.filtros[tipo] = '';
+    // Alternar filtro
+    $scope.toggleFiltro = function(campo, valor) {
+        if ($scope.filtros[campo] === valor) {
+            $scope.filtros[campo] = null; // Desativar filtro
         } else {
-            $scope.filtros[tipo] = valor;
+            $scope.filtros[campo] = valor; // Ativar filtro
         }
-        $scope.carregarPedidos();
     };
 
-    // Calcular tempo decorrido em minutos
+    // Calcular tempo decorrido
     $scope.calcularTempoDecorrido = function(pedido) {
-        if (!pedido.tempos || !pedido.tempos.pedido_criado) {
-            return 0;
-        }
+        if (!pedido || !pedido.data_criacao) return 0;
         
-        const inicio = new Date(pedido.tempos.pedido_criado);
+        const inicio = new Date(pedido.data_criacao);
         const agora = new Date();
-        const diffMinutos = Math.round((agora - inicio) / (1000 * 60));
+        const diferenca = Math.floor((agora - inicio) / (1000 * 60)); // em minutos
         
-        return Math.max(0, diffMinutos);
+        return diferenca;
     };
 
-    // Formatar tempo para exibição
+    // Formatar tempo
     $scope.formatarTempo = function(minutos) {
-        if (!minutos && minutos !== 0) return '0min';
+        if (!minutos && minutos !== 0) return '';
         
         if (minutos < 60) {
             return minutos + 'min';
@@ -183,117 +103,178 @@ function($scope, $interval, ApiService, SocketService, ToastService, $window) {
         }
     };
 
-    // Verificar se pedido está atrasado/urgente
+    // Verificar se pedido está urgente/atrasado
     $scope.isUrgent = function(pedido) {
         const tempoDecorrido = $scope.calcularTempoDecorrido(pedido);
-        return tempoDecorrido > $scope.tempoLimiteUrgente;
+        return tempoDecorrido > 30; // Considerar urgente após 30 minutos
     };
 
-    // Obter ícone do tipo de pedido
+    // Obter ícone do tipo
     $scope.getTypeIcon = function(tipo) {
-        const icons = {
+        const icones = {
             'entrega': 'fa-motorcycle',
             'retirada': 'fa-walking',
             'consumo_local': 'fa-utensils',
             'mesa': 'fa-chair'
         };
-        return icons[tipo] || 'fa-question';
+        return icones[tipo] || 'fa-box';
     };
 
-    // Obter texto do status
-    $scope.getStatusText = function(status) {
-        const texts = {
-            'aguardando_preparo': 'Aguardando Preparo',
-            'em_preparo': 'Em Preparo',
-            'pronto': 'Pronto',
-            'despachado': 'Despachado',
-            'entregue': 'Entregue',
-            'cancelado': 'Cancelado'
+    // Navegação para novo pedido
+    $scope.irParaNovoPedido = function() {
+        $location.path('/pedidos/novo');
+    };
+
+    // Abrir modal de ações
+    $scope.abrirModalAcoes = function(pedido) {
+        $scope.pedidoSelecionado = pedido;
+        $scope.showModalAcoes = true;
+        $scope.mostrarHistorico = false;
+    };
+
+    // Fechar modal de ações
+    $scope.fecharModalAcoes = function() {
+        $scope.showModalAcoes = false;
+        $scope.pedidoSelecionado = null;
+        $scope.mostrarHistorico = false;
+    };
+
+    // Atualizar status do pedido
+    $scope.atualizarStatus = function(pedido, novoStatus) {
+        const dados = {
+            status: novoStatus
         };
-        return texts[status] || status;
+
+        ApiService.put('/pedidos/' + pedido._id, dados)
+            .then(function(response) {
+                if (response.success) {
+                    ToastService.success('Status do pedido atualizado com sucesso');
+                    $scope.carregarPedidos();
+                } else {
+                    ToastService.error('Erro ao atualizar status: ' + response.message);
+                }
+            })
+            .catch(function(error) {
+                console.error('Erro ao atualizar status:', error);
+                ToastService.error('Erro ao atualizar status do pedido');
+            });
     };
 
-    // Novo pedido
-    $scope.novoPedido = function() {
-        $window.location.href = '#!/pedidos/novo';
+    // Atualizar status via modal
+    $scope.atualizarStatusModal = function(novoStatus) {
+        if ($scope.pedidoSelecionado) {
+            $scope.atualizarStatus($scope.pedidoSelecionado, novoStatus);
+            $scope.fecharModalAcoes();
+        }
+    };
+
+    // Cancelar pedido
+    $scope.cancelarPedido = function(pedido) {
+        if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+            $scope.atualizarStatus(pedido, 'cancelado');
+        }
+    };
+
+    // Cancelar pedido via modal
+    $scope.cancelarPedidoModal = function() {
+        if ($scope.pedidoSelecionado && confirm('Tem certeza que deseja cancelar este pedido?')) {
+            $scope.atualizarStatus($scope.pedidoSelecionado, 'cancelado');
+            $scope.fecharModalAcoes();
+        }
+    };
+
+    // Voltar status
+    $scope.voltarStatus = function(statusAnterior) {
+        if ($scope.pedidoSelecionado) {
+            $scope.atualizarStatus($scope.pedidoSelecionado, statusAnterior);
+            $scope.fecharModalAcoes();
+        }
+    };
+
+    // Iniciar pedido agendado
+    $scope.iniciarPedidoAgendado = function(pedido) {
+        $scope.atualizarStatus(pedido, 'aguardando_preparo');
     };
 
     // Atualizar pedidos manualmente
     $scope.atualizarPedidos = function() {
         $scope.carregarPedidos();
-        ToastService.info('Pedidos atualizados');
+        ToastService.success('Pedidos atualizados');
     };
 
-    // Reproduzir som de notificação
-    $scope.reproduzirSomNotificacao = function() {
-        try {
-            // Criar um beep simples usando Web Audio API
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        } catch (error) {
-            console.log('Não foi possível reproduzir som de notificação');
-        }
+    // Funções do modal (placeholder - implementar conforme necessário)
+    $scope.editarPedido = function() {
+        ToastService.info('Funcionalidade de edição em desenvolvimento');
+        $scope.fecharModalAcoes();
     };
 
-    // Iniciar relógio
-    $scope.iniciarRelogio = function() {
-        $interval(function() {
-            $scope.currentTime = new Date();
+    $scope.pausarPedido = function() {
+        ToastService.info('Funcionalidade de pausa em desenvolvimento');
+        $scope.fecharModalAcoes();
+    };
+
+    $scope.imprimirComanda = function() {
+        ToastService.info('Funcionalidade de impressão em desenvolvimento');
+        $scope.fecharModalAcoes();
+    };
+
+    $scope.duplicarPedido = function() {
+        ToastService.info('Funcionalidade de duplicação em desenvolvimento');
+        $scope.fecharModalAcoes();
+    };
+
+    $scope.verHistorico = function() {
+        $scope.mostrarHistorico = !$scope.mostrarHistorico;
+        // Aqui você pode carregar o histórico do pedido se necessário
+    };
+
+    // Socket.IO para atualizações em tempo real
+    $scope.iniciarSocket = function() {
+        SocketService.on('novo_pedido', function(pedido) {
+            $scope.$apply(function() {
+                $scope.carregarPedidos();
+                ToastService.success('Novo pedido recebido: #' + pedido.numero);
+            });
+        });
+
+        SocketService.on('pedido_atualizado', function(pedido) {
+            $scope.$apply(function() {
+                $scope.carregarPedidos();
+            });
+        });
+    };
+
+    // Atualização automática
+    $scope.iniciarAtualizacaoAutomatica = function() {
+        // Atualizar relógio a cada segundo
+        $scope.relogioInterval = $interval(function() {
+            $scope.atualizarRelogio();
         }, 1000);
-    };
 
-    // Auto-refresh
-    $scope.iniciarAutoRefresh = function() {
-        $interval(function() {
+        // Atualizar pedidos a cada 30 segundos
+        $scope.pedidosInterval = $interval(function() {
             $scope.carregarPedidos();
-        }, $scope.autoRefreshInterval);
+        }, 30000);
     };
 
-    // Cleanup ao sair da tela
+    // Inicialização
+    $scope.init = function() {
+        $scope.carregarPedidos();
+        $scope.iniciarAtualizacaoAutomatica();
+        $scope.iniciarSocket();
+    };
+
+    // Cleanup
     $scope.$on('$destroy', function() {
-        SocketService.disconnect();
+        if ($scope.relogioInterval) {
+            $interval.cancel($scope.relogioInterval);
+        }
+        if ($scope.pedidosInterval) {
+            $interval.cancel($scope.pedidosInterval);
+        }
     });
 
     // Inicializar
     $scope.init();
 }]);
-
-// Filtros personalizados
-angular.module('pizzariaApp').filter('tipoText', function() {
-    return function(tipo) {
-        const texts = {
-            'entrega': 'Entrega',
-            'retirada': 'Retirada',
-            'consumo_local': 'Balcão',
-            'mesa': 'Mesa'
-        };
-        return texts[tipo] || tipo;
-    };
-});
-
-angular.module('pizzariaApp').filter('canalText', function() {
-    return function(canal) {
-        const texts = {
-            'balcao': 'Balcão',
-            'telefone': 'Telefone',
-            'ifood': 'iFood',
-            'site': 'Site',
-            'whatsapp': 'WhatsApp'
-        };
-        return texts[canal] || canal;
-    };
-});
 

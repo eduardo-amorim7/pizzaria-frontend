@@ -43,7 +43,7 @@
                 <i class="fas fa-list-alt"></i>
                 Caixa Detalhado
             </button>
-            <button class="action-btn btn-dark" ng-click="novoPedido()">
+            <button class="action-btn btn-dark" ng-click="irParaNovoPedido()">
                 <i class="fas fa-plus"></i>
                 Novo Pedido
             </button>
@@ -72,7 +72,8 @@
             <div class="kds-column-content">
                 <div class="kds-order-card status-novo" 
                      ng-repeat="pedido in getPedidosPorStatus('aguardando_preparo') track by pedido._id"
-                     ng-class="{'urgent': isUrgent(pedido)}">
+                     ng-class="{'urgent': isUrgent(pedido)}"
+                     ng-click="abrirModalAcoes(pedido)">
                     
                     <!-- Header do card -->
                     <div class="kds-card-header">
@@ -122,18 +123,6 @@
                         <div class="kds-time-info">
                             <span><i class="fas fa-clock"></i> {{formatarTempo(calcularTempoDecorrido(pedido))}}</span>
                             <span class="kds-time-elapsed">{{calcularTempoDecorrido(pedido)}}min</span>
-                        </div>
-                        <div class="kds-card-actions">
-                            <button class="kds-action-btn btn-green" 
-                                    ng-click="atualizarStatus(pedido, 'em_preparo')"
-                                    title="Iniciar Preparo">
-                                <i class="fas fa-play"></i>
-                            </button>
-                            <button class="kds-action-btn btn-red" 
-                                    ng-click="cancelarPedido(pedido)"
-                                    title="Cancelar">
-                                <i class="fas fa-times"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -152,7 +141,8 @@
             <div class="kds-column-content">
                 <div class="kds-order-card status-processando" 
                      ng-repeat="pedido in getPedidosPorStatus('em_preparo') track by pedido._id"
-                     ng-class="{'urgent': isUrgent(pedido)}">
+                     ng-class="{'urgent': isUrgent(pedido)}"
+                     ng-click="abrirModalAcoes(pedido)">
                     
                     <!-- Header do card -->
                     <div class="kds-card-header">
@@ -202,18 +192,6 @@
                         <div class="kds-time-info">
                             <span><i class="fas fa-clock"></i> {{formatarTempo(calcularTempoDecorrido(pedido))}}</span>
                             <span class="kds-time-elapsed">{{calcularTempoDecorrido(pedido)}}min</span>
-                        </div>
-                        <div class="kds-card-actions">
-                            <button class="kds-action-btn btn-green" 
-                                    ng-click="atualizarStatus(pedido, 'pronto')"
-                                    title="Marcar como Pronto">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="kds-action-btn btn-red" 
-                                    ng-click="cancelarPedido(pedido)"
-                                    title="Cancelar">
-                                <i class="fas fa-times"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -232,7 +210,8 @@
             <div class="kds-column-content">
                 <div class="kds-order-card status-pronto" 
                      ng-repeat="pedido in getPedidosPorStatus('pronto') track by pedido._id"
-                     ng-class="{'urgent': isUrgent(pedido)}">
+                     ng-class="{'urgent': isUrgent(pedido)}"
+                     ng-click="abrirModalAcoes(pedido)">
                     
                     <!-- Header do card -->
                     <div class="kds-card-header">
@@ -283,19 +262,6 @@
                             <span><i class="fas fa-clock"></i> {{formatarTempo(calcularTempoDecorrido(pedido))}}</span>
                             <span class="kds-time-elapsed">{{calcularTempoDecorrido(pedido)}}min</span>
                         </div>
-                        <div class="kds-card-actions">
-                            <button class="kds-action-btn btn-blue" 
-                                    ng-click="atualizarStatus(pedido, 'despachado')"
-                                    title="Despachar">
-                                <i class="fas fa-shipping-fast"></i>
-                            </button>
-                            <button class="kds-action-btn btn-green" 
-                                    ng-click="atualizarStatus(pedido, 'entregue')"
-                                    title="Marcar como Entregue"
-                                    ng-if="pedido.tipo === 'retirada'">
-                                <i class="fas fa-handshake"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -312,7 +278,8 @@
             </div>
             <div class="kds-column-content">
                 <div class="kds-order-card status-agendado" 
-                     ng-repeat="pedido in getPedidosAgendados() track by pedido._id">
+                     ng-repeat="pedido in getPedidosAgendados() track by pedido._id"
+                     ng-click="abrirModalAcoes(pedido)">
                     
                     <!-- Header do card -->
                     <div class="kds-card-header">
@@ -367,13 +334,6 @@
                         <div class="kds-time-info">
                             <span><i class="fas fa-calendar"></i> Agendado</span>
                         </div>
-                        <div class="kds-card-actions">
-                            <button class="kds-action-btn btn-green" 
-                                    ng-click="iniciarPedidoAgendado(pedido)"
-                                    title="Iniciar Agora">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -401,5 +361,119 @@
         </div>
     </div>
 
+    <!-- Modal de Ações do Pedido -->
+    <div class="modal fade" id="modalAcoesPedido" tabindex="-1" ng-show="showModalAcoes">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-cog"></i>
+                        Ações do Pedido #{{pedidoSelecionado.numero}}
+                    </h5>
+                    <button type="button" class="btn-close" ng-click="fecharModalAcoes()"></button>
+                </div>
+                <div class="modal-body">
+                    <div ng-include="'views/modals.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay para modal -->
+    <div class="modal-overlay" ng-show="showModalAcoes" ng-click="fecharModalAcoes()"></div>
+
 </div>
+
+<!-- CSS específico para modal -->
+<style>
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog {
+    max-width: 90%;
+    max-height: 90%;
+    margin: 0;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-close:before {
+    content: '×';
+}
+
+.modal-body {
+    padding: 1rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-lg {
+    max-width: 800px;
+}
+
+.kds-order-card {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.kds-order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+</style>
 

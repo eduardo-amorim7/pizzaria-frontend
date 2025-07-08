@@ -4,6 +4,11 @@ angular.module('pizzariaApp', ['ngRoute'])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
+            templateUrl: 'views/kds.html',
+            controller: 'KdsController',
+            requireAuth: true
+        })
+        .when('/dashboard', {
             templateUrl: 'views/dashboard.html',
             controller: 'DashboardController',
             requireAuth: true
@@ -21,11 +26,6 @@ angular.module('pizzariaApp', ['ngRoute'])
         .when("/pedidos/novo", {
             templateUrl: "views/novo-pedido.html",
             controller: "NovoPedidoController",
-            requireAuth: true
-        })
-        .when("/kds", {
-            templateUrl: "views/kds.html",
-            controller: "KdsController",
             requireAuth: true
         })
         .when('/produtos', {
@@ -193,8 +193,8 @@ angular.module('pizzariaApp', ['ngRoute'])
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
+            const message = attrs.confirmClick || 'Tem certeza?';
             element.bind('click', function(e) {
-                const message = attrs.confirmClick || 'Tem certeza?';
                 if (!confirm(message)) {
                     e.preventDefault();
                 }
@@ -268,4 +268,6 @@ function($scope, ApiService, ToastService) {
 
     $scope.init();
 }]);
+
+
 

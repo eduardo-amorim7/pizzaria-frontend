@@ -28,15 +28,60 @@ const server = http.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
     
     // Parse URL
-    const parsedUrl = url.parse(req.url);
+    const parsedUrl = url.parse(req.url, true);
     let pathname = parsedUrl.pathname;
     
-    // Default to index.html
+    // Add CORS headers for all requests
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    // Handle OPTIONS requests
+    if (req.method === 'OPTIONS') {
+        res.statusCode = 200;
+        res.end();
+        return;
+    }
+    
+    // Check if it's a template request (pattern: /static/forms/{filename})
+    const templateMatch = pathname.match(/^\/static\/forms\/([^\/]+)$/);
+    if (templateMatch) {
+        const templateName = templateMatch[1];
+        const templatePath = path.join(__dirname, 'pages', 'static', 'forms', `${templateName}.html`);
+        
+        // Check if template file exists
+        fs.access(templatePath, fs.constants.F_OK, (err) => {
+            if (err) {
+                // Template not found
+                res.statusCode = 404;
+                res.setHeader('Content-Type', 'text/html');
+                res.end('<h1>404 Template Not Found</h1>');
+                return;
+            }
+            
+            // Read and serve template
+            fs.readFile(templatePath, 'utf8', (err, data) => {
+                if (err) {
+                    res.statusCode = 500;
+                    res.setHeader('Content-Type', 'text/html');
+                    res.end('<h1>500 Internal Server Error</h1>');
+                    return;
+                }
+                
+                res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                res.statusCode = 200;
+                res.end(data);
+            });
+        });
+        return;
+    }
+    
+    // Default to index.html for root
     if (pathname === '/') {
         pathname = '/index.html';
     }
     
-    // Build file path
+    // Build file path for regular files
     const filePath = path.join(__dirname, pathname);
     
     // Get file extension
@@ -64,11 +109,6 @@ const server = http.createServer((req, res) => {
             // Set content type
             const contentType = mimeTypes[ext] || 'application/octet-stream';
             res.setHeader('Content-Type', contentType);
-            
-            // Add CORS headers
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-            res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
             
             // Serve file
             res.statusCode = 200;

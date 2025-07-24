@@ -43,7 +43,18 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
                 "title": "Visão Geral",
                 "icon": "pli-bar-chart-4",
                 "edit": false
+            },
+            {
+            'id': 'pedidos',
+            'path': '/pedidos',
+            'template' : '/static/forms/pedidos',
+            'controller': 'PedidosPageController',
+            'group': 'bus_control',
+            'title': 'Pedidos',
+            'icon': 'pli-cash-register',
+            'edit': false
             }
+
         ];
         routes.forEach(SpaNavigation.addRoute);
 

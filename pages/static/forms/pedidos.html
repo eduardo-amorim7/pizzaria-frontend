@@ -1,0 +1,281 @@
+<style>
+  .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+    font-family: "Inter", sans-serif;
+  }
+
+  .btn-light-b-0:active{
+    background-color: #fff !important;
+  }
+
+  .btn-light-b-0:focus{
+    background-color: #fff !important;
+  }
+
+  .bg-edit{
+    background: #ecf0f5;
+  }
+
+  .btn-light{
+    background: inherit;
+  }
+
+
+  .btn-light:hover {
+    color: #373c43;
+    background-color: #ffffff; 
+    border-color: #e4e9f2;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .loading-backdrop {
+    position: absolute !important;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 2000;
+    text-align: center;  
+    padding-top: calc(25vh - 20px);
+  }
+
+  .ht-100 {
+    height: 100%;
+  }
+
+  .btn-group-link {
+    background-color: #FFF!important;
+    border-radius: 4px;
+    color: #000!important;
+    margin: 0;
+    height: 31px;
+    width: 33px;
+    border: 2px solid rgba(0,0,0,0.2)!important;
+    background-clip: padding-box;
+    box-shadow: none!important;
+    padding: 2px;
+  }
+
+  .badge{
+    border-radius: 4px!important;
+    padding: 0.7em 0.65em!important;
+    font-weight: 400;
+    font-size: 0.83em;
+  }
+
+  .bg-light{
+    background-color: rgba(238, 238, 238, 1) !important;
+    color: rgba(183, 183, 183, 1);
+  }
+
+  .bg-success{
+    background-color: rgba(54, 165, 72, 1) !important;
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .bg-warning{
+    background-color: rgba(255, 180, 33, 0.4) !important;
+    color: rgba(165, 144, 0, 1);
+  }
+
+  .bg-active{
+    background-color: rgba(127, 204, 114, 0.26);
+    color: rgba(127, 204, 114, 1);
+  }
+
+  .status-badge{ 
+    font-size: medium;
+    left: 10px;
+    top: -4px;
+    position: relative;
+    line-height: 6.8px;
+    width: 145px;
+    height: 29px;
+    border: 1px solid;
+  }
+
+
+  .center-img{
+    justify-content: center;
+    display: flex;
+  }
+
+  .table-responsive .center-img{
+    padding-top:16px !important;
+    padding-bottom: 16px!important;
+  }
+
+  .bg-icon-map{
+
+    width: 38px;
+    height: 37px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #AF124C 0%, #9B0F6F 100%);
+  }
+
+  hr {
+    border-bottom: 1px solid #e1e1e1 !important;
+    height: auto !important;
+  }
+
+  figure img{
+    width: 60px!important;
+    height: 60px!important;
+  }
+
+  .fs-5 {
+    font-size: 1.2rem!important;
+  }
+
+  .card-header .btn {
+    font-size: .855rem;
+    border-radius: 4px;
+  }
+
+  .page-actions .btn{
+    font-size: .855rem;
+    border-radius: 4px;
+  }
+
+  .modal-content .btn{ 
+    font-size: .8925rem;
+    border-radius: 4px;
+  }
+
+  .list-group-borderless{
+    overflow-x: auto !important;
+    overflow-y: auto!important;
+  }
+
+  .accordion-button::after{
+    background-size: 20px;
+    width: 1.2rem;
+    height: 0.88rem;
+  }
+
+  .accordion-button:not(.collapsed)::after {
+    position: relative;
+    top: 5px;
+  }
+
+
+  .detail-item .list-group-item-action:focus, .detail-item .list-group-item-action:hover{
+    background-color: transparent;
+
+  }
+
+  .detail-item{
+    padding: 0px 40px 0px 40px;
+  }
+
+  .custom-col{
+    width: 94.66667%;
+  }
+
+  .cursor-p{
+    cursor:pointer;
+  }
+
+  .border-header{
+    border-bottom: 1px solid #eeeeee !important;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Display ellipsis (...) for overflowing text */
+  }
+
+  @media (max-width: 767px) {
+    .custom-table th,
+    .custom-table td {
+      display: block; /* Stack cells vertically on small screens */
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .custom-table th {
+      text-align: left;
+      background-color: #f8f9fa; /* Optional: Highlight header background on small screens */
+    }
+  }
+</style>
+<section id="content" class="content" data-ng-if="!vm.active.id">
+  <div class="content__header content__boxed overlapping">
+    <div class="content__wrap">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" style="margin-top: 18.57px;">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="/#!/home">Início</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
+        </ol>
+      </nav>
+      <!-- END : Breadcrumb -->
+      <h1 class="page-title mb-0 mt-2"></h1>
+
+      <p class="lead">
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="content__boxed">
+
+    <div class="content__wrap">
+
+      <article class="d-md-flex gap-4">
+        <div class="flex-fill">
+          <div class="row">
+            <div class="col-md-12 mb-12">
+
+              <div class="card border-2 border-light min-h-330" >
+
+                <div  class="card-header toolbar" style="border-bottom: 0px;" ng-class="{'border-header': vm.active.id}">
+
+
+                  <div class="toolbar-start" data-ng-show="!vm.active.id">
+                    
+                    <div class="mt-1 d-flex justify-content-between align-items-center" >
+                  
+
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="loading-backdrop" data-ng-if="loadingPositions">
+                  <i class="fa fa-2x fa-fw fa-pulse fa-spinner"></i>
+                </div>
+
+
+
+                <div data-ng-if="!vm.active.id">
+
+
+                    <!--   CARDS - KDS de PEDIDOS    -->
+                  KDS de PEDIDOS
+                </div>
+              </div>
+            </div>                  
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+</section>
+

@@ -38,19 +38,19 @@
   }
 
 
-  .exclamation{
+  .exclamation {
     background-repeat: no-repeat;
     background-position: right 1rem center, center right 3rem;
     padding-right: 2.3rem;
     background-size: 17px 16px, calc(.75em + .55rem) calc(.75em + .55rem);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23df5645'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23df5645' stroke='none'/%3e%3c/svg%3e");
   }
-  
-  .fs-6{
+
+  .fs-6 {
     font-size: 1.1rem !important;
   }
-  
-  .fs-7{
+
+  .fs-7 {
     margin-right: 0.4rem !important;
     font-size: 1.3rem !important;
     margin-left: -0.1rem;
@@ -60,14 +60,14 @@
     border-bottom: 1px solid #e1e1e1 !important;
     height: auto !important;
   }
-
 </style>
 
-<section id="content" class="content inter" >
+<section id="content" class="content inter">
   <div class="content__header content__boxed overlapping">
     <div class="content__wrap">
 
-      <h2 class="h2" style="margin-top: 25px"><span class="h2" style="font-weight: 400;margin-top: 25px;color: #fff">Olá,</span> #!{ spa.user.name }!#</h2>
+      <h2 class="h2" style="margin-top: 25px"><span class="h2"
+          style="font-weight: 400;margin-top: 25px;color: #fff">Olá,</span> #!{ spa.user.name }!#</h2>
       <p style="font-size:14.3px">Seja bem-vindo ao Bus Control<br></p>
 
     </div>
@@ -80,14 +80,106 @@
           <div class="row">
             <div class="col-xl-7 mb-3 mb-xl-0">
               <div class="card h-100">
-           
-          
 
-             
-              
+                <div class="card-header toolbar d-flex align-items-center border-light">
+
+                  <div class="toolbar-start">
+                    <h5 class="mb-3"><i class="pli-road-3 text-reset text-opacity-75 fs-3 me-2"></i> Insights </h5>
+                  </div>
+
+                  <div class="toolbar-end">
+
+
+
+
+                  </div>
+                </div>
+
+                <div class="card-body" style="padding: 0.4rem 0.4rem !important;">
+                  <div class="table-responsive scrollable-content" style="max-height: 688.84px;"
+                    style="font-size: 1.1em;">
+
+                    <div ng-if="!routes || routes.length < 1"
+                      style="display: flex;align-items: baseline;flex-direction: row-reverse;justify-content: center;padding: 19em;">
+                      <p style="margin-bottom: 2px" class="fw-normal nowrap text-center">Sem dados para exibir.</p>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+              </div>
             </div>
+            <div class="col-xl-5">
+
+              <div class="row">
+                <div class="col-sm-6" data-ng-if="charts">
+                  <div class="h-100 card border-2 border-light overflow-hidden mb-3">
+                    <div class="card-header toolbar" style="z-index: 2;">
+                      <h5 class="mb-3"><i class="pli-pie-chart-2 text-reset text-opacity-75 fs-3 me-2"></i> Pizzas </h5>
+                    </div>
+                    <div class="col-12">
+                      <div style="min-height: 248px;" fusioncharts type="doughnut2d" width="100%" height="248"
+                        dataSource="#!{ charts.comparative }!#">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="h-100 card border-2 border-light overflow-hidden mb-3">
+                    <div class="card-header toolbar">
+                      <div class="toolbar-start">
+                        <h5 class="mb-3"><i class="pli-bar-chart-2 text-reset text-opacity-75 fs-3 me-2"></i> Dados
+                          Gerais </h5>
+                      </div>
+                    </div>
+                    <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
+                      <div class="col-12" style="font-size: 1.1em;">
+                        <div class="d-flex justify-content-between align-items-center mb-3"
+                          style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
+                          <span class="text-truncate" uib-tooltip="Quantidade colaboradores">Quantidade
+                            colaboradores</span>
+                          <span class="d-block badge bg-success ms-auto"
+                            style="margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">#!{
+                            qtd_collaborators || 0 }!#</span>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3"
+                          style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
+                          <span uib-tooltip="Trajetos agendados para o dia" class="text-truncate">Trajetos agendados
+                            para o dia</span>
+                          <span class="d-block badge bg-warning ms-auto"
+                            style="margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">
+                            #!{ qtd_trajetos || 0 }!#</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3"
+                          style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
+                          <span class="text-truncate" uib-tooltip="Ocorrências pendentes de tratamento"> Ocorrências
+                            pendentes de tratamento</span>
+                          <span class="d-block badge bg-light ms-auto"
+                            style="background-color: #b1b0b0 !important;margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">
+                            #!{ ocorrencias_pendente || 0 }!#</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center"
+                          style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
+                          <span class="text-truncate" uib-tooltip="Linhas Ativas sem Veículo Designado"> Linhas Ativas
+                            sem Veículo Designado</span>
+                          <span class="d-block badge bg-danger ms-auto"
+                            style="margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">
+                            #!{ linhas_sem_veiculo || 0 }!#</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
-        </div>
 
       </article>
 

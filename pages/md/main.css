@@ -1,0 +1,916 @@
+.vdotheme .my-datepicker .btn-default .text-info {
+    color: #000 !important;
+    font-weight: 600;
+}
+
+.vdotheme #content-container {
+  padding-bottom: 0px;
+} 
+
+ .pl-25{
+    padding-left: 25px;
+ }
+
+.pr-25{
+  padding-right: 25px;
+}
+
+.table td:first-child, .table th:first-child {
+  padding-left: 25px;
+}
+
+.table td:last-child, .table th:last-child {
+  padding-right: 25px;
+}
+
+
+
+.vdotheme #mainnav {
+background-color: #18385e;
+user-select: none;
+}
+
+  .vdotheme #mainnav-menu>li>a {
+  x-text-transform: uppercase;
+font-weight: 400;
+color: #aed0ed;
+}
+
+  .vdotheme .navbar-top-links>li>a {
+    color: #555;
+    font-weight: 300;  
+  }
+
+.vdotheme #page-content {
+padding: 0px 0px;
+overflow: hidden;
+}
+
+  .vdotheme .with-tabs #page-content {
+  padding-top: 121px;
+}
+
+  .vdotheme #page-head {
+  border-bottom: 1px solid #ccc;  
+  user-select: none;
+position: absolute;
+top: 0;
+z-index: 2;
+width: 100%;
+}
+
+  .vdotheme #page-head.noborder {
+  border-bottom: 1px solid #f5f5f5;  
+}
+
+  .vdotheme #page-head,
+    .vdotheme .nav-tabs {
+      background-color: #f5f5f5;
+    }
+
+.vdotheme .tab-stacked-left .nav-tabs {
+  padding: 0px 0px;
+  background-color: #fff;
+}
+
+.vdotheme .tab-base.tab-stacked-left .tab-content {
+  padding-top: 20px;
+}
+
+.vdotheme .tab-base.tab-stacked-left .tab-pane {
+  padding-top: 0px;
+}
+
+
+
+
+.vdotheme #page-head, 
+  .vdotheme #page-head h1, 
+    .vdotheme #page-head h2, 
+      .vdotheme #page-head h3, 
+        .vdotheme #page-head h4, 
+          .vdotheme #page-head h5, 
+            .vdotheme #page-head h6, 
+              .vdotheme #page-head .text-main, 
+                .vdotheme #page-head .breadcrumb li, 
+                  .vdotheme #page-head .breadcrumb li a, 
+                    .vdotheme #page-head .breadcrumb .active {
+                    color: #555 !important;
+}
+
+
+  .vdotheme .page-header {
+    x-text-transform: uppercase;
+
+    min-height: 42px;
+    display: inline-block;
+  }
+
+.vdotheme #page-head .btn {
+margin: 6px 3px 0px;  
+}
+
+  .vdotheme .nav-tabs {
+    padding: 0px 6px;
+  }
+
+.vdotheme #page-head .tab-base {
+margin-bottom: 0px;
+}
+
+  .vdotheme .alert-docked {
+    margin: -30px  -30px 35px -30px;
+  }
+
+.vdotheme .alert-info {
+  border-left: 3px solid #116f99;
+}
+
+.vdotheme .alert-warning {
+  background-color: #f7bb2b;
+  border-color: transparent;
+  border-left: 3px solid #b07c03;
+  font-weight: 400;
+  color: #fff;  
+}
+
+.vdotheme .label-warning {
+  background-color: #f7bb2b;
+  font-weight: 400;
+  color: #fff;  
+}
+
+.vdotheme .text-primary {
+  color: #7a878e !important;  
+}
+
+.vdotheme .nav-tabs>li>a, 
+  .vdotheme .nav-tabs>li>a:focus, 
+    .vdotheme .nav-tabs>li>a:hover {
+      color: #7a878e !important;
+      font-weight: 400;
+      border-bottom: 3px transparent !important;   
+      text-transform: uppercase;
+
+    }
+
+.vdotheme .tab-base .nav-tabs>.active>a, 
+  .vdotheme .tab-base .nav-tabs>.active a:hover, 
+    .vdotheme .tab-base .nav-tabs>.active>a:focus {
+      color: #333 !important;
+      font-weight: 500;
+      border-bottom: 3px solid #234D96 !important;
+    }
+
+.vdotheme .tab-base .tab-content {
+  padding: 0px;
+}
+
+.vdotheme .tab-base .tab-pane {
+  padding: 35px;
+}
+
+.vdotheme .form-group.is-focused label, 
+  .vdotheme .form-group.is-focused label.control-label {
+    color: #234D96;
+  }
+
+.form-group .checkbox label, .form-group .radio label, .form-group label {
+  color: #888;
+}
+
+.vdotheme .form-group.is-focused .form-control {
+  background-image: linear-gradient(#234D96,#234D96),linear-gradient(#D2D2D2,#D2D2D2);
+                                    }
+
+                                    .vdotheme .nav-list {
+                                    background: #f0f0f0;    
+                                    border-right: 1px solid #ccc;                                    
+                                    min-height: calc(100vh - 198px);
+  padding-right: 0px;  
+}
+
+.vdotheme .nav-list .list_align {
+  margin-left: 20px;
+}
+
+.vdotheme .arrow {
+  color: #fff!important;
+  float: right;
+  transition: all 0.5s;
+}
+
+.vdotheme .nav-list .list_align .arrow_icon {
+  float: right;
+}
+
+.vdotheme .site_color {
+  background-color: #ddd;
+}
+
+.vdotheme .site_font,
+  .vdotheme .arrow_icon {
+    color: #454545;
+    font-weight: 400;
+  }
+
+.vdotheme .with-tabs-nav .check-site {
+  border: 1px solid #454545!important;
+  font-weight: 400;
+}
+
+.vdotheme .nav-list>ul>li>a {
+  cursor: pointer;
+  display: block;
+  padding: 16px 20px;
+  color: #7a878e;
+  border-bottom: 1px solid #ddd;
+  font-weight: 400;
+}
+
+.vdotheme .nav-list>ul>li.text-muted>a {
+  color: #C3C3C4;
+}
+
+.vdotheme .nav-list>ul>li>a span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 185px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.vdotheme .nav-list>ul>li.active>a {
+  background-color: #fff;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  font-weight: 500;
+}
+
+.vdotheme .nav-list>ul>li>a:hover,
+  .vdotheme .nav-list>ul>li>a:active {
+    text-decoration: none;
+  }
+
+.vdotheme .nav-list .nav-list-search .input-group {
+  border-bottom: 1px solid #ddd;
+}
+
+.vdotheme .nav-list .nav-list-search input.form-control,
+  .vdotheme .nav-list .nav-list-search input.form-control + span {
+    transition: background-color 0.2s;
+  }
+
+.vdotheme .nav-list .nav-list-search input.form-control {
+  height: 48px;
+  padding: 0px 16px;
+  background: none;
+}
+
+
+
+.vdotheme .btn-default:hover,
+  .vdotheme .btn-default:focus {
+    border-radius:0!important;
+  }
+
+.vdotheme .nav-list .nav-list-search input.form-control:focus,
+  .vdotheme .nav-list .nav-list-search input.form-control:focus + span {
+    background-color: #fff !important;
+  }
+
+.my-datepicker .uib-datepicker-popup{
+  z-index: 1001;
+  transform: inherit!important;
+  opacity: 1!important;
+  pointer-events: auto!important;
+  touch-action: auto!important;
+  visibility: visible!important;
+}
+.my-datepicker .uib-datepicker-popup .btn-default:hover{
+  background-color: #ededed !important;
+}
+.container-fluid .col-md-12 .btn-default{
+  border-radius: .4375rem !important;
+  background-color: #eae9e9 !important;
+}
+
+.vdotheme .my-datepicker .btn-info {
+    background-color: #0E478A!important;
+    border-color: #0E478A!important;
+    border-radius: 0px!important;
+    color: #ffffff!important;
+}
+
+.nav-list-search .form-control:focus {
+  box-shadow: unset !important;
+  border-radius: 0px!important;
+}
+
+.pagination{
+  padding-left: 4px!important;
+}
+
+.vdotheme .bg-gray {
+  background-color: #f5f5f5;
+}
+
+.vdotheme .text-250 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 250px;
+  vertical-align: top;  
+}
+
+.vdotheme .form-group.label-floating label.control-label,
+  .vdotheme .form-group.label-placeholder label.control-label {
+    top: -17px;
+    padding-top: 8px;
+  }
+
+.vdotheme .form-group.label-floating:not(.is-empty) label.control-label,
+  .vdotheme .form-group.label-floating.is-focused label.control-label {
+    top: -31px;
+  }
+
+.vdotheme .form-group .form-control {
+  font-weight: 300;
+  color: #000;  
+}
+
+.vdotheme .form-group .control-label {
+  font-weight: 500;
+  color: #888
+}
+
+
+.vdotheme .vdo-footer {
+  border-top: 1px solid #ddd;
+  padding: 20px 0px;
+  background-color: #f0f0f0;
+  margin-bottom: 0px;  
+}
+
+.vdotheme .vdo-footer p {
+  margin-bottom: 0px;
+}
+
+.vdotheme .panel {
+  margin-bottom: 20px;
+  border: 0;
+  -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12)!important;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12)!important;
+}
+
+.vdotheme .panel:not(.panel-colorful) {
+  background-color: #fff;  
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.vdotheme .panel-default {
+  border-color: #ddd;
+}
+
+.vdotheme .panel-body:after, .panel-body:before {
+  display: table;
+  content: " ";
+}
+
+.vdotheme .panel-body:after {
+  clear: both;
+}
+
+.vdotheme .panel.selected {
+  box-shadow: 0px 0px 0px 2px #234d96 !important;
+}
+
+.vdotheme .my-datepicker .btn {
+  padding: 2px 2px;
+  font-size: 12px;
+}
+
+/*.nav:not(.nav-pills) .nav-link.active {
+  color: #373c43!important;
+}*/
+
+.nav-callout .nav-link.active {
+  box-shadow: inset 0 -0.1875rem #373c43!important;
+}
+
+.nav {
+  margin-bottom: -14px !important;
+
+}
+
+.vdotheme .my-datepicker td {
+  padding: 0 8px;
+}
+
+
+.vdotheme .my-datepicker .btn:not(.btn-raised), .btn:not(.btn-raised).btn-default {
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+.vdotheme .form-control-feedback {
+  line-height: 36px;
+  position: relative;
+  right: initial;
+  color: #888;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 0px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.vdotheme .date_position {
+  padding-left: 30px;
+}
+
+.vdotheme .date_label {
+  left: 30px;
+}
+
+.vdotheme .ng-view,
+  .vdotheme #page-container, 
+    .vdotheme #page-content {
+    position: relative;
+height: 100vh;
+overflow: hidden;
+ min-height: calc(100vh - 198px);
+  height: 100%;
+}
+
+
+
+  .vdotheme #page-content.with-tabs .tab-base {
+  position: relative;
+height: 100%;
+margin-bottom: 0px;
+} 
+
+  .vdotheme #page-content.with-tabs .tab-content {
+  height: calc(100vh - 210px);
+margin-top: -15px;
+overflow: hidden;
+position: relative;
+}
+
+  .vdotheme #page-content.with-tabs .tab-pane {
+  height: 100%;
+  overflow: auto;
+}
+
+  .vdotheme #page-content.with-nav-list .nav-list,
+    .vdotheme #page-content.with-tabbed-nav-list .nav-list {
+    position: absolute;     
+left: 0px;
+height: 100%;
+width: 100%;
+overflow: auto;
+padding-bottom: 20%;
+overflow-x: hidden;
+}
+
+  .vdotheme #page-content.with-tabs .nav-list {
+
+}
+
+  .vdotheme .extract-table td,
+    .vdotheme .extract-table th {
+      margin: 0;
+      padding: 0;
+    }
+
+.vdotheme .extract-table svg {
+  float:left;
+}
+
+.vdotheme .extract-table td { max-height:40px; }
+
+.vdotheme .report-results th {
+  background: #0E478A;
+}
+
+.vdotheme .report-results table.topfive-tb  {
+  width: 100%;
+}
+
+.vdotheme .report-results table.topfive-tb  tr {
+  border-bottom: 1px solid;
+}
+
+.vdotheme .report-results table.topfive-tb th {
+  font-size: 14px;
+  font-weight: bold;
+  color: grey;
+}
+
+.vdotheme .report-results table.topfive-tb td {
+  font-size: 11px;
+}
+
+.vdotheme .report-results table.topfive-tb td, table.topfive-tb  th {
+  padding: 6px;
+}
+
+.vdotheme .report-results .chart-header > span {
+  font-size: 16px; 
+}
+
+
+.vdotheme .table-vdo th { 
+  color: #fff !important;
+  vertical-align: middle; 
+}
+
+.vdotheme .table-vdo .ignition-on {
+  background-color: #8DDF5F; 
+  color: #242423;
+  text-align: center;
+}
+.vdotheme .table-vdo .ignition-off {
+  background-color: #ff6161;
+  color: #242423;
+  text-align: center;
+}
+
+
+.vdotheme .table-vdo .table_title_td {
+  background-color: #234d96;
+  color: #fff!important;
+  font-size: 1.05em;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+
+
+.vdotheme .no_data_msg {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.vdotheme .total_table {
+  background-color: #ddd;
+  border-color: #ddd !important;
+}
+
+.vdotheme .rowspan_td, .vdotheme .rowspan_emptytd {
+  background-color: #ddd;
+  border-color: #ddd !important;
+  text-align: center;
+}
+
+
+@media (min-width: 893px) {
+  .vdotheme .ng-view,
+    .vdotheme #page-container, 
+      .vdotheme #page-content {
+      position: relative;
+  min-height: calc(100vh - 198px);
+  height: 100%;
+  overflow: hidden;
+}
+}
+
+  @media  (max-width: 692px) {
+    .vdotheme #page-content.with-nav-list .nav-list,
+      .vdotheme #page-content.with-tabbed-nav-list .nav-list{
+      width: 100%!important;
+  }
+}
+
+  @media (min-width: 992px) {
+
+    .vdotheme #page-content.with-nav-list {
+    padding-left: 301px;
+  }
+
+.vdotheme #page-content.with-tabbed-nav-list .tab-content{
+padding-left: 301px;
+}
+
+
+  .vdotheme #page-content.with-nav-list .nav-list,
+    .vdotheme #page-content.with-tabbed-nav-list .nav-list{
+    width: 300px;
+}
+
+
+
+  .vdotheme #content-container {
+  height: 100vh;  
+}
+
+
+}
+
+  .vdotheme #page-container.bg-gray {
+  background-color: #ecf0f5;
+}
+
+  .vdotheme #page-container.with-head {}
+
+    .vdotheme #page-container #page-head {
+    position: absolute;
+top: 0px;
+left: 0px;
+width: 100%;
+overflow: visible;
+}
+
+  .vdotheme #page-content>div {
+  height: 100%;    
+  overflow-y: auto;
+overflow-x: hidden;
+position: relative;
+}
+
+  .vdotheme .reports-page .panel-body {
+    position: relative;
+    overflow:hidden;
+  }
+
+.vdotheme .reports-page .panel-body .overlay {
+  background-color: #FFF;
+  filter: blur(8px);
+  left: 0;
+  opacity: .6;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+.vdotheme .reports-page .panel-body .overlay-btn a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.vdotheme .report-form {
+  background-color: #fbfbfb;
+}
+
+.vdotheme .text-highlight {
+  font-size: 30px;
+  text-align: center;
+  color: #4d627b;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+.vdotheme .pricing-list-page .card {
+  margin-bottom: 45px;
+}
+
+.vdotheme .pricing-list {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.vdotheme .pricing-list .title1 {
+  background-color: #18385e;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: #d8dce0;
+  font-size: 20px;
+  margin: 0;
+  padding: 30px;
+}
+
+.vdotheme .pricing-list .text-muted {
+  padding: 30px 30px 5px;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 0px;
+  position: relative;
+  top: -8px;
+}
+
+.vdotheme .pricing-list .amount {
+  font-size: 30px;
+  font-weight: 500;
+  padding-top: 35px;
+}
+
+.vdotheme .pricing-list .pricing-content-2 {
+  padding: 15px 35px 10px;
+  min-height: 235px;
+}
+
+.vdotheme .pricing-list .pricing-content-2 li {
+  line-height: 40px;
+}
+
+.vdotheme .pricing-list .pricing-content-2 li:not(:last-child) {
+  border-bottom: 1px solid #ccc;  
+}
+
+.vdotheme .pricing-list .btn-plan {
+  background-color: #18385e;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin: 10px 0 0 !important;
+  width: 100%;
+}
+
+.vdotheme .pricing-list.active-plan .title1  {
+  background-color: #d1d3d5;
+  color: #18385e;
+}
+
+.vdotheme .pricing-list .btn:not(.btn-raised):not(.btn-link):hover {
+  background-color: #18385e!important;
+}
+
+.vdotheme .pricing-list.active-plan .btn:not(.btn-raised):not(.btn-link) {
+  background-color: #d1d3d5!important;
+  color: #18385e!important;
+}  
+
+.vdotheme .pricing-list.active-plan .btn:not(.btn-raised):not(.btn-link):hover {
+  background-color: #d1d3d5!important;
+  color: #18385e!important;
+}
+
+.vdotheme .with-tabs-nav .tab-base .tab-content {
+  padding: 0;
+}
+
+.vdotheme .with-tabs-nav .tab-base .tab-pane {
+  padding: 0;
+}
+
+.vdotheme .nav-list .checkbox-list {
+  margin-top: 13px;
+  position: absolute;
+  margin-left: 13px;
+}
+
+.checkbox-list .form-check-input {
+  width: 1.50em!important;
+  height: 1.50em!important;
+}
+.vdotheme .nav-list .list-icon-withcheckbox {
+  margin-left: 25px!important;
+}
+
+
+.vdotheme .nav-list .check-inlist {
+  border: 1px solid #7a878e!important;
+}
+
+.vdotheme .nav-list .list-divider {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7a878e;
+  border-bottom: 1px solid #ddd;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+}
+
+.vdotheme .nav-list .painel-padding {
+  padding: 30px;
+}
+
+.vdotheme .nav-list .print-panel-padding {
+  padding: 30px;
+}
+
+@media print {
+  .vdotheme #page-content {
+  padding-top: 0;
+  height: auto !important;
+  padding-top: 0px !important;
+  overflow: auto !important;
+}
+
+.boxed, html, body, #content-container, #page-container {
+height: auto !important;
+overflow: auto !important;  
+}
+
+
+
+}
+
+  .vdotheme .with-tabs .nav-tabs,
+    .vdotheme .with-tabs-nav .nav-tabs {
+      border-bottom: 1px solid #DDD; 
+    }
+
+.vdotheme .tab-pane #page-content {
+padding-top: 0;
+}
+
+  .vdotheme .permission-table {
+    margin-top: 35px;  
+  }
+
+.vdotheme .permission-table ul {
+  list-style: none;
+}
+
+.vdotheme .permission-table .nav-view { padding-left: 2px; }
+
+.vdotheme .permission-table .txt-cols { 
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+
+.vdotheme .permission-table .txt-ch { text-align: center; }
+
+.vdotheme .permission-table .txt-cols > p,
+  .vdotheme .permission-table .txt-ch  { 
+    background-color: #18385e;
+    color: #fff;
+    height: 35px;
+    line-height: 34px;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+  }
+
+.vdotheme .permission-table .txt-cols > p {
+  padding-left: 15px;
+}
+
+.vdotheme .children {
+  color: #7a878e!important;
+}
+
+.vdotheme .children .txt-cols label {
+  color:#888!important;
+  padding-left: 25px;
+  line-height: 6px;
+}
+
+.vdotheme .children .txt-cols,
+  .vdotheme .children .txt-cb {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+.vdotheme .children .txt-cb {
+  padding: 3.9px; 
+}
+
+.vdotheme .permission-table .checkbox {
+  padding-top: 0;
+  text-align: center;
+}
+
+.vdotheme .settings-parameters h6 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  top: 9px;
+  font-weight: 600;
+}
+
+.vdotheme span.trunc-100 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  display: inline-block;
+}
+
+.vdotheme span.trunc-200 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  display: inline-block;
+}
+
+.vdotheme span.trunc-300 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  display: inline-block;
+}
+
+
+.vdotheme .report-results-table .table th,
+  .vdotheme .report-results-table .table span {
+    white-space: nowrap;
+  }
+
+.vdotheme .tab-base .tab-pane.no-pad {
+  padding: 0px !important;
+}
+

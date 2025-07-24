@@ -1,119 +1,889 @@
 <!DOCTYPE html>
-<html lang="pt-BR" ng-app="pizzariaApp">
+<html lang="pt" class="vdotheme vdowhitelabel" data-ng-app="vdo.spa"
+  data-ng-model-options="{ updateOn: 'keyup change click blur', debounce: { keyup: 500, click: 0, change: 0, blur: 0 }, allowInvalid: true }">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão - Pizzaria</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/kds-style.css" rel="stylesheet">
-    <link href="css/novo-pedido-style.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Front-end</title>
+  <link rel="shortcut icon" type="image/x-icon"
+    href="https://static.inpaas.com/assets/inpaas/favicon/favicon-96x96.png">
+
+  <!-- fonts -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+  <link
+    href="//fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Ubuntu:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link href="//fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <link href="//static.vdo-web.com/assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link href="//static.vdo-web.com/fonts/line-icons/premium-line-icons.min.css" rel="stylesheet">
+  <link href="//static.vdo-web.com/fonts/solid-icons/premium-solid-icons.min.css" rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet"
+    href="//static.vdo-web.com/assets/buscontrol-theme-css-2.0.0/buscontrol-theme-bootstrap.min.css">
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/buscontrol-theme-css-2.0.0/buscontrol-theme.min.css">
+
+  <link rel="stylesheet" href="pages/md/main.css">
+
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/nifty-3.0.1/css/spinkit.css">
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/nifty-3.0.1/css/tabulator.css">
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/nifty-3.0.1/css/zangdar.min.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/leaflet-1.7.1/leaflet.css" />
+  <link rel="stylesheet"
+    href="//static.vdo-web.com/assets/leaflet-gesture-handling-1.2.1/leaflet-gesture-handling.min.css" />
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/leaflet-markercluster-1.4.1/leaflet-markercluster.css" />
+  <link rel="stylesheet"
+    href="//static.vdo-web.com/assets/leaflet-markercluster-1.4.1/leaflet-markercluster-default.css" />
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/leaflet-fullscreen-1.0.0/leaflet-fullscreen.css" />
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/leaflet-measure-1.0.0/leaflet-measure.css" />
+  <link rel="stylesheet"
+    href="//static.vdo-web.com/assets/leaflet-control-geocoder-1.13.0/leaflet-control-geocoder.css" />
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/leaflet-draw-1.0.4/leaflet.draw.css" />
+
+
+
+
+  <style>
+    .ng-cloak {
+      display: none;
+    }
+
+    .bg-edit {
+      background: #ecf0f5;
+    }
+
+    .fade:not(.show) {
+      opacity: 1;
+    }
+  </style>
+
 </head>
-<body>
-    <!-- Navbar - Oculta na tela principal -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" ng-controller="NavController" ng-hide="isMainDashboard()">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#/">
-                <i class="fas fa-pizza-slice me-2"></i>
-                Pizzaria Management
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item" ng-if="isAuthenticated">
-                        <a class="nav-link" href="#/">
-                            <i class="fas fa-home me-1"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item" ng-if="isAuthenticated">
-                        <a class="nav-link" href="#/novo-pedido">
-                            <i class="fas fa-plus-circle me-1"></i>
-                            Novo Pedido
-                        </a>
-                    </li>
-                </ul>
+
+<style>
+  @media (min-width: 0px) {
+
+    .mainnav__bottom-content,
+    .mainnav__top-content {
+      padding-inline: Max(0.75rem, 0.25rem);
+    }
+
+  }
+
+
+  .loadwait .panel-body img {
+    height: 34px !important;
+  }
+</style>
+
+<body data-ng-controller="HomeController as $home"
+  data-ng-class="{ 'ready': spa.ready && spa.loaded, 'loaded': spa.loaded, 'locked': spa.locked || spa.timeout }"
+  data-ng-init="spa.template_version = '1.0'">
+
+  <div class="loadwait">
+    <div class="panel">
+      <div class="panel-body" style="background: white;">
+        <div class="load6">
+          <div class="loader">
+            <div class="py-4 d-flex justify-content-center">
+              <div class="sk-chase" style="--sk-color: #262a2f;">
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>Aguarde alguns segundos, os seus dados estão sendo carregados ...</p>
+
+        <img style="margin-bottom: 17px;" src="//static.vdo-web.com/images/vdo/logo_bus_blue_152x62.png"
+          class="wait-icon">
+      </div>
+    </div>
+  </div>
+
+  <div class="ng-cloak sessionlock" data-ng-if="spa.timeout">
+    <div class="panel">
+      <div class="panel-body" style="background: white;">
+        <div class="load6">
+          <div class="loader"></div>
+        </div>
+
+        <p style="margin-top: 15px;">spa.timeout</p>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="ng-cloak sessionlock" data-ng-if="spa.locked">
+    <div class="panel">
+      <div class="panel-body" style="background: white;">
+        <i class="fa fa-fw fa-2x fa-lock"></i>
+        <p>label.sessionlock</p>
+
+        <button class="btn btn-primary" type="button" onclick="location.reload();">Fazer Login</button>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/ng-template" id="bc.templates.accounterror.html">
+      <div data-ng-if="account.error" class="row">
+        <div class="col-xs-12">
+          <div class="alert alert-warning">
+            <i class="fa fa-fw fa-exclamation-triangle"></i>
+            <b>Erro</b>
+
+            <p class="pad-top">
+              Não foi possível obter os dados de conta, se o seu usuário não estiver vinculado a uma conta ativa, você deve selecionar uma conta no topo dessa página.
+            </p>
+          </div>
+        </div>
+      </div>      
+    </script>
+
+
+
+
+  <script type="text/ng-template" id="bc.templates.reports.content.html">
+      <div class="wrapper">
+          <div data-ng-include="'bc.templates.accounterror.html'" />
+          <section id="content" class="content" data-ng-if="!vm.active.id">
+              <div class="content__header content__boxed overlapping">
+                  <div class="content__wrap">
+                      <!-- Breadcrumb -->
+                      <nav aria-label="breadcrumb" style="margin-top: 18.57px;">
+                          <ol class="breadcrumb mb-0">
+                              <li class="breadcrumb-item"><a href="/#!/home">Início</a></li>
+                              <li class="breadcrumb-item active"><a href="/#!/reports">Relatórios</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">#!{ $page.title }!#</li>
+                          </ol>
+                      </nav>
+                      <!-- END : Breadcrumb -->
+                      <h1 class="page-title mb-0 mt-2"></h1>
+                      <p class="lead">
+                      </p>
+                  </div>
+              </div>
+
+              <div class="content__boxed">
+
+                  <div class="content__wrap">
+
+                      <article class="d-md-flex gap-4">
+                          <div class="flex-fill" style="width: -webkit-fill-available;">
+                              <div class="row">
+                                  <div class="col-md-12 mb-12">
+
+                                      <div class="card border-2 border-light min-h-330">
+
+                                          <div class="card-header toolbar" style="min-height: 45px;border-bottom: 1px solid rgb(25 25 25 / 6%);padding: 0rem 0rem 0rem 1.2rem;">
+                                              <div class="toolbar-start">
+                                                  <div class="d-flex justify-content-between align-items-center">
+                                                      <h1 style="font-size: 18px;font-family: inherit;" class="m-0">#!{ $page.title }!# </h1>
+                                                  </div>
+
+                                              </div>
+
+                                          </div>
+
+                                          <div>
+                                              <div data-report-tabs          
+                                                  data-vehicle-report="$page.vehicle_report"
+                                                  data-driver-report="$page.driver_report"
+                                                  data-vehicle-list="vehicles"
+                                                  data-driver-list="drivers"/>
+                                              </div>
+
+
+                                          </div>
+                                      </div>
+                                  </div>                  
+                              </div>
+                          </div>
+                      </article>
+                  </div>
+              </div>
+
+          </section>
+      </div>
+  </script>
+
+  <script type="text/ng-template" id="bc.templates.reports.content.trips.html">
+
+      <div class="wrapper">
+          <div data-ng-include="'bc.templates.accounterror.html'" />
+          <section id="content" class="content" data-ng-if="!vm.active.id">
+              <div class="content__header content__boxed overlapping">
+                  <div class="content__wrap">
+                      <!-- Breadcrumb -->
+                      <nav aria-label="breadcrumb" style="margin-top: 18.57px;">
+                          <ol class="breadcrumb mb-0">
+                              <li class="breadcrumb-item"><a href="/#!/home">Início</a></li>
+                              <li class="breadcrumb-item active"><a href="/#!/reports">Relatórios</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">#!{ $page.title }!#</li>
+                          </ol>
+                      </nav>
+                      <!-- END : Breadcrumb -->
+                      <h1 class="page-title mb-0 mt-2"></h1>
+                      <p class="lead">
+                      </p>
+                  </div>
+              </div>
+
+              <div class="content__boxed">
+
+                  <div class="content__wrap">
+
+                      <article class="d-md-flex gap-4">
+                          <div class="flex-fill" style="width: -webkit-fill-available;">
+                              <div class="row">
+                                  <div class="col-md-12 mb-12">
+
+                                      <div class="card border-2 border-light min-h-330">
+
+                                          <div class="card-header toolbar" style="min-height: 45px;border-bottom: 1px solid rgb(25 25 25 / 6%);padding: 0rem 0rem 0rem 1.2rem;">
+                                              <div class="toolbar-start">
+                                                  <div class="d-flex justify-content-between align-items-center">
+                                                      <h1 style="font-size: 18px;font-family: inherit;" class="m-0">#!{ $page.title }!# </h1>
+                                                  </div>
+
+                                              </div>
+
+                                          </div>
+
+                                          <div>
+                                              <div data-report-tabs          
+                                                  data-vehicle-report="$page.vehicle_report"
+                                                  data-driver-report="$page.driver_report"
+                                                  data-vehicle-list="vehicles"
+                                                  data-driver-list="drivers"/>
+                                              </div>
+
+
+                                          </div>
+                                      </div>
+                                  </div>                  
+                              </div>
+                          </div>
+                      </article>
+                  </div>
+              </div>
+
+          </section>
+      </div>
+  </script>
+
+
+  <script type="text/ng-template" id="bc.templates.reports.navlist.html">
+
+      <div class="scrollable-content nav-list no-print" >
+        <ul class="list-group">
+
+          <li class="nav-list-search">
+            <div class="input-group">
+              <input type="text" class="form-control" style="border: 0px;" ng-model="search.text" placeholder="Buscar" aria-describedby="basic-addon2" ng-focus="focusSearch = true" ng-blur="focusSearch = false">
+              <span ng-class="{ 'focused': focusSearch }" class="input-group-addon" style="transition: background-color 0.2s;border: 0px solid #282828;background: 0 0;font-size: 13px;color: #7a878e;min-width: 43px;font-weight: 400;line-height: 1;text-align: center;padding: 16px 12px;" id="basic-addon2">
+              <i class="fa fa-fw fa-search"></i>
+      			</span>
+          </div>
+          </li>
+
+          <li class="site_color" ng-repeat-start="group in navlistItems" data-ng-if="group.items.length && !search.text">
+            <div class="checkbox checkbox-list" data-ng-click="$navlist.toggle(group);" data-ng-if="!single_vehicle">
+              <span>
+                <input type="checkbox" class="form-check-input" data-ng-checked="group.selected">
+              
+          	  </span>
+            </div>
+
+            <a class="list_align" data-ng-click="group.open = !group.open">
+              <span>#!{ group.text }!#</span>
+              <i class="fa fa-angle-up fa-lg arrow_icon" ng-if="group.open"></i>
+              <i class="fa fa-angle-down fa-lg arrow_icon" ng-if="!group.open"></i>
+          </a>
+          </li>
+
+          <li ng-repeat-end ng-repeat="item in group.items | filter:search.text" data-ng-if="group.open || search.text">
+          
+            <div class="checkbox checkbox-list" 
+            	data-ng-class="group.selected ? 'checkbox-disabled' : ''" 
+                data-ng-disabled="group.selected" 
+                data-ng-click="$navlist.toggle(item, group.selected || !item.selected);">
                 
-                <ul class="navbar-nav" ng-if="isAuthenticated">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user me-1"></i>
-                            {{currentUser.nome}}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" ng-click="logout()">
-                                <i class="fas fa-sign-out-alt me-1"></i>
-                                Sair
-                            </a></li>
-                        </ul>
+              <span style="cursor:pointer;">
+                <input type="checkbox" class="form-check-input" data-ng-checked="item.selected" data-ng-disabled="group.selected" >
+                
+             
+      		  </span>
+          	</div>
+
+            <a class="list_align" 
+            	data-ng-disabled="group.selected" 
+                data-ng-click="$navlist.toggle(item, group.selected || !item.selected);">
+              <span>#!{ item.text }!#</span>
+          	</a>
+          </li>
+
+          </ul>
+          
+        </div> 
+
+	</script>
+
+
+
+
+
+  <script type="text/ng-template" id="bc.templates.reports.tabs.html">
+
+        <div class="card-header toolbar" style="padding: 0rem 0rem;">
+            <div class="toolbar-start" >
+                <ul class="nav nav-callout" style="padding: 0px 6px;margin-bottom: 14px !important;" role="tablist">
+                
+                    <li class="nav-item" role="presentation" data-ng-if="!!vehicleReport">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vehicleTab" type="button"
+                            role="tab" aria-controls="vehicle" aria-selected="true"
+                            data-ng-class="activeReport == 'vehicle' ? 'active' : ''"
+                            data-ng-click="$reporttabs.activate('vehicle')">Linhas</button>
+                    </li>
+                    
+                       <li class="nav-item" role="presentation" data-ng-if="!!driverReport">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#driverTab" type="button"
+                            role="tab" aria-controls="vehicle" aria-selected="true"
+                            data-ng-class="activeReport == 'driver' ? 'active' : ''"
+                           data-ng-click="$reporttabs.activate('driver')">Tipos de Atendimento</button>
                     </li>
                 </ul>
             </div>
         </div>
+         <div class="tab-content" data-ng-if="navlistItems && activeReportUrl">
+          <div class="tab-pane active scrollable-content" >
+            <div report-navlist data-navlist-items="navlistItems" />
+
+            <div class="tabbed-content" data-ng-include="activeReportUrl" />
+          </div>      
+        </div>
+		</script>
+
+
+
+
+  <script type="text/ng-template" id="bc.templates.reports.form.html">
+      <div data-ng-transclude />
+
+      <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-md pull-right" style="margin-bottom: 14px;font-size: 13px;"
+                    data-ng-class="$page.busy ? 'btn-default' : 'btn-primary'"
+                    ng-click="$page.generate(activeReport+'s')"
+                    ng-disabled="$page.fields.errors || $page.busy">
+              <i class="fa fa-fw fa-pulse fa-spinner" data-ng-if="$page.busy"></i>
+              Gerar Relátorio
+            </button>
+          </div>
+
+      </div>
+  	</script>
+
+  <script type="text/ng-template" id="bc.templates.reports.errors.html">
+		<div class="row">
+        <div class="col-sm-12" data-ng-repeat="error in errorList track by $index">    
+          <div class="alert alert-warning">
+            <i class="fa fa-fw fa-exclamation-triangle"></i> 
+            <b>#!{ 'label.report.errors.'+error | translate }!#</b>
+
+            <p class="pad-top">
+              <span ng-bind="vm.error"></span>
+            </p>
+          </div>      
+        </div>
+        
+		<div class="col-sm-12" data-ng-if="resultData.error">    
+        
+          <div class="alert alert-warning">
+            <i class="fa fa-fw fa-exclamation-triangle"></i> 
+            <b>#!{ resultData.error.message }!#</b>
+
+            <p class="pad-top">
+              <span ng-bind="vm.error"></span>
+            </p>
+          </div>      
+        </div>        
+      </div>
+	</script>
+
+
+  <script type="text/ng-template" id="bc.templates.reports.results.html">
+      <div class="row">
+        <div class="col-md-12 print-panel-padding print" id="printTable" data-ng-if="results && !results.error">
+          <div class="col-lg-12"> 
+
+            <div class="row head">
+              <div class="col-sm-12 text-left">
+                <h4 style="margin-bottom: 0rem;margin-top: 1.2rem;font-size: 1rem;font-family: 'Poppins';font-weight: 300;">#!{ $page.title }!#</h4>
+              </div>
+            </div>
+
+            <hr/>    
+
+            <div data-ng-transclude></div>
+
+            <div class="row noprint" style="margin-top: 15px; margin-bottom: 35px;">          
+              <div class="col-xs-12 text-center">
+           
+                <a class="btn btn btn-primary" href="#!{ results.xlsx }!#" target="_blank">EXPORTAR XLSX</a>
+              </div>
+      		</div>
+
+
+
+          </div>
+        </div>
+      </div>
+  	</script>
+
+  <script type="text/ng-template" id="bc.templates.reports.results.map.html">
+      <div class="row">
+        <div class="col-md-12 print-panel-padding print" id="printTable" data-ng-if="results && !results.error">
+          <div class="col-lg-12"> 
+
+            <div class="row head">
+              <div class="col-sm-12 text-left">
+                <h4 style="margin-bottom: 0rem;margin-top: 1.2rem;font-size: 1rem;font-family: 'Poppins';font-weight: 300;">Informações do percurso</h4>
+              </div>
+            </div>
+
+            <hr/>    
+
+            <div data-ng-transclude></div>
+
+            <div class="row noprint" style="margin-top: 15px; margin-bottom: 35px;">          
+              <div class="col-xs-12 text-center">
+           
+                <a class="btn btn btn-primary" href="#!{ results.xlsx }!#" target="_blank">EXPORTAR XLSX</a>
+              </div>
+      		</div>
+
+
+
+          </div>
+        </div>
+      </div>
+  	</script>
+
+  <script type="text/ng-template" id="bc.templates.reports.results.header.html">
+    	<div class="row" data-ng-transclude></div>
+	</script>
+
+  <script type="text/ng-template" id="bc.templates.reports.results.table.html">
+
+        <div ng-if="$pagination.pages == 0" class="no_data_msg">
+          <span>report.errormessage</span>
+        </div>
+
+        <div ng-if="$pagination.pages != 0" class="col-md-12 table-responsive" style="padding-bottom: 3px;">  
+		  <div class="scrollable-content" data-ng-transclude style="overflow: auto; max-width: 100%; margin-bottom: 5px;"></div>
+
+          <div class="noprint">
+           
+<p data-ng-if="$pagination.pages > 1"> 
+  <input type="range" class="slider-color form-range" min="1" 
+         max="#!{ $pagination.pages }!#" 
+         data-ng-model="$pagination.pagectrls.current"
+         data-ng-model-options="{ updateOn: 'default' }" 
+         data-ng-change="$pagination.setPage($pagination.pagectrls.current)" />
+
+</p>
+
+<div class="fixed-table-pagination" style="">
+  <div class="pull-left pagination">
+    <span class="page-list">
+   <span class="btn-group dropup">
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="page-size">#!{ $pagination.pageSize }!#</span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="text-align: center" role="menu">
+          <li role="menuitem" data-ng-repeat="size in [5, 10, 50, 100]"><a class="dropdown-item" style="cursor: pointer;" href="javascript:void(0);" data-ng-click="$pagination.setPageSize(size)">#!{ size }!#</a></li>
+        </ul>
+      </span> 
+      Range
+    </span>
+  </div>
+  <div class="pull-right">
+    <ul class="pagination" data-ng-if="$pagination.pages > 1">
+      <li class="page-item page-pre"><a class="page-link" href="javascript:void(0);" 
+                                        data-ng-click="$pagination.setPage(1)">&lt;&lt;</a></li>
+      <li class="page-item page-pre"><a class="page-link" href="javascript:void(0);"
+                                        data-ng-click="$pagination.setPage($pagination.pagectrls.current-1)">&lt;</a></li>
+      <li class="page-item active"><a class="page-link" href="javascript:void(0);">
+        Página #!{ $pagination.pagectrls.current }!# de #!{ $pagination.pages }!#
+        </a></li>
+      <li class="page-item page-next"><a class="page-link" href="javascript:void(0);"
+                                         data-ng-click="$pagination.setPage($pagination.pagectrls.current+1)">&gt;</a></li>
+      <li class="page-item page-next"><a class="page-link" href="javascript:void(0);"
+                                         data-ng-click="$pagination.setPage($pagination.pages)">&gt;&gt;</a></li>
+    </ul>
+  </div>
+</div>
+
+
+          </div>
+
+        </div>
+
+    </script>
+
+
+
+
+  <div id="root" class="root hd--expanded mn--max">
+    
+    <section id="content" class="content" ng-class="{'bg-edit': spa.edit_page}">
+      <div class="ng-view"></div>
+    </section>
+
+    <header class="header">
+      <style>
+        .mini-logo {
+          filter: invert(96%);
+          margin-left: 1em;
+          width: 64%;
+        }
+
+        .custom-logo {
+          filter: invert(96%) !important;
+        }
+
+        @media only screen and (max-width: 991px) {
+          .mini-logo {
+            margin-left: 0em;
+            position: relative;
+            top: -2px;
+            width: 100%;
+          }
+
+          .mn--min .brand-wrap {
+            max-width: 25px;
+          }
+        }
+
+        .mn--min .brand-title {
+          display: none !important;
+        }
+
+        .mn--max .mini-logo {
+          display: none !important;
+        }
+
+
+
+        .header__content-start .btn {
+          border-radius: 4px;
+          font-size: 0.82rem !important;
+
+        }
+
+        .header__content-end .btn {
+          border-radius: 4px;
+          font-size: 0.82rem !important;
+
+        }
+      </style>
+
+      <div class="header__inner">
+
+        <!-- Brand -->
+        <div class="header__brand">
+          <div class="brand-wrap">
+
+            <!-- Brand logo -->
+            <img src="//static.inpaas.com/images/vdo/logo_bus_black_small-389x360.png" class="mini-logo">
+            <!--  -->
+            <!-- Brand title -->
+            <div class="brand-title">
+              <img src="//static.inpaas.com/images/vdo/logo_bus_black_152x62.png" alt="Nifty Logo"
+                class="Nifty logo custom-logo">
+            </div>
+
+          </div>
+        </div>
+        <!-- End - Brand -->
+
+        <div class="header__content">
+
+          <!-- Content Header - Left Side: -->
+          <div class="header__content-start">
+
+            <!-- Navigation Toggler -->
+            <button type="button" class="nav-toggler header__btn btn btn-icon btn-sm" aria-label="Nav Toggler">
+              <i class="psi-list-view"></i>
+            </button>
+
+
+          </div>
+          <!-- End - Content Header - Left Side -->
+
+          <!-- Content Header - Right Side: -->
+          <div class="header__content-end">
+
+            <!-- User dropdown -->
+            <div class="dropdown">
+
+              <button
+                ng-if="(spa.user.roles | filter: {id: 1}).length > 0 || (spa.user.roles | filter: {id: 5}).length > 0"
+                style="padding-left: 9px;
+    padding-right: 9px;" class="ng-cloak header__btn btn  btn-lg" type="button" data-bs-toggle="dropdown"
+                uib-tooltip="Acessar outra Conta" tooltip-placement="bottom" aria-label="Back dropdown"
+                aria-expanded="false">
+                <span class="ic-user pull-left ng-binding">
+                  <i class="psi-affiliate icon-lg icon-fw"
+                    style="font-size: 0.988rem !important;padding-top: 0.06em;"></i>
+                </span>
+
+                <span ng-if="spa.account_name" style="margin-left: 7px;position: relative;top: 1px;">
+                  #!{ spa.account_name }!#
+                </span>
+              </button>
+
+              <div class="dropdown-menu dropdown-menu-end w-md-300px"
+                ng-if="(spa.user.roles | filter: {id: 1}).length > 0 || (spa.user.roles | filter: {id: 5}).length > 0">
+
+                <!-- User dropdown header -->
+                <div class="d-flex align-items-center border-bottom  py-2">
+
+                  <form class="col-md-12" style="justify-content: center;display: flex;">
+                    <input type="text" class="form-control" style="width: 96%;min-height: 38.6px;" placeholder="Buscar"
+                      ng-model="customFilterAccount.text">
+                  </form>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-12">
+
+                    <!-- User menu link -->
+                    <div class="scrollable-content list-group list-group-borderless h-100 py-3"
+                      style="padding-bottom: 0.3em !important; max-height: 358px;overflow-y:auto">
+                      <a data-ng-href="#!{ '/api/context/v1/switch-account/'+account.value }!#"
+                        ng-repeat="account in spa.accounts|filter: customFilterAccount"
+                        class="list-group-item list-group-item-action">
+                        <i class="pli-male fs-5 me-2"></i> #!{ account.text }!#
+                      </a>
+                      <hr style="margin-bottom: 11px;margin-top: 11px;">
+                      <a data-ng-href="#!{ '/api/context/v1/switch-account/none' }!#"
+                        class="list-group-item list-group-item-action">
+                        <i class="pli-back fs-5 me-2"></i> Sair do Perfil Frotista
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+
+              <!-- Toggler -->
+              <span class="vr" style="height: 17px;position: relative;top: 5px;"
+                ng-if="(spa.user.roles | filter: {id: 1}).length > 0 || (spa.user.roles | filter: {id: 5}).length > 0"></span>
+              <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown"
+                aria-label="User dropdown" aria-expanded="false">
+                <i class="psi-male"></i>
+
+              </button>
+
+
+              <!-- User dropdown menu -->
+              <div class="dropdown-menu dropdown-menu-end w-md-300px">
+
+                <!-- User dropdown header -->
+                <div class="d-flex align-items-center border-bottom  py-2" style="padding-right: 1rem !important;">
+
+                  <div class="flex-grow-1 ms-3">
+                    <h5 class="mb-0"> #!{ spa.user.name }!# </h5>
+                    <span class="text-muted fst-italic">#!{ spa.user.email }!#</span>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-12">
+
+                    <!-- User menu link -->
+                    <div class="list-group list-group-borderless h-100 py-3">
+                      <a href="/?m=menu.admin" class="list-group-item list-group-item-action"
+                        ng-if="(spa.user.roles | filter: {id: 1}).length > 0 || (spa.user.roles | filter: {id: 5}).length > 0">
+                        <i class="pli-gear fs-5 me-2"></i> Administrador
+                      </a>
+
+                      <a href="/?m=menu.devstudio" class="list-group-item list-group-item-action"
+                        ng-if="(spa.user.roles | filter: {id: 1}).length > 0">
+                        <i style="margin-right: 5px!important;margin-left: -2px;"
+                          class="fa fa-fw fa-code fs-5 me-2"></i> Development Studio
+                      </a>
+
+                      <a href="/logout" class="list-group-item list-group-item-action">
+                        <i class="pli-unlock fs-5 me-2"></i> Sair
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- End - User dropdown -->
+
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <nav id="mainnav-container" class="mainnav">
+      <!-- MAIN NAVIGATION -->
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      <style>
+        .mainnav__top-content .fs-5 {
+          font-size: 1.2rem !important;
+        }
+
+        .mainnav__inner .mainnav__menu>.nav-item>.nav-link.active {
+          padding: 0.6rem 0.8rem;
+        }
+
+        .mainnav__inner .mainnav__menu>.nav-item>.nav-link {
+          padding: 0.6rem 0.8rem;
+        }
+      </style>
+      <div class="mainnav__inner">
+
+        <!-- Navigation menu -->
+        <div class="mainnav__top-content scrollable-content pb-5">
+
+          <div class="mainnav__categoriy py-3">
+            <h6 class="mainnav__caption mt-0 px-3 fw-bold" style="font-size: .82rem;color: #abb4bf; padding-right: 0.6rem !important;
+                                                            padding-left: 0.79rem !important; font-family: 'Inter';">
+              Navegação</h6>
+            <ul class="mainnav__menu nav flex-column ng-cloak">
+
+              <li class="nav-item" data-ng-repeat="route in nav.groups.bus_control.routes">
+                <a data-ng-href="#!{ '#!'+route.path }!#" class="nav-link mininav-toggle collapsed"
+                  data-ng-class="{'active': spa.active === route.id }">
+                  <i class="#!{route.icon}!# fs-5 me-2"></i>
+
+                  <span class="nav-label mininav-content ms-1">#!{ route.title || "" }!# </span>
+                </a>
+              </li>
+
+
+            </ul>
+          </div>
+        </div>
+        <!-- End - Navigation menu -->
+
+      </div>
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      <!-- END - MAIN NAVIGATION -->
     </nav>
 
-    <!-- Main Content -->
-    <div>
-        <div ng-view></div>
+    <div class="scroll-container">
+      <a ng-click="scrollUp()" class="scroll-page rounded-circle ratio ratio-1x1" aria-label="Scroll button"></a>
     </div>
+  </div>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" ng-show="isLoading">
-        <div class="loading-spinner">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Carregando...</span>
-            </div>
-            <p class="mt-2">Carregando...</p>
-        </div>
-    </div>
+  <!-- basic -->
+  <script src="//static.vdo-web.com/assets/jquery/jquery-3.2.1.min.js"></script>
+  <!-- script src="//code.jquery.com/jquery-3.6.0.min.js"></script-->
+  <script src="//static.vdo-web.com/assets/moment-2.29.4/moment-with-locales.min.js"></script>
 
-    <!-- Toast Container -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div class="toast" ng-repeat="toast in toasts" ng-class="'toast-' + toast.type" role="alert">
-            <div class="toast-header">
-                <i class="fas" ng-class="getToastIcon(toast.type)"></i>
-                <strong class="me-auto ms-2">{{getToastTitle(toast.type)}}</strong>
-                <button type="button" class="btn-close" ng-click="removeToast($index)"></button>
-            </div>
-            <div class="toast-body">
-                {{toast.message}}
-            </div>
-        </div>
-    </div>
+  <script src="//static.vdo-web.com/pages/demo-fiserv/assets/vendors/popperjs/popper.min.js" defer></script>
+  <script src="//static.vdo-web.com/pages/demo-fiserv/assets/vendors/bootstrap/bootstrap.min.js" defer></script>
+  <script src="//static.vdo-web.com/pages/demo-fiserv/assets/js/nifty.js" defer></script>
+  <!-- <script src="//static.vdo-web.com/assets/bootstrap-3.4.1/js/bootstrap.min.js"></script>    -->
+  <script src="//static.vdo-web.com/assets/angular-1.8.2/angular.min.js"></script>
+  <script src="//static.vdo-web.com/assets/angular-1.8.2/angular-route.min.js"></script>
 
-    <!-- Scripts -->
-    <!-- AngularJS -->
-    <script src="node_modules/angular/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.2/angular-route.min.js"></script>
-    
-    <!-- Socket.IO -->
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- App Scripts -->
-    <script src="js/app.js"></script>
-    <script src="js/services/authService.js"></script>
-    <script src="js/services/apiService.js"></script>
-    <script src="js/services/socketService.js"></script>
-    <script src="js/services/toastService.js"></script>
-    <script src="js/services/modalService.js"></script>
-    <script src="js/controllers/navController.js"></script>
-    <script src="js/controllers/loginController.js"></script>
-    <script src="js/controllers/mainDashboardController.js"></script>
-    <script src="js/controllers/novoPedidoController.js"></script>
+  <script src="//static.vdo-web.com/assets/showdownjs/showdown.min.js"></script>
+  <script src="//static.vdo-web.com/assets/angular-1.8.2/angular-sanitize.min.js"></script>
+
+  <script src="//static.vdo-web.com/assets/angular-ui-mask/mask.min.js"></script>
+  <script src="//static.vdo-web.com/assets/angular-input-masks-4.4.1/angular-input-masks-standalone.min.js"></script>
+
+  <!-- Calendar -->
+  <script src="//static.vdo-web.com/assets/fullcalendar-3.5.1/fullcalendar.min.js"></script>
+  <script src="//static.vdo-web.com/assets/fullcalendar-3.5.1/locale-all.js"></script>
+  <script src="//static.vdo-web.com/assets/angular-ui-calendar/calendar.js"></script>
+
+  <script src="//static.vdo-web.com/assets/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="//static.vdo-web.com/assets/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+  <!-- ng-file-upload -->
+  <script src="//static.vdo-web.com/assets/ng-file-upload/ng-file-upload.min.js"></script>
+
+
+
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/fusioncharts.js"></script>
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/themes/fusioncharts.theme.fusion.js"></script>
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/themes/fusioncharts.theme.zune.js"></script>
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/angular-fusioncharts.min.js"></script>
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/fusioncharts.maps.js"></script>
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/maps/fusioncharts.brazil.js"></script>
+  <script src="//static.vdo-web.com/assets/fusion-charts-3.15.3/maps/fusioncharts.brazilregion.js"></script>
+
+  <script src="//static.vdo-web.com/assets/angular-ui-select-0.19.7/select.min.js"></script>
+  <link rel="stylesheet" href="//static.vdo-web.com/assets/angular-ui-select-0.19.7/select.min.css">
+
+
+
+  <!-- leaflet -->
+  <script src="//static.vdo-web.com/assets/leaflet-1.7.1/leaflet.js"></script>
+  <!-- script src="//static.vdo-web.com/assets/leaflet-1.8.0/leaflet.js"></script -->
+
+  <script src="//static.vdo-web.com/assets/leaflet-gesture-handling-1.2.1/leaflet-gesture-handling.min.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-markercluster-1.4.1/leaflet-markercluster.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-fullscreen-1.0.0/leaflet-fullscreen.min.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-control-geocoder-1.13.0/leaflet-control-geocoder.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-measure-1.0.0/leaflet-measure.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-draw-1.0.4/leaflet.draw.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-heatmap-2.0.5/heatmap.min.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-heatmap-2.0.5/leaflet-heatmap.js"></script>
+  <!--  <script src="//static.vdo-web.com/assets/leaflet-routing-machine-3.2.12/leaflet-routing-machine.js"></script> -->
+
+  <script src="//static.vdo-web.com/assets/Leaflet.Legend/leaflet.legend.js"></script>
+  <script src="//static.vdo-web.com/assets/leaflet-heat/leaflet-heat.js"></script>
+
+  <!-- maps api -->
+  <!-- script defer=true src="//maps.googleapis.com/maps/api/js?key=AIzaSyAg0GnxnMH4eodWvRjRz8JKF4yenbIbA-0&callback=initMap"></script -->
+
+  <!-- bc.pages.js -->
+
+  <script src="//static.vdo-web.com/assets/nifty-3.0.1/js/zangdar2.0.min-fix.js"></script>
+  <script src="pages/js/app.js"></script>
+  <script src="pages/js/app.config.js"></script>
+  <script src="pages/js/app.filters.js"></script>
+  <script src="pages/js/home.controller.js"></script>
+  <script src="pages/js/debounce.factory.js"></script>
+  <script src="pages/js/app.providers.spanavigation.js"></script>
+  <script src="pages/js/init.service.js"></script>
+
+
+
+
+
 </body>
-</html>
 
+</html>

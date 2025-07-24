@@ -1,0 +1,98 @@
+<style>
+  :root {
+    --star-size: 22px;
+    --star-color: #eeeeee;
+    --star-background: #fc0;
+  }
+
+  .Stars {
+    --percent: calc(var(--rating) / 5 * 100%);
+
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: 'premium-solid-icons' !important;
+    line-height: 1;
+
+    &::before {
+      content: '\efd8 \efd8 \efd8 \efd8 \efd8';
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+
+
+  body {
+    background: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  * {
+    position: relative;
+    box-sizing: border-box;
+  }
+
+
+  .exclamation{
+    background-repeat: no-repeat;
+    background-position: right 1rem center, center right 3rem;
+    padding-right: 2.3rem;
+    background-size: 17px 16px, calc(.75em + .55rem) calc(.75em + .55rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23df5645'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23df5645' stroke='none'/%3e%3c/svg%3e");
+  }
+  
+  .fs-6{
+    font-size: 1.1rem !important;
+  }
+  
+  .fs-7{
+    margin-right: 0.4rem !important;
+    font-size: 1.3rem !important;
+    margin-left: -0.1rem;
+  }
+
+  hr {
+    border-bottom: 1px solid #e1e1e1 !important;
+    height: auto !important;
+  }
+
+</style>
+
+<section id="content" class="content inter" >
+  <div class="content__header content__boxed overlapping">
+    <div class="content__wrap">
+
+      <h2 class="h2" style="margin-top: 25px"><span class="h2" style="font-weight: 400;margin-top: 25px;color: #fff">Olá,</span> #!{ spa.user.name }!#</h2>
+      <p style="font-size:14.3px">Seja bem-vindo ao Bus Control<br></p>
+
+    </div>
+  </div>
+
+  <div class="content__boxed">
+    <div class="content__wrap">
+      <article class="col-xl-12 mb-3 mb-xl-0">
+        <div class="flex-fill">
+          <div class="row">
+            <div class="col-xl-7 mb-3 mb-xl-0">
+              <div class="card h-100">
+           
+          
+
+             
+              
+            </div>
+          </div>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>

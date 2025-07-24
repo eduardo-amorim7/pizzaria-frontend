@@ -208,6 +208,135 @@
       background-color: #f8f9fa; /* Optional: Highlight header background on small screens */
     }
   }
+
+  /* KDS Specific Styles */
+  .kds-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #f0f2f5;
+    min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+  }
+
+  .kds-column {
+    flex: 1;
+    margin: 0 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .kds-column-header {
+    background-color: #343a40;
+    color: #fff;
+    padding: 15px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .kds-column-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  .kds-card {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .kds-card.processing {
+    background-color: #ffeeba; /* Light yellow for processing */
+    border-color: #ffc107;
+  }
+
+  .kds-card.ready {
+    background-color: #d4edda; /* Light green for ready */
+    border-color: #28a745;
+  }
+
+  .kds-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .kds-card-body {
+    font-size: 0.9em;
+  }
+
+  .kds-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e9ecef;
+    font-size: 0.8em;
+    color: #6c757d;
+  }
+
+  .kds-card-status {
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 0.8em;
+  }
+
+  .kds-card-status.new {
+    background-color: #007bff;
+  }
+
+  .kds-card-status.approved {
+    background-color: #28a745;
+  }
+
+  .kds-card-status.delivery {
+    background-color: #6c757d;
+  }
+
+  .kds-card-actions button {
+    margin-left: 5px;
+  }
+
+  .kds-top-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    padding-right: 20px;
+  }
+
+  .kds-top-actions button {
+    margin-left: 10px;
+  }
+
+  .kds-bottom-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .kds-bottom-actions button {
+    margin-left: 10px;
+  }
+
 </style>
 <section id="content" class="content" data-ng-if="!vm.active.id">
   <div class="content__header content__boxed overlapping">
@@ -265,9 +394,144 @@
 
                 <div data-ng-if="!vm.active.id">
 
+                  <div class="kds-top-actions">
+                    <button class="btn btn-success"><i class="fa fa-plus"></i> Novo Pedido</button>
+                    <button class="btn btn-info"><i class="fa fa-print"></i> Imprimir</button>
+                  </div>
 
-                    <!--   CARDS - KDS de PEDIDOS    -->
-                  KDS de PEDIDOS
+                  <div class="kds-container">
+                    <div class="kds-column">
+                      <div class="kds-column-header">
+                        <span>Novos</span>
+                        <span>0</span>
+                      </div>
+                      <div class="kds-column-content">
+                        <div class="kds-card">
+                          <div class="kds-card-header">
+                            <span>#01</span>
+                            <span class="kds-card-status new">Novo</span>
+                          </div>
+                          <div class="kds-card-body">
+                            <p><strong>Cliente:</strong> João Silva</p>
+                            <p><strong>Itens:</strong> Pizza Calabresa (G), Coca-Cola (2L)</p>
+                          </div>
+                          <div class="kds-card-footer">
+                            <span>10:00</span>
+                            <div class="kds-card-actions">
+                              <button class="btn btn-sm btn-primary">Processar</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="kds-card">
+                          <div class="kds-card-header">
+                            <span>#02</span>
+                            <span class="kds-card-status new">Novo</span>
+                          </div>
+                          <div class="kds-card-body">
+                            <p><strong>Cliente:</strong> Maria Souza</p>
+                            <p><strong>Itens:</strong> Pizza Frango c/ Catupiry (M), Suco de Laranja</p>
+                          </div>
+                          <div class="kds-card-footer">
+                            <span>10:05</span>
+                            <div class="kds-card-actions">
+                              <button class="btn btn-sm btn-primary">Processar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="kds-column">
+                      <div class="kds-column-header">
+                        <span>Processando</span>
+                        <span>4</span>
+                      </div>
+                      <div class="kds-column-content">
+                        <div class="kds-card processing">
+                          <div class="kds-card-header">
+                            <span>#03</span>
+                            <span class="kds-card-status approved">Aprovado</span>
+                          </div>
+                          <div class="kds-card-body">
+                            <p><strong>Cliente:</strong> Pedro Santos</p>
+                            <p><strong>Itens:</strong> Pizza Portuguesa (G), Água</p>
+                          </div>
+                          <div class="kds-card-footer">
+                            <span>10:10</span>
+                            <div class="kds-card-actions">
+                              <button class="btn btn-sm btn-success">Pronto</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="kds-card processing">
+                          <div class="kds-card-header">
+                            <span>#04</span>
+                            <span class="kds-card-status approved">Aprovado</span>
+                          </div>
+                          <div class="kds-card-body">
+                            <p><strong>Cliente:</strong> Ana Costa</p>
+                            <p><strong>Itens:</strong> Pizza Quatro Queijos (M), Cerveja</p>
+                          </div>
+                          <div class="kds-card-footer">
+                            <span>10:15</span>
+                            <div class="kds-card-actions">
+                              <button class="btn btn-sm btn-success">Pronto</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="kds-card processing">
+                          <div class="kds-card-header">
+                            <span>#05</span>
+                            <span class="kds-card-status approved">Aprovado</span>
+                          </div>
+                          <div class="kds-card-body">
+                            <p><strong>Cliente:</strong> Carlos Lima</p>
+                            <p><strong>Itens:</strong> Pizza Margherita (P), Refrigerante</p>
+                          </div>
+                          <div class="kds-card-footer">
+                            <span>10:20</span>
+                            <div class="kds-card-actions">
+                              <button class="btn btn-sm btn-success">Pronto</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="kds-column">
+                      <div class="kds-column-header">
+                        <span>Prontos</span>
+                        <span>0</span>
+                      </div>
+                      <div class="kds-column-content">
+                        <div class="kds-card ready">
+                          <div class="kds-card-header">
+                            <span>#06</span>
+                            <span class="kds-card-status delivery">Entrega</span>
+                          </div>
+                          <div class="kds-card-body">
+                            <p><strong>Cliente:</strong> Fernanda Alves</p>
+                            <p><strong>Itens:</strong> Pizza Brigadeiro (G)</p>
+                          </div>
+                          <div class="kds-card-footer">
+                            <span>10:25</span>
+                            <div class="kds-card-actions">
+                              <button class="btn btn-sm btn-info">Entregue</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="kds-bottom-actions">
+                    <button class="btn btn-secondary">Ajustar Tempo de Entrega</button>
+                    <div>
+                      <button class="btn btn-danger"><i class="fa fa-times"></i> Cancelar</button>
+                      <button class="btn btn-primary"><i class="fa fa-sync"></i> Atualizar</button>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>                  
@@ -278,4 +542,5 @@
   </div>
 
 </section>
+
 

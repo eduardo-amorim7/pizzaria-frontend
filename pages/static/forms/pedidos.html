@@ -226,11 +226,6 @@
     min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
   }
 
-  .kds-column {
-    
-
-  }
-
   .kds-column-header {
     background-color: #343a40;
     color: #fff;
@@ -556,7 +551,7 @@ border-color: #e4e9f2;
                         <h4 class="h4-title"><i class="pli-bell text-reset text-opacity-75 fs-5 me-2"></i> Novos</h4>
                       </div>
                       <div class="toolbar-end">
-                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">{{ (pedidos | filter:{column:'novos'}).length }}</span>
+                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">#!{ (pedidos | filter:{column:'novos'}).length }!#</span>
                       </div>
                     </div>
                     <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
@@ -564,8 +559,8 @@ border-color: #e4e9f2;
                         <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'novos'}">
                           <!-- Bloco vermelho -->
                           <div class="kds-card-left-block">
-                            <div class="kds-card-order-number">{{ pedido.id }}</div>
-                            <div class="kds-card-status-text">{{ pedido.status }}</div>
+                            <div class="kds-card-order-number">#!{ pedido.id }!#</div>
+                            <div class="kds-card-status-text">#!{ pedido.status }!#</div>
                           </div>
 
                           <!-- Conteúdo -->
@@ -575,19 +570,19 @@ border-color: #e4e9f2;
                               <!-- Blocos de info agrupados -->
                               <div class="kds-card-info-group">
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> {{ pedido.type }}
+                                  <div class="kds-card-info-line"><i ng-if="pedido.type === 'Entrega'" class="pli-scooter"></i><i ng-if="pedido.type === 'Retirada'"  class="pli-aim"></i> #!{ pedido.type }!#
                                   </div>
                                   <div class="kds-card-info-line"><i class="pli-support"></i><span class="badge"
-                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">{{pedido.source }}</span></div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> {{ pedido.time }}
+                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">#!{pedido.source }!#</span></div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> #!{ pedido.time }!#
                                   </div>
                                 </div>
 
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line">{{ pedido.client }}</div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>{{ pedido.phone }}
+                                  <div class="kds-card-info-line">#!{ pedido.client }!#</div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>#!{ pedido.phone }!#
                                   </div>
-                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> {{ pedido.address }}
+                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> #!{ pedido.address }!#
                                   </div>
                                 </div>
                               </div>
@@ -605,8 +600,8 @@ border-color: #e4e9f2;
 
                             <!-- Rodapé -->
                             <div class="kds-card-footer-section">
-                              <i class="pli-scooter kds-card-footer-icon"></i> {{ pedido.deliveryTime }} &nbsp;
-                              <i class="pli-clock kds-card-footer-icon"></i> {{ pedido.preparationTime }}
+                              <i class="pli-scooter kds-card-footer-icon"></i> #!{ pedido.deliveryTime }!# &nbsp;
+                              <i class="pli-clock kds-card-footer-icon"></i> #!{ pedido.preparationTime }!#
                             </div>
                           </div>
                         </div>
@@ -622,7 +617,7 @@ border-color: #e4e9f2;
                           Processando</h4>
                       </div>
                       <div class="toolbar-end">
-                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">{{ (pedidos | filter:{column:'processando'}).length }}</span>
+                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">#!{ (pedidos | filter:{column:'processando'}).length }!#</span>
                       </div>
                     </div>
 
@@ -631,8 +626,8 @@ border-color: #e4e9f2;
                         <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'processando'}">
                           <!-- Bloco vermelho -->
                           <div class="kds-card-left-block">
-                            <div class="kds-card-order-number">{{ pedido.id }}</div>
-                            <div class="kds-card-status-text">{{ pedido.status }}</div>
+                            <div class="kds-card-order-number">#!{ pedido.id }!#</div>
+                            <div class="kds-card-status-text">#!{ pedido.status }!#</div>
                           </div>
 
                           <!-- Conteúdo -->
@@ -642,19 +637,19 @@ border-color: #e4e9f2;
                               <!-- Blocos de info agrupados -->
                               <div class="kds-card-info-group">
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> {{ pedido.type }}
+                                  <div class="kds-card-info-line"><i ng-if="pedido.type === 'Entrega'" class="pli-scooter"></i><i ng-if="pedido.type === 'Retirada'"  class="pli-aim"></i> #!{ pedido.type }!#
                                   </div>
                                   <div class="kds-card-info-line"><i class="pli-support"></i><span class="badge"
-                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">{{pedido.source }}</span></div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> {{ pedido.time }}
+                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">#!{pedido.source }!#</span></div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> #!{ pedido.time }!#
                                   </div>
                                 </div>
 
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line">{{ pedido.client }}</div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>{{ pedido.phone }}
+                                  <div class="kds-card-info-line">#!{ pedido.client }!#</div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>#!{ pedido.phone }!#
                                   </div>
-                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> {{ pedido.address }}
+                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> #!{ pedido.address }!#
                                   </div>
                                 </div>
                               </div>
@@ -672,8 +667,8 @@ border-color: #e4e9f2;
 
                             <!-- Rodapé -->
                             <div class="kds-card-footer-section">
-                              <i class="pli-scooter kds-card-footer-icon"></i> {{ pedido.deliveryTime }} &nbsp;
-                              <i class="pli-clock kds-card-footer-icon"></i> {{ pedido.preparationTime }}
+                              <i class="pli-scooter kds-card-footer-icon"></i> #!{ pedido.deliveryTime }!# &nbsp;
+                              <i class="pli-clock kds-card-footer-icon"></i> #!{ pedido.preparationTime }!#
                             </div>
                           </div>
                         </div>
@@ -691,7 +686,7 @@ border-color: #e4e9f2;
                         </h4>
                       </div>
                       <div class="toolbar-end">
-                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">{{ (pedidos | filter:{column:'prontos'}).length }}</span>
+                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">#!{ (pedidos | filter:{column:'prontos'}).length }!#</span>
                       </div>
                     </div>
                     <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
@@ -699,8 +694,8 @@ border-color: #e4e9f2;
                         <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'prontos'}">
                           <!-- Bloco vermelho -->
                           <div class="kds-card-left-block">
-                            <div class="kds-card-order-number">{{ pedido.id }}</div>
-                            <div class="kds-card-status-text">{{ pedido.status }}</div>
+                            <div class="kds-card-order-number">#!{ pedido.id }!#</div>
+                            <div class="kds-card-status-text">#!{ pedido.status }!#</div>
                           </div>
 
                           <!-- Conteúdo -->
@@ -710,19 +705,19 @@ border-color: #e4e9f2;
                               <!-- Blocos de info agrupados -->
                               <div class="kds-card-info-group">
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> {{ pedido.type }}
+                                  <div class="kds-card-info-line"><i ng-if="pedido.type === 'Entrega'" class="pli-scooter"></i><i ng-if="pedido.type === 'Retirada'"  class="pli-aim"></i> #!{ pedido.type }!#
                                   </div>
                                   <div class="kds-card-info-line"><i class="pli-support"></i><span class="badge"
-                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">{{pedido.source }}</span></div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> {{ pedido.time }}
+                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">#!{pedido.source }!#</span></div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> #!{ pedido.time }!#
                                   </div>
                                 </div>
 
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line">{{ pedido.client }}</div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>{{ pedido.phone }}
+                                  <div class="kds-card-info-line">#!{ pedido.client }!#</div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>#!{ pedido.phone }!#
                                   </div>
-                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> {{ pedido.address }}
+                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> #!{ pedido.address }!#
                                   </div>
                                 </div>
                               </div>
@@ -740,8 +735,8 @@ border-color: #e4e9f2;
 
                             <!-- Rodapé -->
                             <div class="kds-card-footer-section">
-                              <i class="pli-scooter kds-card-footer-icon"></i> {{ pedido.deliveryTime }} &nbsp;
-                              <i class="pli-clock kds-card-footer-icon"></i> {{ pedido.preparationTime }}
+                              <i class="pli-scooter kds-card-footer-icon"></i> #!{ pedido.deliveryTime }!# &nbsp;
+                              <i class="pli-clock kds-card-footer-icon"></i> #!{ pedido.preparationTime }!#
                             </div>
                           </div>
                         </div>

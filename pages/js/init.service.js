@@ -53,6 +53,63 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
             'title': 'Pedidos',
             'icon': 'pli-list-view',
             'edit': false
+            },{
+            'id': 'despachos',
+            'path': '/despachos',
+            'template' : '/static/forms/despachos',
+            'controller': 'DespachosPageController',
+            'group': 'bus_control',
+            'title': 'Despacho',
+            'icon': 'pli-map-2',
+            'edit': false
+            },{
+            'id': 'clientes',
+            'path': '/clientes',
+            'template' : '/static/forms/clientes',
+            'controller': 'ClientesPageController',
+            'group': 'bus_control',
+            'title': 'Clientes',
+            'icon': 'pli-address-book',
+            'edit': false
+            },
+            {
+            'id': 'usuarios',
+            'path': '/usuarios',
+            'template' : '/static/forms/usuarios',
+            'controller': 'UsuariosPageController',
+            'group': 'bus_control',
+            'title': 'Usuários',
+            'icon': 'pli-male',
+            'edit': false
+            },
+            {
+            'id': 'entregadores',
+            'path': '/entregadores',
+            'template' : '/static/forms/entregadores',
+            'controller': 'EntregadoresPageController',
+            'group': 'bus_control',
+            'title': 'Entregadores',
+            'icon': 'pli-motorcycle',
+            'edit': false
+            },{
+            'id': 'relatorios',
+            'path': '/relatorios',
+            'template' : '/static/forms/relatorios',
+            'controller': 'RelatoriosPageController',
+            'group': 'bus_control',
+            'title': 'Relatórios',
+            'icon': 'pli-file-text-image',
+            'edit': false
+            },
+            {
+            'id': 'configuracoes',
+            'path': '/configuracoes',
+            'template' : '/static/forms/configuracoes',
+            'controller': 'ConfiguracoesPageController',
+            'group': 'bus_control',
+            'title': 'Configurações',
+            'icon': 'pli-gear',
+            'edit': false
             }
 
         ];

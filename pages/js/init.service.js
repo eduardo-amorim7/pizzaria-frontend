@@ -51,7 +51,7 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
             'controller': 'PedidosPageController',
             'group': 'bus_control',
             'title': 'Pedidos',
-            'icon': 'pli-cash-register',
+            'icon': 'pli-list-view',
             'edit': false
             }
 

@@ -65,9 +65,10 @@
 
   .badge{
     border-radius: 4px!important;
-    padding: 0.7em 0.65em!important;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.83em;
+    position: relative;
+    left: 4px;
   }
 
   .bg-light{
@@ -131,9 +132,6 @@
     height: 60px!important;
   }
 
-  .fs-5 {
-    font-size: 1.2rem!important;
-  }
 
   .card-header .btn {
     font-size: .855rem;
@@ -213,19 +211,13 @@
   .kds-container {
     display: flex;
     justify-content: space-around;
-    padding: 20px;
-    background-color: #f0f2f5;
+    padding: 9.8px;
     min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
   }
 
   .kds-column {
-    flex: 1;
-    margin: 0 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+    
+
   }
 
   .kds-column-header {
@@ -259,7 +251,7 @@
 
   .kds-card.processing {
     background-color: #ffeeba; /* Light yellow for processing */
-    border-color: #ffc107;
+    border-color: #dfdfdf;
   }
 
   .kds-card.ready {
@@ -283,7 +275,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 4px;
     padding-top: 10px;
     border-top: 1px solid #e9ecef;
     font-size: 0.8em;
@@ -314,6 +306,7 @@
   }
 
   .kds-top-actions {
+    padding-top: 30px;
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
@@ -337,8 +330,64 @@
     margin-left: 10px;
   }
 
+.btn-yes:hover {
+  box-shadow: 0 0.1rem 0.5rem rgb(52 253 52 / 50%), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
+  background-color: rgba(3, 167, 3, 0.1);
+  border-radius: 4px;
+}
+
+.btn-no:hover {
+  box-shadow: 0 0.1rem 0.5rem rgb(255 79 79 / 50%), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
+  background-color: rgba(240, 7, 7, 0.1);
+  border-radius: 4px;
+}
+
+.bg-default-v2{
+    background-color: #c9c7cb;
+    color: rgb(26 24 24);
+}
+
+.card-header {
+    padding: .7375rem 1.25rem;
+    min-height: 3rem;
+    background-color: #333333fa;
+    color: #f8f8f8;
+
+}
+
+.card {
+     border: 0px solid #333333fa!important;
+}
+
+.card-header:first-child {
+border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+}
+
+.h4-title{
+  font-size: 1rem;
+    color: #f8f8f8;
+}
+
+.input-search:hover {
+    box-shadow: 0 0.1rem 0.5rem rgba(225, 231, 240, 0.5), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
+border-color: #e4e9f2;
+}
+
+
+.input-search:focus {
+    box-shadow: 0 0 0 1px #e1e7f0, 0 0 0.7rem 0.25rem rgba(225, 231, 240, 0.4) !important;	
+	color: #788289;
+    background-color: #f8f8f8;
+}
+
+.border-2{
+  border-radius: 14px !important;
+}
+
 </style>
-<section id="content" class="content" data-ng-if="!vm.active.id">
+
+<section id="content" class="content inter">
   <div class="content__header content__boxed overlapping">
     <div class="content__wrap">
       <!-- Breadcrumb -->
@@ -349,196 +398,283 @@
         </ol>
       </nav>
       <!-- END : Breadcrumb -->
-      <h1 class="page-title mb-0 mt-2"></h1>
+  
+       <div class="mt-1 d-flex justify-content-between align-items-center"
+        style="margin-top: 1.05rem !important;align-items: flex-start!important;">
+        <div class="col-md-6 col-lg-6">
+          <input type="text" aria-haspopup="true"
+            class="form-control input-sm input-search ng-valid ng-valid-maxlength ng-dirty ng-valid-parse ng-empty ng-touched"
+            id="txt-finder-term" placeholder="Buscar" ng-change="changeFilter(textFilter)"
+            data-ng-model-options="{ debounce: 1000 }" ng-model="textFilter" maxlength="80"
+            style="border-radius: 4px;font-size: 0.84rem;height: 40px;padding-left: 32px;">
+          <span class="pli-magnifi-glass"
+            style="position: initial;margin-top: -61px;margin-left: 10px;font-size: 17px;"></span>
+        </div>
 
-      <p class="lead">
-
-      </p>
-
+        <div class="col-md-5 col-lg-5 d-flex">
+          <div class="d-grid gap-2 d-md-flex  page-actions" style="padding-right: 20px;">
+           <button type="button" class="btn btn-light hstack gap-2" style="color:#788289;background-color: #f8f8f8;">
+              <i class="btn-label pli-scooter fs-5"></i>
+              Entrega
+            </button>
+          </div>   
+          <div class="d-grid gap-2 d-md-flex  page-actions">
+            <button type="button" class="btn btn-light hstack gap-2" style="color:#788289;background-color: #f8f8f8;">
+              <i class="btn-label pli-aim fs-5"></i>
+              Retirada
+            </button>
+          </div>
+        </div>
+          
+        <div class="page-actions pull-right">
+          <div class="d-grid gap-2 d-md-flex col-md-3">
+  
+            <button type="button" class="btn btn-success hstack gap-2" data-ng-click="gravar()">
+              <i class="btn-label pli-add fs-5"></i>
+              <span class="vr"></span>
+              Novo
+            </button>
+          </div>
+        </div>
+      </div>
+  
     </div>
+    <h1 class="page-title mb-0 mt-2"></h1>
+  
+    <p class="lead"></p>
 
   </div>
 
-  <div class="content__boxed">
-
+  <div class="content__boxed" style="font-family: 'Inter';">
     <div class="content__wrap">
-
-      <article class="d-md-flex gap-4">
+      <article class="col-xl-12 mb-3 mb-xl-0">
         <div class="flex-fill">
           <div class="row">
-            <div class="col-md-12 mb-12">
+   
+            <div class="col-xl-12">
 
-              <div class="card border-2 border-light min-h-330" >
+              <div class="row">
+                  <div class="col-sm-4 kds-column">
+                  <div class="h-100 card border-2 border-light mb-3">
+                    <div class="card-header toolbar">
+                      <div class="toolbar-start">
+                        <h4 class="h4-title"><i class="pli-bell text-reset text-opacity-75 fs-5 me-2"></i> Novos</h4>
+                      </div>
+                         <div class="toolbar-end">
+                            <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">0</span>
+                        </div>
+                    </div>
+                    <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
+                      <div class="col-12" style="font-size: 1.1em;">
 
-                <div  class="card-header toolbar" style="border-bottom: 0px;" ng-class="{'border-header': vm.active.id}">
-
-
-                  <div class="toolbar-start" data-ng-show="!vm.active.id">
+                      
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 kds-column">
+                <div class="h-100 card border-2 border-light mb-3">
+                    <div class="card-header toolbar">
+                        <div class="toolbar-start">
+                            <h4 class="h4-title"><i class="pli-refresh text-reset text-opacity-75 fs-5 me-2"></i> Processando</h4>
+                        </div>
+                        <div class="toolbar-end">
+                            <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">3</span>
+                        </div>
+                    </div>
+                
+                    <div class="col-12">
+                        <div class="kds-column-content">
+                
+                            <div class="kds-card processing" style="display: flex; padding: 0; overflow: hidden;">
+                                <!-- Bloco vermelho -->
+                                <div
+                                    style="background: #f44336; color: white; padding: 20px; text-align: center; font-weight: bold; min-width: 80px;">
+                                    <div style="font-size: 18px;">018</div>
+                                    <div style="font-size: 12px;">Aprovado</div>
+                                </div>
+                
+                                <!-- Conteúdo -->
+                                <div style="flex: 1; background: #ECE6FC; padding: 10px; position: relative;color: #555;">
+                                    <!-- Info -->
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                        <!-- Blocos de info agrupados -->
+                                        <div style="display: flex; gap: 20px;">
+                                            <div style="line-height: 1.5; font-size: 12px;">
+                                                <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-scooter"></i> Entrega
+                                                </div>
+                                                <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-support"></i><span
+                                                        class="badge bg-default-v2">LOCAL</span></div>
+                                                <div style="font-size: 13px;"><i class="pli-smartphone-3"></i> 10:16</div>
+                                            </div>
+                
+                                            <div style="line-height: 1.5; font-size: 12px;">
+                                                <div style="padding-bottom: 2px;font-size: 13px;">Marcio</div>
+                                                <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-smartphone-2"></i>(61)
+                                                    99673-6411
+                                                </div>
+                                                <div style="font-size: 13px;"><i class="pli-map-marker"></i> Taguatinga</div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Ações -->
+                                        <div style="display: flex; gap: 1px; align-items: center;">
+                                            <button type="button" style="background: none; border: none;color: #fff;padding: 5px;">
+                                                <i class="psi-yes btn-yes" style="color: rgb(3, 167, 3); font-size: 17px;"></i>
+                                            </button>
+                                            <button type="button" style="background: none; border: none;padding: 0px;">
+                                                <i class="psi-close btn-no" style="color: rgb(240, 7, 7); font-size: 17px;"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                
+                                    <!-- Rodapé -->
+                                    <div style="text-align: right; font-size: 13px; margin-top: 10px; color: #555;">
+                                        <i class="pli-scooter"></i> 5min &nbsp;
+                                        <i class="pli-clock"></i> 1799 min
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="kds-card processing" style="display: flex; padding: 0; overflow: hidden;">
+                                <!-- Bloco vermelho -->
+                                <div
+                                    style="background: #f44336; color: white; padding: 20px; text-align: center; font-weight: bold; min-width: 80px;">
+                                    <div style="font-size: 18px;">019</div>
+                                    <div style="font-size: 12px;">Aprovado</div>
+                                </div>
+                
+                                <!-- Conteúdo -->
+                                <div style="flex: 1; background: #ECE6FC; padding: 10px; position: relative;color: #555;">
+                                    <!-- Info -->
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                        <!-- Blocos de info agrupados -->
+                                        <div style="display: flex; gap: 20px;">
+                                            <div style="line-height: 1.5; font-size: 12px;">
+                                                <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-scooter"></i> Entrega
+                                                </div>
+                                                <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-support"></i><span
+                                                        class="badge bg-default-v2">LOCAL</span></div>
+                                                <div style="font-size: 13px;"><i class="pli-smartphone-3"></i> 10:16</div>
+                                            </div>
+                
+                                            <div style="line-height: 1.5; font-size: 12px;">
+                                                <div style="padding-bottom: 2px;font-size: 13px;">Marcio</div>
+                                                <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-smartphone-2"></i>(61)
+                                                    99673-6411
+                                                </div>
+                                                <div style="font-size: 13px;"><i class="pli-map-marker"></i> Taguatinga</div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Ações -->
+                                        <div style="display: flex; gap: 1px; align-items: center;">
+                                            <button type="button" style="background: none; border: none;color: #fff;padding: 5px;">
+                                                <i class="psi-yes btn-yes" style="color: rgb(3, 167, 3); font-size: 17px;"></i>
+                                            </button>
+                                            <button type="button" style="background: none; border: none;padding: 0px;">
+                                                <i class="psi-close btn-no" style="color: rgb(240, 7, 7); font-size: 17px;"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                
+                                    <!-- Rodapé -->
+                                    <div style="text-align: right; font-size: 13px; margin-top: 10px; color: #555;">
+                                        <i class="pli-scooter"></i> 5min &nbsp;
+                                        <i class="pli-clock"></i> 1799 min
+                                    </div>
+                                </div>
+                            </div>
+                
+                
+                            <div class="kds-card processing" style="display: flex; padding: 0; overflow: hidden;">
+                                <!-- Bloco vermelho -->
+                                <div
+                                    style="background: #f44336; color: white; padding: 20px; text-align: center; font-weight: bold; min-width: 80px;">
+                                    <div style="font-size: 18px;">020</div>
+                                    <div style="font-size: 12px;">Aprovado</div>
+                                </div>
+                
+                                <!-- Conteúdo -->
+                                <div style="flex: 1; background: #E5FBF3; padding: 10px; position: relative;color: #555;">
+                                    <!-- Info -->
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                        <!-- Blocos de info agrupados -->
+                                        <div style="display: flex; gap: 20px;">
+                                            <div style="line-height: 1.5; font-size: 12px;">
+                                            <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-scooter"></i> Entrega </div>
+                                            <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-support"></i><span
+                                                    class="badge bg-warning">SITE</span></div>
+                                            <div style="font-size: 13px;"><i class="pli-smartphone-3"></i> 10:16</div>
+                                        </div>
                     
-                    <div class="mt-1 d-flex justify-content-between align-items-center" >
-                  
-
-                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <div style="line-height: 1.5; font-size: 12px;">
+                                            <div style="padding-bottom: 2px;font-size: 13px;">Marcio</div>
+                                            <div style="padding-bottom: 2px;font-size: 13px;"><i class="pli-smartphone-2"></i>(61)
+                                                99673-6411
+                                            </div>
+                                            <div style="font-size: 13px;"><i class="pli-map-marker"></i> Taguatinga</div>
+                                        </div>
+                                    </div>
                     
+                                    <!-- Ações -->
+                                    <div style="display: flex; gap: 1px; align-items: center;">
+                                        <button type="button" style="background: none; border: none;color: #fff;padding: 5px;">
+                                            <i class="psi-yes btn-yes" style="color: rgb(3, 167, 3); font-size: 17px;"></i>
+                                        </button>
+                                        <button type="button" style="background: none; border: none;padding: 0px;">
+                                            <i class="psi-close btn-no" style="color: rgb(240, 7, 7); font-size: 17px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                    
+                                <!-- Rodapé -->
+                                <div style="text-align: right; font-size: 13px; margin-top: 10px; color: #555;">
+                                    <i class="pli-scooter"></i> 5min &nbsp;
+                                    <i class="pli-clock"></i> 1799 min
+                                </div>
+                            </div>
+                        </div>
+                                        
+                    </div>
+                      
+                      
+                      </div>
+                    
+                  </div>
+                </div>
+
+                <div class="col-sm-4 kds-column">
+                  <div class="h-100 card border-2 border-light mb-3">
+                    <div class="card-header toolbar">
+                      <div class="toolbar-start">
+                        <h4 class="h4-title"><i class="pli-check text-reset text-opacity-75 fs-5 me-2"></i> Prontos </h4>
+                      </div>
+                         <div class="toolbar-end">
+                            <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">0</span>
+                        </div>
+                    </div>
+                    <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
+                      <div class="col-12" style="font-size: 1.1em;">
+
+                      
                       
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="loading-backdrop" data-ng-if="loadingPositions">
-                  <i class="fa fa-2x fa-fw fa-pulse fa-spinner"></i>
-                </div>
-
-
-
-                <div data-ng-if="!vm.active.id">
-
-                  <div class="kds-top-actions">
-                    <button class="btn btn-success"><i class="fa fa-plus"></i> Novo Pedido</button>
-                    <button class="btn btn-info"><i class="fa fa-print"></i> Imprimir</button>
-                  </div>
-
-                  <div class="kds-container">
-                    <div class="kds-column">
-                      <div class="kds-column-header">
-                        <span>Novos</span>
-                        <span>0</span>
-                      </div>
-                      <div class="kds-column-content">
-                        <div class="kds-card">
-                          <div class="kds-card-header">
-                            <span>#01</span>
-                            <span class="kds-card-status new">Novo</span>
-                          </div>
-                          <div class="kds-card-body">
-                            <p><strong>Cliente:</strong> João Silva</p>
-                            <p><strong>Itens:</strong> Pizza Calabresa (G), Coca-Cola (2L)</p>
-                          </div>
-                          <div class="kds-card-footer">
-                            <span>10:00</span>
-                            <div class="kds-card-actions">
-                              <button class="btn btn-sm btn-primary">Processar</button>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="kds-card">
-                          <div class="kds-card-header">
-                            <span>#02</span>
-                            <span class="kds-card-status new">Novo</span>
-                          </div>
-                          <div class="kds-card-body">
-                            <p><strong>Cliente:</strong> Maria Souza</p>
-                            <p><strong>Itens:</strong> Pizza Frango c/ Catupiry (M), Suco de Laranja</p>
-                          </div>
-                          <div class="kds-card-footer">
-                            <span>10:05</span>
-                            <div class="kds-card-actions">
-                              <button class="btn btn-sm btn-primary">Processar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="kds-column">
-                      <div class="kds-column-header">
-                        <span>Processando</span>
-                        <span>4</span>
-                      </div>
-                      <div class="kds-column-content">
-                        <div class="kds-card processing">
-                          <div class="kds-card-header">
-                            <span>#03</span>
-                            <span class="kds-card-status approved">Aprovado</span>
-                          </div>
-                          <div class="kds-card-body">
-                            <p><strong>Cliente:</strong> Pedro Santos</p>
-                            <p><strong>Itens:</strong> Pizza Portuguesa (G), Água</p>
-                          </div>
-                          <div class="kds-card-footer">
-                            <span>10:10</span>
-                            <div class="kds-card-actions">
-                              <button class="btn btn-sm btn-success">Pronto</button>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="kds-card processing">
-                          <div class="kds-card-header">
-                            <span>#04</span>
-                            <span class="kds-card-status approved">Aprovado</span>
-                          </div>
-                          <div class="kds-card-body">
-                            <p><strong>Cliente:</strong> Ana Costa</p>
-                            <p><strong>Itens:</strong> Pizza Quatro Queijos (M), Cerveja</p>
-                          </div>
-                          <div class="kds-card-footer">
-                            <span>10:15</span>
-                            <div class="kds-card-actions">
-                              <button class="btn btn-sm btn-success">Pronto</button>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="kds-card processing">
-                          <div class="kds-card-header">
-                            <span>#05</span>
-                            <span class="kds-card-status approved">Aprovado</span>
-                          </div>
-                          <div class="kds-card-body">
-                            <p><strong>Cliente:</strong> Carlos Lima</p>
-                            <p><strong>Itens:</strong> Pizza Margherita (P), Refrigerante</p>
-                          </div>
-                          <div class="kds-card-footer">
-                            <span>10:20</span>
-                            <div class="kds-card-actions">
-                              <button class="btn btn-sm btn-success">Pronto</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="kds-column">
-                      <div class="kds-column-header">
-                        <span>Prontos</span>
-                        <span>0</span>
-                      </div>
-                      <div class="kds-column-content">
-                        <div class="kds-card ready">
-                          <div class="kds-card-header">
-                            <span>#06</span>
-                            <span class="kds-card-status delivery">Entrega</span>
-                          </div>
-                          <div class="kds-card-body">
-                            <p><strong>Cliente:</strong> Fernanda Alves</p>
-                            <p><strong>Itens:</strong> Pizza Brigadeiro (G)</p>
-                          </div>
-                          <div class="kds-card-footer">
-                            <span>10:25</span>
-                            <div class="kds-card-actions">
-                              <button class="btn btn-sm btn-info">Entregue</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="kds-bottom-actions">
-                    <button class="btn btn-secondary">Ajustar Tempo de Entrega</button>
-                    <div>
-                      <button class="btn btn-danger"><i class="fa fa-times"></i> Cancelar</button>
-                      <button class="btn btn-primary"><i class="fa fa-sync"></i> Atualizar</button>
-                    </div>
-                  </div>
-
-                </div>
               </div>
-            </div>                  
+
+            </div>
+
           </div>
-        </div>
+
       </article>
+
     </div>
+
   </div>
 
 </section>

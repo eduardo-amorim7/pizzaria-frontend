@@ -26,14 +26,14 @@
     background: #ecf0f5;
   }
 
-  .btn-light {
+  .btn-light{
     background: inherit;
   }
 
 
   .btn-light:hover {
     color: #373c43;
-    background-color: #ffffff;
+    background-color: #ffffff; 
     border-color: #e4e9f2;
   }
 
@@ -53,7 +53,7 @@
     height: 100%;
     background: rgba(255, 255, 255, 0.6);
     z-index: 2000;
-    text-align: center;
+    text-align: center;  
     padding-top: calc(25vh - 20px);
   }
 
@@ -62,47 +62,47 @@
   }
 
   .btn-group-link {
-    background-color: #FFF !important;
+    background-color: #FFF!important;
     border-radius: 4px;
-    color: #000 !important;
+    color: #000!important;
     margin: 0;
     height: 31px;
     width: 33px;
-    border: 2px solid rgba(0, 0, 0, 0.2) !important;
+    border: 2px solid rgba(0,0,0,0.2)!important;
     background-clip: padding-box;
-    box-shadow: none !important;
+    box-shadow: none!important;
     padding: 2px;
   }
 
-  .badge {
-    border-radius: 4px !important;
+  .badge{
+    border-radius: 4px!important;
     font-weight: 500;
     font-size: 0.83em;
     position: relative;
     left: 4px;
   }
 
-  .bg-light {
+  .bg-light{
     background-color: rgba(238, 238, 238, 1) !important;
     color: rgba(183, 183, 183, 1);
   }
 
-  .bg-success {
+  .bg-success{
     background-color: rgba(54, 165, 72, 1) !important;
     color: rgba(255, 255, 255, 1);
   }
 
-  .bg-warning {
+  .bg-warning{
     background-color: rgba(255, 180, 33, 0.4) !important;
     color: rgba(165, 144, 0, 1);
   }
 
-  .bg-active {
+  .bg-active{
     background-color: rgba(127, 204, 114, 0.26);
     color: rgba(127, 204, 114, 1);
   }
 
-  .status-badge {
+  .status-badge{ 
     font-size: medium;
     left: 10px;
     top: -4px;
@@ -114,17 +114,17 @@
   }
 
 
-  .center-img {
+  .center-img{
     justify-content: center;
     display: flex;
   }
 
-  .table-responsive .center-img {
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
+  .table-responsive .center-img{
+    padding-top:16px !important;
+    padding-bottom: 16px!important;
   }
 
-  .bg-icon-map {
+  .bg-icon-map{
 
     width: 38px;
     height: 37px;
@@ -138,9 +138,9 @@
     height: auto !important;
   }
 
-  figure img {
-    width: 60px !important;
-    height: 60px !important;
+  figure img{
+    width: 60px!important;
+    height: 60px!important;
   }
 
 
@@ -149,22 +149,22 @@
     border-radius: 4px;
   }
 
-  .page-actions .btn {
+  .page-actions .btn{
     font-size: .855rem;
     border-radius: 4px;
   }
 
-  .modal-content .btn {
+  .modal-content .btn{ 
     font-size: .8925rem;
     border-radius: 4px;
   }
 
-  .list-group-borderless {
+  .list-group-borderless{
     overflow-x: auto !important;
-    overflow-y: auto !important;
+    overflow-y: auto!important;
   }
 
-  .accordion-button::after {
+  .accordion-button::after{
     background-size: 20px;
     width: 1.2rem;
     height: 0.88rem;
@@ -176,51 +176,45 @@
   }
 
 
-  .detail-item .list-group-item-action:focus,
-  .detail-item .list-group-item-action:hover {
+  .detail-item .list-group-item-action:focus, .detail-item .list-group-item-action:hover{
     background-color: transparent;
 
   }
 
-  .detail-item {
+  .detail-item{
     padding: 0px 40px 0px 40px;
   }
 
-  .custom-col {
+  .custom-col{
     width: 94.66667%;
   }
 
-  .cursor-p {
-    cursor: pointer;
+  .cursor-p{
+    cursor:pointer;
   }
 
-  .border-header {
+  .border-header{
     border-bottom: 1px solid #eeeeee !important;
   }
 
   .custom-table th,
   .custom-table td {
-    white-space: nowrap;
-    /* Prevent text wrapping */
+    white-space: nowrap; /* Prevent text wrapping */
     overflow: hidden;
-    text-overflow: ellipsis;
-    /* Display ellipsis (...) for overflowing text */
+    text-overflow: ellipsis; /* Display ellipsis (...) for overflowing text */
   }
 
   @media (max-width: 767px) {
-
     .custom-table th,
     .custom-table td {
-      display: block;
-      /* Stack cells vertically on small screens */
+      display: block; /* Stack cells vertically on small screens */
       width: 100%;
       box-sizing: border-box;
     }
 
     .custom-table th {
       text-align: left;
-      background-color: #f8f9fa;
-      /* Optional: Highlight header background on small screens */
+      background-color: #f8f8f8; /* Optional: Highlight header background on small screens */
     }
   }
 
@@ -229,10 +223,13 @@
     display: flex;
     justify-content: space-around;
     padding: 9.8px;
-    min-height: calc(100vh - 100px);
-    /* Adjust based on header/footer height */
+    min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
   }
 
+  .kds-column {
+    
+
+  }
 
   .kds-column-header {
     background-color: #343a40;
@@ -264,14 +261,12 @@
   }
 
   .kds-card.processing {
-    background-color: #ffeeba;
-    /* Light yellow for processing */
+    background-color: #ffeeba; /* Light yellow for processing */
     border-color: #dfdfdf;
   }
 
   .kds-card.ready {
-    background-color: #d4edda;
-    /* Light green for ready */
+    background-color: #d4edda; /* Light green for ready */
     border-color: #28a745;
   }
 
@@ -346,145 +341,145 @@
     margin-left: 10px;
   }
 
-  .btn-yes:hover {
-    box-shadow: 0 0.1rem 0.5rem rgb(52 253 52 / 50%), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
-    background-color: rgba(3, 167, 3, 0.1);
-    border-radius: 4px;
-  }
+.btn-yes:hover {
+  box-shadow: 0 0.1rem 0.5rem rgb(52 253 52 / 50%), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
+  background-color: rgba(3, 167, 3, 0.1);
+  border-radius: 4px;
+}
 
-  .btn-no:hover {
-    box-shadow: 0 0.1rem 0.5rem rgb(255 79 79 / 50%), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
-    background-color: rgba(240, 7, 7, 0.1);
-    border-radius: 4px;
-  }
+.btn-no:hover {
+  box-shadow: 0 0.1rem 0.5rem rgb(255 79 79 / 50%), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
+  background-color: rgba(240, 7, 7, 0.1);
+  border-radius: 4px;
+}
 
-  .bg-default-v2 {
+.bg-default-v2{
     background-color: #c9c7cb;
     color: rgb(26 24 24);
-  }
+}
 
-  .card-header {
+.card-header {
     padding: .7375rem 1.25rem;
     min-height: 3rem;
     background-color: #333333fa;
     color: #f8f8f8;
 
-  }
+}
 
-  .card {
-    border: 0px solid #333333fa !important;
-  }
+.card {
+     border: 0px solid #333333fa!important;
+}
 
-  .card-header:first-child {
-    border-top-left-radius: 11px;
+.card-header:first-child {
+border-top-left-radius: 11px;
     border-top-right-radius: 11px;
-  }
+}
 
-  .h4-title {
-    font-size: 1rem;
+.h4-title{
+  font-size: 1rem;
     color: #f8f8f8;
-  }
+}
 
-  .input-search:hover {
+.input-search:hover {
     box-shadow: 0 0.1rem 0.5rem rgba(225, 231, 240, 0.5), 0 0.25rem 1rem rgba(55, 60, 67, 0.2);
-    border-color: #e4e9f2;
-  }
+border-color: #e4e9f2;
+}
 
 
-  .input-search:focus {
-    box-shadow: 0 0 0 1px #e1e7f0, 0 0 0.7rem 0.25rem rgba(225, 231, 240, 0.4) !important;
-    color: #788289;
+.input-search:focus {
+    box-shadow: 0 0 0 1px #e1e7f0, 0 0 0.7rem 0.25rem rgba(225, 231, 240, 0.4) !important;	
+	color: #788289;
     background-color: #f8f8f8;
-  }
+}
 
-  .border-2 {
-    border-radius: 14px !important;
-  }
+.border-2{
+  border-radius: 14px !important;
+}
 
 
-  .kds-card-wrapper {
+.kds-card-wrapper {
     display: flex;
     padding: 0;
     overflow: hidden;
-  }
+}
 
-  .kds-card-left-block {
+.kds-card-left-block {
     background: #f44336;
     color: white;
     padding: 20px;
     text-align: center;
     font-weight: bold;
     min-width: 80px;
-  }
+}
 
-  .kds-card-order-number {
+.kds-card-order-number {
     font-size: 18px;
-  }
+}
 
-  .kds-card-status-text {
+.kds-card-status-text {
     font-size: 12px;
-  }
+}
 
-  .kds-card-content-area {
+.kds-card-content-area {
     flex: 1;
     background: #ECE6FC;
     padding: 10px;
     position: relative;
     color: #555;
-  }
+}
 
-  .kds-card-info-section {
+.kds-card-info-section {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-  }
+}
 
-  .kds-card-info-group {
+.kds-card-info-group {
     display: flex;
     gap: 20px;
-  }
+}
 
-  .kds-card-info-item {
+.kds-card-info-item {
     line-height: 1.5;
     font-size: 12px;
-  }
+}
 
-  .kds-card-info-line {
+.kds-card-info-line {
     padding-bottom: 2px;
     font-size: 13px;
-  }
+}
 
-  .kds-card-actions-group {
+.kds-card-actions-group {
     display: flex;
     gap: 1px;
     align-items: center;
-  }
+}
 
-  .kds-card-action-btn {
+.kds-card-action-btn {
     background: none;
     border: none;
     color: #fff;
     padding: 5px;
-  }
+}
 
-  .kds-card-action-icon {
+.kds-card-action-icon {
     font-size: 17px;
-  }
+}
 
-  .kds-card-footer-section {
+.kds-card-footer-section {
     text-align: right;
     font-size: 13px;
     margin-top: 10px;
     color: #555;
-  }
+}
 
-  .kds-card-footer-icon {
+.kds-card-footer-icon {
     font-size: 13px;
-  }
+}
 
-  .kds-card-content-area.site-order {
+.kds-card-content-area.site-order {
     background: #E5FBF3;
-  }
+}
 </style>
 
 <section id="content" class="content inter">
@@ -561,37 +556,16 @@
                         <h4 class="h4-title"><i class="pli-bell text-reset text-opacity-75 fs-5 me-2"></i> Novos</h4>
                       </div>
                       <div class="toolbar-end">
-                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">0</span>
+                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">{{ (pedidos | filter:{column:'novos'}).length }}</span>
                       </div>
                     </div>
                     <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
                       <div class="col-12" style="font-size: 1.1em;">
-
-
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-4 kds-column">
-                  <div class="h-100 card border-2 border-light mb-3">
-                    <div class="card-header toolbar">
-                      <div class="toolbar-start">
-                        <h4 class="h4-title"><i class="pli-refresh text-reset text-opacity-75 fs-5 me-2"></i>
-                          Processando</h4>
-                      </div>
-                      <div class="toolbar-end">
-                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';"> #!{ pedidos.length }!#</span>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <div class="kds-column-content">
-                        <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos">
+                        <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'novos'}">
                           <!-- Bloco vermelho -->
                           <div class="kds-card-left-block">
-                            <div class="kds-card-order-number">#!{ pedido.id }!#</div>
-                            <div class="kds-card-status-text">#!{ pedido.status }!#</div>
+                            <div class="kds-card-order-number">{{ pedido.id }}</div>
+                            <div class="kds-card-status-text">{{ pedido.status }}</div>
                           </div>
 
                           <!-- Conteúdo -->
@@ -601,19 +575,19 @@
                               <!-- Blocos de info agrupados -->
                               <div class="kds-card-info-group">
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> #!{ pedido.type }!#
+                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> {{ pedido.type }}
                                   </div>
                                   <div class="kds-card-info-line"><i class="pli-support"></i><span class="badge"
-                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">#!{pedido.source }!#</span></div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> #!{ pedido.time }!#
+                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">{{pedido.source }}</span></div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> {{ pedido.time }}
                                   </div>
                                 </div>
 
                                 <div class="kds-card-info-item">
-                                  <div class="kds-card-info-line">#!{ pedido.client }!#</div>
-                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>#!{ pedido.phone }!#
+                                  <div class="kds-card-info-line">{{ pedido.client }}</div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>{{ pedido.phone }}
                                   </div>
-                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> #!{ pedido.address }!#
+                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> {{ pedido.address }}
                                   </div>
                                 </div>
                               </div>
@@ -631,8 +605,75 @@
 
                             <!-- Rodapé -->
                             <div class="kds-card-footer-section">
-                              <i class="pli-scooter kds-card-footer-icon"></i> #!{ pedido.deliveryTime }!# &nbsp;
-                              <i class="pli-clock kds-card-footer-icon"></i> #!{ pedido.preparationTime }!#
+                              <i class="pli-scooter kds-card-footer-icon"></i> {{ pedido.deliveryTime }} &nbsp;
+                              <i class="pli-clock kds-card-footer-icon"></i> {{ pedido.preparationTime }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 kds-column">
+                  <div class="h-100 card border-2 border-light mb-3">
+                    <div class="card-header toolbar">
+                      <div class="toolbar-start">
+                        <h4 class="h4-title"><i class="pli-refresh text-reset text-opacity-75 fs-5 me-2"></i>
+                          Processando</h4>
+                      </div>
+                      <div class="toolbar-end">
+                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">{{ (pedidos | filter:{column:'processando'}).length }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="kds-column-content">
+                        <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'processando'}">
+                          <!-- Bloco vermelho -->
+                          <div class="kds-card-left-block">
+                            <div class="kds-card-order-number">{{ pedido.id }}</div>
+                            <div class="kds-card-status-text">{{ pedido.status }}</div>
+                          </div>
+
+                          <!-- Conteúdo -->
+                          <div class="kds-card-content-area" ng-class="{'site-order': pedido.source === 'SITE'}">
+                            <!-- Info -->
+                            <div class="kds-card-info-section">
+                              <!-- Blocos de info agrupados -->
+                              <div class="kds-card-info-group">
+                                <div class="kds-card-info-item">
+                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> {{ pedido.type }}
+                                  </div>
+                                  <div class="kds-card-info-line"><i class="pli-support"></i><span class="badge"
+                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">{{pedido.source }}</span></div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> {{ pedido.time }}
+                                  </div>
+                                </div>
+
+                                <div class="kds-card-info-item">
+                                  <div class="kds-card-info-line">{{ pedido.client }}</div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>{{ pedido.phone }}
+                                  </div>
+                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> {{ pedido.address }}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Ações -->
+                              <div class="kds-card-actions-group">
+                                <button type="button" class="kds-card-action-btn">
+                                  <i class="psi-yes btn-yes kds-card-action-icon" style="color: rgb(3, 167, 3);"></i>
+                                </button>
+                                <button type="button" class="kds-card-action-btn" style="padding: 0px;">
+                                  <i class="psi-close btn-no kds-card-action-icon" style="color: rgb(240, 7, 7);"></i>
+                                </button>
+                              </div>
+                            </div>
+
+                            <!-- Rodapé -->
+                            <div class="kds-card-footer-section">
+                              <i class="pli-scooter kds-card-footer-icon"></i> {{ pedido.deliveryTime }} &nbsp;
+                              <i class="pli-clock kds-card-footer-icon"></i> {{ pedido.preparationTime }}
                             </div>
                           </div>
                         </div>
@@ -650,14 +691,60 @@
                         </h4>
                       </div>
                       <div class="toolbar-end">
-                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">0</span>
+                        <span style="font-size: 15px;font-weight: 500;font-family: 'Inter';">{{ (pedidos | filter:{column:'prontos'}).length }}</span>
                       </div>
                     </div>
                     <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
                       <div class="col-12" style="font-size: 1.1em;">
+                        <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'prontos'}">
+                          <!-- Bloco vermelho -->
+                          <div class="kds-card-left-block">
+                            <div class="kds-card-order-number">{{ pedido.id }}</div>
+                            <div class="kds-card-status-text">{{ pedido.status }}</div>
+                          </div>
 
+                          <!-- Conteúdo -->
+                          <div class="kds-card-content-area" ng-class="{'site-order': pedido.source === 'SITE'}">
+                            <!-- Info -->
+                            <div class="kds-card-info-section">
+                              <!-- Blocos de info agrupados -->
+                              <div class="kds-card-info-group">
+                                <div class="kds-card-info-item">
+                                  <div class="kds-card-info-line"><i class="pli-scooter"></i> {{ pedido.type }}
+                                  </div>
+                                  <div class="kds-card-info-line"><i class="pli-support"></i><span class="badge"
+                                      ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">{{pedido.source }}</span></div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-3"></i> {{ pedido.time }}
+                                  </div>
+                                </div>
 
+                                <div class="kds-card-info-item">
+                                  <div class="kds-card-info-line">{{ pedido.client }}</div>
+                                  <div class="kds-card-info-line"><i class="pli-smartphone-2"></i>{{ pedido.phone }}
+                                  </div>
+                                  <div class="kds-card-info-line"><i class="pli-map-marker"></i> {{ pedido.address }}
+                                  </div>
+                                </div>
+                              </div>
 
+                              <!-- Ações -->
+                              <div class="kds-card-actions-group">
+                                <button type="button" class="kds-card-action-btn">
+                                  <i class="psi-yes btn-yes kds-card-action-icon" style="color: rgb(3, 167, 3);"></i>
+                                </button>
+                                <button type="button" class="kds-card-action-btn" style="padding: 0px;">
+                                  <i class="psi-close btn-no kds-card-action-icon" style="color: rgb(240, 7, 7);"></i>
+                                </button>
+                              </div>
+                            </div>
+
+                            <!-- Rodapé -->
+                            <div class="kds-card-footer-section">
+                              <i class="pli-scooter kds-card-footer-icon"></i> {{ pedido.deliveryTime }} &nbsp;
+                              <i class="pli-clock kds-card-footer-icon"></i> {{ pedido.preparationTime }}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -676,3 +763,7 @@
   </div>
 
 </section>
+
+
+
+

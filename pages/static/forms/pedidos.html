@@ -399,12 +399,17 @@ border-color: #e4e9f2;
 }
 
 .kds-card-left-block {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     background: #f44336;
     color: white;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     font-weight: bold;
-    min-width: 80px;
+       min-width: 23%;
+       max-width: 23%;
+    flex-direction: column;
 }
 
 .kds-card-order-number {
@@ -475,6 +480,11 @@ border-color: #e4e9f2;
 .kds-card-content-area.site-order {
     background: #E5FBF3;
 }
+
+.modal-header {
+    align-items: center !important;
+    justify-content: center !important;
+}
 </style>
 
 <section id="content" class="content inter">
@@ -491,7 +501,7 @@ border-color: #e4e9f2;
 
       <div class="mt-1 d-flex justify-content-between align-items-center"
         style="margin-top: 1.05rem !important;align-items: flex-start!important;">
-        <div class="col-md-6 col-lg-6">
+        <div class="col-md-6 col-lg-6" style="padding-right: 14px;">
           <input type="text" aria-haspopup="true"
             class="form-control input-sm input-search ng-valid ng-valid-maxlength ng-dirty ng-valid-parse ng-empty ng-touched"
             id="txt-finder-term" placeholder="Buscar" ng-change="changeFilter(textFilter)"
@@ -502,14 +512,22 @@ border-color: #e4e9f2;
         </div>
 
         <div class="col-md-5 col-lg-5 d-flex">
-          <div class="d-grid gap-2 d-md-flex  page-actions" style="padding-right: 20px;">
-            <button type="button" class="btn btn-light hstack gap-2" style="color:#788289;background-color: #f8f8f8;">
+          <div class="d-grid gap-2 d-md-flex  page-actions" style="padding-right: 18px;">
+            <button type="button" class="btn btn-light hstack" style="padding-left: 10px;
+    font-size: 0.725rem;
+    display: flex;
+    color: #788289;
+    background-color: #f8f8f8;
+    flex-direction: column;
+    height: 40px;
+    justify-content: center;
+    padding-right: 10px;">
               <i class="btn-label pli-scooter fs-5"></i>
               Entrega
             </button>
           </div>
           <div class="d-grid gap-2 d-md-flex  page-actions">
-            <button type="button" class="btn btn-light hstack gap-2" style="color:#788289;background-color: #f8f8f8;">
+            <button type="button" class="btn btn-light hstack" style="padding-left: 10px;font-size: 0.725rem;display: flex;color: #788289;background-color: #f8f8f8;flex-direction: column;height: 40px;justify-content: center;padding-right: 10px;">
               <i class="btn-label pli-aim fs-5"></i>
               Retirada
             </button>
@@ -589,10 +607,11 @@ border-color: #e4e9f2;
 
                               <!-- Ações -->
                               <div class="kds-card-actions-group">
-                                <button type="button" class="kds-card-action-btn">
+
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#newModal" class="kds-card-action-btn" ng-click="cardAction(pedido.id, 'A')">
                                   <i class="psi-yes btn-yes kds-card-action-icon" style="color: rgb(3, 167, 3);"></i>
                                 </button>
-                                <button type="button" class="kds-card-action-btn" style="padding: 0px;">
+                                <button type="button" class="kds-card-action-btn" style="padding: 0px;" data-bs-toggle="modal" data-bs-target="#cancelModal" ng-click="cardAction(pedido.id, 'C')">
                                   <i class="psi-close btn-no kds-card-action-icon" style="color: rgb(240, 7, 7);"></i>
                                 </button>
                               </div>
@@ -656,10 +675,10 @@ border-color: #e4e9f2;
 
                               <!-- Ações -->
                               <div class="kds-card-actions-group">
-                                <button type="button" class="kds-card-action-btn">
-                                  <i class="psi-yes btn-yes kds-card-action-icon" style="color: rgb(3, 167, 3);"></i>
+                                <button type="button" class="kds-card-action-btn" data-bs-toggle="modal" data-bs-target="#processModal" ng-click="cardAction(pedido.id, 'P')">
+                                  <i class="psi-yes btn-yes kds-card-action-icon"  style="color: rgb(3, 167, 3);" ></i>
                                 </button>
-                                <button type="button" class="kds-card-action-btn" style="padding: 0px;">
+                                <button type="button" class="kds-card-action-btn" style="padding: 0px;" data-bs-toggle="modal" data-bs-target="#cancelModal" ng-click="cardAction(pedido.id, 'C')">
                                   <i class="psi-close btn-no kds-card-action-icon" style="color: rgb(240, 7, 7);"></i>
                                 </button>
                               </div>
@@ -724,10 +743,10 @@ border-color: #e4e9f2;
 
                               <!-- Ações -->
                               <div class="kds-card-actions-group">
-                                <button type="button" class="kds-card-action-btn">
+                                <button type="button" class="kds-card-action-btn" data-bs-toggle="modal" data-bs-target="#finishModal" ng-click="cardAction(pedido.id, 'F')">
                                   <i class="psi-yes btn-yes kds-card-action-icon" style="color: rgb(3, 167, 3);"></i>
                                 </button>
-                                <button type="button" class="kds-card-action-btn" style="padding: 0px;">
+                                <button type="button" class="kds-card-action-btn" style="padding: 0px;" data-bs-toggle="modal" data-bs-target="#cancelModal" ng-click="cardAction(pedido.id, 'C')">
                                   <i class="psi-close btn-no kds-card-action-icon" style="color: rgb(240, 7, 7);"></i>
                                 </button>
                               </div>
@@ -756,6 +775,112 @@ border-color: #e4e9f2;
     </div>
 
   </div>
+
+  <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+         <i class="pli-question" style="font-size: 60px;"></i>
+      </div>
+      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
+        Confirmar cancelamento  <br>
+        do pedido <b>016</b> ?
+                 </div>
+      <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
+        <button type="button" class="btn btn-light bg-light hstack gap-2" style="color: rgba(104, 104, 104, 1);font-weight: 500;" data-bs-dismiss="modal">
+            <i class="btn-label pli-close fs-5"></i>
+              <span class="vr"></span>
+          Não
+        </button>
+        <button type="button" class="btn btn-success hstack gap-2" ng-click="removePedido()"  data-bs-dismiss="modal">
+            <i class="btn-label pli-yes fs-5"></i>
+              <span class="vr"></span>
+          Sim
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="modal fade" id="finishModal" tabindex="-1" aria-labelledby="finishModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+         <i class="pli-question" style="font-size: 60px;"></i>
+      </div>
+      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
+        Confirma que o pedido <b>016</b> foi <br>
+        Despachado para entrega?
+                 </div>
+      <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
+        <button type="button" class="btn btn-light bg-light hstack gap-2" style="color: rgba(104, 104, 104, 1);font-weight: 500;" data-bs-dismiss="modal">
+            <i class="btn-label pli-close fs-5"></i>
+              <span class="vr"></span>
+          Não
+        </button>
+        <button type="button" class="btn btn-success hstack gap-2" ng-click="confirmPedido()"  data-bs-dismiss="modal">
+            <i class="btn-label pli-yes fs-5"></i>
+              <span class="vr"></span>
+          Sim
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="processModal" tabindex="-1" aria-labelledby="processModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+         <i class="pli-question" style="font-size: 60px;"></i>
+      </div>
+      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
+        Confirma que o pedido <b>016</b> foi <br>
+        Finalizado na Produção?
+                 </div>
+      <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
+        <button type="button" class="btn btn-light bg-light hstack gap-2" style="color: rgba(104, 104, 104, 1);font-weight: 500;" data-bs-dismiss="modal">
+            <i class="btn-label pli-close fs-5"></i>
+              <span class="vr"></span>
+          Não
+        </button>
+        <button type="button" class="btn btn-success hstack gap-2" ng-click="confirmPedido()"  data-bs-dismiss="modal">
+            <i class="btn-label pli-yes fs-5"></i>
+              <span class="vr"></span>
+          Sim
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+         <i class="pli-question" style="font-size: 60px;"></i>
+      </div>
+      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
+        Confirma que o pedido <b>016</b> vai <br>
+        Iniciar a Produção?
+                 </div>
+      <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
+        <button type="button" class="btn btn-light bg-light hstack gap-2" style="color: rgba(104, 104, 104, 1);font-weight: 500;" data-bs-dismiss="modal">
+            <i class="btn-label pli-close fs-5"></i>
+              <span class="vr"></span>
+          Não
+        </button>
+        <button type="button" class="btn btn-success hstack gap-2" ng-click="confirmPedido()"  data-bs-dismiss="modal">
+            <i class="btn-label pli-yes fs-5"></i>
+              <span class="vr"></span>
+          Sim
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </section>
 

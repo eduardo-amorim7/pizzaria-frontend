@@ -120,6 +120,11 @@ angular.module('vdo.spa').controller('PedidosPageController', function($scope, $
 
   }
 
+ $scope.cardAction = function(id, action) {
+console.log('id, action', id, action);
+  };
+  
+
 
   if(!$scope.vm.active.id){
     findPedidos();

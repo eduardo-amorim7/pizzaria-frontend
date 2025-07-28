@@ -485,6 +485,12 @@ border-color: #e4e9f2;
     align-items: center !important;
     justify-content: center !important;
 }
+
+@media (max-width: 1536px) {
+    .input-search-div {
+        padding-right: 14px;
+    }
+}
 </style>
 
 <section id="content" class="content inter">
@@ -501,7 +507,7 @@ border-color: #e4e9f2;
 
       <div class="mt-1 d-flex justify-content-between align-items-center"
         style="margin-top: 1.05rem !important;align-items: flex-start!important;">
-        <div class="col-md-6 col-lg-6" style="padding-right: 14px;">
+        <div class="col-md-6 col-lg-6 input-search-div">
           <input type="text" aria-haspopup="true"
             class="form-control input-sm input-search ng-valid ng-valid-maxlength ng-dirty ng-valid-parse ng-empty ng-touched"
             id="txt-finder-term" placeholder="Buscar" ng-change="changeFilter(textFilter)"

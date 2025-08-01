@@ -582,7 +582,7 @@ border-color: #e4e9f2;
                       <div class="col-12" style="font-size: 1.1em;">
                         <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'novos'}">
                           <!-- Bloco vermelho -->
-                          <div class="kds-card-left-block">
+                          <div class="kds-card-left-block" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="infoCard(pedido)">
                             <div class="kds-card-order-number">#!{ pedido.id }!#</div>
                             <div class="kds-card-status-text">#!{ pedido.status }!#</div>
                           </div>
@@ -646,11 +646,11 @@ border-color: #e4e9f2;
                       </div>
                     </div>
 
-                    <div class="col-12">
-                      <div class="kds-column-content">
+                       <div class="card-body" style="min-height: 248px; padding-top: 1.5rem;">
+                      <div class="col-12" style="font-size: 1.1em;">
                         <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'processando'}">
                           <!-- Bloco vermelho -->
-                          <div class="kds-card-left-block">
+                          <div class="kds-card-left-block" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="infoCard(pedido)">
                             <div class="kds-card-order-number">#!{ pedido.id }!#</div>
                             <div class="kds-card-status-text">#!{ pedido.status }!#</div>
                           </div>
@@ -718,7 +718,7 @@ border-color: #e4e9f2;
                       <div class="col-12" style="font-size: 1.1em;">
                         <div class="kds-card kds-card-wrapper processing" ng-repeat="pedido in pedidos | filter:{column:'prontos'}">
                           <!-- Bloco vermelho -->
-                          <div class="kds-card-left-block">
+                          <div class="kds-card-left-block" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="infoCard(pedido)">
                             <div class="kds-card-order-number">#!{ pedido.id }!#</div>
                             <div class="kds-card-status-text">#!{ pedido.status }!#</div>
                           </div>
@@ -783,14 +783,14 @@ border-color: #e4e9f2;
   </div>
 
   <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+      <div class="modal-header" style="border-bottom: 0px;padding: 2rem 1rem 1rem 1rem;">
          <i class="pli-question" style="font-size: 60px;"></i>
       </div>
-      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
+      <div class="modal-body" style="text-align: center;font-size: 18px;padding: 1rem 1rem 1rem 1rem;">
         Confirmar cancelamento  <br>
-        do pedido <b>016</b> ?
+        do pedido <b>#!{ selectedOrderId }!#</b> ?
                  </div>
       <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
         <button type="button" class="btn btn-light bg-light hstack gap-2" style="color: rgba(104, 104, 104, 1);font-weight: 500;" data-bs-dismiss="modal">
@@ -810,13 +810,13 @@ border-color: #e4e9f2;
 
 
   <div class="modal fade" id="finishModal" tabindex="-1" aria-labelledby="finishModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+      <div class="modal-header" style="border-bottom: 0px;padding: 2rem 1rem 1rem 1rem;">
          <i class="pli-question" style="font-size: 60px;"></i>
       </div>
-      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
-        Confirma que o pedido <b>016</b> foi <br>
+      <div class="modal-body" style="text-align: center;font-size: 18px;padding: 1rem 1rem 1rem 1rem;">
+        Confirma que o pedido <b> #!{ selectedOrderId }!#</b> foi <br>
         Despachado para entrega?
                  </div>
       <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
@@ -836,13 +836,13 @@ border-color: #e4e9f2;
 </div>
 
 <div class="modal fade" id="processModal" tabindex="-1" aria-labelledby="processModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+      <div class="modal-header" style="border-bottom: 0px;padding: 2rem 1rem 1rem 1rem;">
          <i class="pli-question" style="font-size: 60px;"></i>
       </div>
-      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
-        Confirma que o pedido <b>016</b> foi <br>
+      <div class="modal-body" style="text-align: center;font-size: 18px;padding: 1rem 1rem 1rem 1rem;">
+        Confirma que o pedido <b>#!{ selectedOrderId }!#</b> foi <br>
         Finalizado na Produção?
                  </div>
       <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
@@ -863,13 +863,13 @@ border-color: #e4e9f2;
 
 
   <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header" style="border-bottom: 0px;padding: 1rem;">
+      <div class="modal-header" style="border-bottom: 0px;padding: 2rem 1rem 1rem 1rem;">
          <i class="pli-question" style="font-size: 60px;"></i>
       </div>
-      <div class="modal-body" style="text-align: center;font-size: 15px;padding: 1rem 1rem 1rem 1rem;">
-        Confirma que o pedido <b>016</b> vai <br>
+      <div class="modal-body" style="text-align: center;font-size: 18px;padding: 1rem 1rem 1rem 1rem;">
+        Confirma que o pedido <b>#!{ selectedOrderId }!#</b> vai <br>
         Iniciar a Produção?
                  </div>
       <div class="modal-footer" style="border-top: 0px;justify-content: center;padding: 0.75rem 0px 2rem 0px;">
@@ -883,6 +883,106 @@ border-color: #e4e9f2;
               <span class="vr"></span>
           Sim
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content p-4" style="font-family: Arial, sans-serif; font-size: 13px; color: #000;">
+      
+      <div class="modal-header pb-0 border-0 d-flex justify-content-between align-items-start">
+        <div>
+          <h5 class="modal-title fw-bold mb-1">Informações do Pedido</h5>
+          <span style="color: #666;">Registrado em #!{pedido.dataRegistro}!# #!{pedido.horaRegistro}!#</span>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body pt-3 pb-2">
+        <div class="row mb-2">
+          <div class="col-6"><strong>Pedido:</strong> #!{pedido.numero}!#</div>
+          <div class="col-6 text-end"><strong>Registrado em:</strong> #!{pedido.dataRegistro}!# #!{pedido.horaRegistro}!#</div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-6"><strong>Origem:</strong> <span class="badge bg-primary">LOCAL</span></div>
+          <div class="col-6 text-end"><strong>Qtd. pedidos:</strong> #!{pedido.qtdPedidos}!#</div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-6"><strong>Modalidade:</strong> ENTREGA</div>
+          <div class="col-6 text-end"><strong>Telefone:</strong> #!{pedido.telefone}!#</div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-12"><strong>Cliente:</strong> #!{pedido.cliente}!#</div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-12">
+            <strong>Endereço:</strong><br>
+            <div style="background-color: #badefc; padding: 6px 10px; border-radius: 4px;">
+              #!{pedido.endereco}!#
+            </div>
+          </div>
+        </div>
+
+        <div class="row my-2">
+          <div class="col-12"><strong>Observação:</strong> #!{pedido.observacao}!#</div>
+        </div>
+
+        <hr>
+
+        <div class="row mb-2">
+          <div class="col-12">
+            <strong>#!{pedido.produto}!#</strong> - #!{pedido.ingredientes}!#
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 text-end"><strong>R$ #!{pedido.valor}!#</strong></div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 text-center text-muted">Sem bebidas</div>
+        </div>
+
+        <hr>
+
+        <div class="row mb-2 small">
+          <div class="col-6"><strong>Taxa de Entrega:</strong></div>
+          <div class="col-6 text-end">Grátis</div>
+
+          <div class="col-6"><strong>Acréscimo:</strong></div>
+          <div class="col-6 text-end">Sem acréscimo</div>
+
+          <div class="col-6"><strong>Desconto:</strong></div>
+          <div class="col-6 text-end">Sem desconto</div>
+
+          <div class="col-6"><strong>Cupons:</strong></div>
+          <div class="col-6 text-end">Sem Cupom</div>
+
+          <div class="col-6"><strong>Formas de Pagamento:</strong></div>
+          <div class="col-6 text-end" style="color: #c0392b;">Cartão Alimentação (Já Pago)</div>
+        </div>
+
+        <hr>
+
+        <div class="row fw-bold">
+          <div class="col-6">Total:</div>
+          <div class="col-6 text-end" style="color: #28a745;">R$ #!{pedido.total}!#</div>
+
+          <div class="col-6">Subtotal:</div>
+          <div class="col-6 text-end" style="color: #28a745;">R$ #!{pedido.subtotal}!#</div>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0 pt-3 justify-content-end">
+        <button type="button" class="btn btn-light border me-2" data-bs-dismiss="modal" style="min-width: 100px;">Fechar</button>
+        <button type="button" class="btn btn-dark" style="min-width: 100px;" ng-click="printPedido()">Imprimir</button>
       </div>
     </div>
   </div>

@@ -122,6 +122,29 @@ angular.module('vdo.spa').controller('PedidosPageController', function($scope, $
 
  $scope.cardAction = function(id, action) {
 console.log('id, action', id, action);
+
+$scope.selectedOrderId = id;
+  };
+  
+
+  $scope.infoCard = function(pedido) {
+       
+$scope.pedido = {
+  numero: '016',
+  dataRegistro: '30/06/2025',
+  horaRegistro: '14:59',
+  cliente: 'manoela',
+  telefone: '(49) 8 8545-1243',
+  endereco: 'Rua Irmãos Vieira, 345, Campinas, São José - SC',
+  observacao: '',
+  qtdPedidos: 3,
+  produto: '01 - Esfiha Gigante',
+  ingredientes: '01 - Champignon',
+  valor: '89,90',
+  total: '89,90',
+  subtotal: '89,90'
+};
+        $scope.selectedOrderId = pedido.id;
   };
   
 

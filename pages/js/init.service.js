@@ -143,3 +143,4 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
         'promise': d.promise
     };
 });
+

@@ -80,8 +80,8 @@ angular.module('vdo.spa').controller('MainPageController', function ($scope, $ti
         var result = {
             "data": {
                  "comparativo": {
-                "linhas_iniciadas": 0,
-                "linhas_nao_iniciadas": 1
+                "linhas_iniciadas": 4,
+                "linhas_nao_iniciadas": 7
             },
             "geral": {
                 "linhas_sem_veiculo": 1,

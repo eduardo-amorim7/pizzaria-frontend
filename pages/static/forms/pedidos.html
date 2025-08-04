@@ -366,8 +366,8 @@
 }
 
 .card-header:first-child {
-border-top-left-radius: 11px;
-    border-top-right-radius: 11px;
+border-top-left-radius: 3px;
+    border-top-right-radius:3px;
 }
 
 .h4-title{
@@ -491,10 +491,14 @@ border-color: #e4e9f2;
         padding-right: 14px;
     }
 }
+
+  .hd--expanded .content__header:not(.overlapping):not(.rounded-0) {
+    min-height: auto;
+}
 </style>
 
 <section id="content" class="content inter">
-  <div class="content__header content__boxed overlapping">
+  <div class="content__header content__boxed ">
     <div class="content__wrap">
       <!-- Breadcrumb -->
       <nav aria-label="breadcrumb" style="margin-top: 18.57px;">
@@ -553,9 +557,7 @@ border-color: #e4e9f2;
       </div>
 
     </div>
-    <h1 class="page-title mb-0 mt-2"></h1>
-
-    <p class="lead"></p>
+   
 
   </div>
 

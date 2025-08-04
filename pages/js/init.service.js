@@ -27,7 +27,7 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
 
 
     function routes(vm) {
-        $log.debug('::vm ', vm);
+        $log.debug('routes::vm ', vm);
 
         /* return $http.get('/api/context/v1/routes.json?_='+$rootScope.spa.sessionId).then(function(result) {
         
@@ -44,6 +44,16 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
                 "icon": "pli-bar-chart-4",
                 "edit": false
             },
+             {
+            "id": "kdsmonitor",
+            "path": "/kdsmonitor",
+            "template" : "/static/forms/kdsmonitor",
+            "controller": "KDSMonitorPageController",
+            "group": "bus_control",
+            "title": "KDS Monitor",
+            "icon": "pli-monitor-2",
+            "edit": false
+            },
             {
             'id': 'pedidos',
             'path': '/pedidos',
@@ -53,7 +63,8 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
             'title': 'Pedidos',
             'icon': 'pli-list-view',
             'edit': false
-            },{
+            },
+            {
             'id': 'despachos',
             'path': '/despachos',
             'template' : '/static/forms/despachos',
@@ -134,7 +145,7 @@ angular.module('vdo.spa').service('InitService', function ($log, $q, $http, $roo
         'init': function (vm) {
 
             ctx(vm);
-            routes();
+            routes(vm);
             $rootScope.$broadcast('rotasCarregadas');
             done(vm);
                 

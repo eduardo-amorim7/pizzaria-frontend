@@ -1,0 +1,207 @@
+<style>
+    .kds-monitor-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+        justify-content: center;
+    }
+
+    .kds-monitor-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        overflow: hidden;
+    }
+
+    .kds-monitor-header {
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .card {
+        border-top-right-radius: 0px;
+        border-top-left-radius: px;
+    }
+
+
+
+    .kds-monitor-header.ifood-pickup {
+        background-color: #FFD700;
+        /* Amarelo */
+        color: #333;
+    }
+
+    .kds-monitor-header.site-entrega {
+        background-color: #2F80ED;
+        /* Azul */
+        color: #333;
+    }
+
+
+    .kds-monitor-header-title {
+        background-color: #e0e0e0;
+        color: #333;
+        text-align: center;
+        padding: 2px 5px 2px 5px;
+    }
+
+
+    .kds-monitor-source-type {
+        display: flex;
+        gap: 5px;
+    }
+
+    .kds-monitor-source,
+    .kds-monitor-type {
+        background-color: rgba(255, 255, 255, 0.3);
+        padding: 5px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+    }
+
+    .kds-monitor-order-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .kds-monitor-order-number {
+        font-size: 1.5em;
+    }
+
+    .kds-monitor-timer {
+        font-size: 1em;
+    }
+
+    .kds-monitor-body {
+        padding: 15px;
+    }
+
+    .kds-monitor-item {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .kds-monitor-item-details {
+        flex-grow: 1;
+    }
+
+    .kds-monitor-item-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .kds-monitor-item-options span {
+        background-color: #e0e0e0;
+        padding: 3px 6px;
+        border-radius: 3px;
+        font-size: 0.8em;
+        margin-right: 5px;
+        display: inline-block;
+        margin-top: 3px;
+    }
+
+    .kds-monitor-item-action i {
+        font-size: 1.5em;
+        color: #28a745;
+        /* Verde */
+    }
+
+    .kds-monitor-item-action i.warning {
+        color: #ffc107;
+        /* Amarelo */
+    }
+
+    .hd--expanded .content__header:not(.overlapping):not(.rounded-0) {
+        min-height: auto;
+    }
+
+    .kds-monitor-timer-icon {
+        right: 1px;
+        position: relative;
+        font-size: 13px !important;
+        bottom: 2px;
+    }
+</style>
+
+<section id="content" class="content inter">
+    <div class="content__header content__boxed">
+        <div class="content__wrap">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" style="margin-top: 18.57px;">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/#!/home">Início</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">KDS Monitor</li>
+                </ol>
+            </nav>
+            <!-- END : Breadcrumb -->
+            <h1 class="page-title mb-0 mt-2"></h1>
+
+            <p class="lead">
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="content__boxed">
+        <div class="content__wrap">
+            <article class="col-xl-12 mb-3 mb-xl-0">
+                <div class="flex-fill">
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3" ng-repeat="pedido in pedidos">
+                            <div class="card">
+                                <div class="kds-monitor-header-title">
+                                    Pizzaria Trial - 01
+                                </div>
+                                <div class="kds-monitor-header #!{pedido.classe}!#">
+                                    <div class="toolbar-start kds-monitor-source-type">
+                                        <span class="kds-monitor-source">#!{pedido.canal}!#</span>
+                                        <span class="kds-monitor-type">#!{pedido.tipo}!#</span>
+                                    </div>
+
+                                    <div class="kds-monitor-order-info">
+                                        <span class="kds-monitor-order-number">#!{pedido.numero}!#</span>
+                                        <span class="kds-monitor-timer"><i
+                                                class="pli-overtime-2 kds-monitor-timer-icon"></i>#!{pedido.tempo}!#</span>
+                                    </div>
+                                </div>
+                                <div class="card-body kds-monitor-body">
+                                    <div class="kds-monitor-item" ng-repeat="item in pedido.itens">
+                                        <div class="kds-monitor-item-details">
+                                            <div class="kds-monitor-item-name">#!{item.nome}!#</div>
+                                            <div class="kds-monitor-item-options">
+                                                <span ng-repeat="opc in item.opcoes">#!{opc}!#</span>
+                                            </div>
+                                        </div>
+                                        <div class="kds-monitor-item-action">
+                                            <i class="#!{item.icone}!#"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>

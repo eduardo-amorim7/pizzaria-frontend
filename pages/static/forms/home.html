@@ -68,7 +68,7 @@
 
       <h2 class="h2" style="margin-top: 25px"><span class="h2"
           style="font-weight: 400;margin-top: 25px;color: #fff">Olá,</span> #!{ spa.user.name }!#</h2>
-      <p style="font-size:14.3px">Seja bem-vindo ao Bus Control<br></p>
+      <p style="font-size:14.3px">Seja bem-vindo ao G Foods<br></p>
 
     </div>
   </div>
@@ -79,43 +79,87 @@
         <div class="flex-fill">
           <div class="row">
             <div class="col-xl-7 mb-3 mb-xl-0">
+
               <div class="card h-100">
-
-                <div class="card-header toolbar d-flex align-items-center border-light">
-
-                  <div class="toolbar-start">
-                    <h5 class="mb-3"><i class="pli-road-3 text-reset text-opacity-75 fs-3 me-2"></i> Insights </h5>
+                <div class="card-header d-flex align-items-center border-0">
+                  <div class="me-auto">
+                    <h3 class="h4 m-0">Insights</h3>
                   </div>
-
                   <div class="toolbar-end">
-
-
-
-
-                  </div>
-                </div>
-
-                <div class="card-body" style="padding: 0.4rem 0.4rem !important;">
-                  <div class="table-responsive scrollable-content" style="max-height: 688.84px;"
-                    style="font-size: 1.1em;">
-
-                    <div ng-if="!routes || routes.length < 1"
-                      style="display: flex;align-items: baseline;flex-direction: row-reverse;justify-content: center;padding: 19em;">
-                      <p style="margin-bottom: 2px" class="fw-normal nowrap text-center">Sem dados para exibir.</p>
+                    <button type="button" class="btn btn-icon btn-sm btn-hover btn-light"
+                      aria-label="Refresh Network Chart">
+                      <i class="pli-repeat-2 fs-5"></i>
+                    </button>
+                    <div class="dropdown">
+                      <button class="btn btn-icon btn-sm btn-hover btn-light" data-bs-toggle="dropdown"
+                        aria-expanded="false" aria-label="Network dropdown">
+                        <i class="pli-dot-horizontal fs-4"></i>
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                          <a href="#" class="dropdown-item">
+                            <i class="pli-pen-5 fs-5 me-2"></i> Edit Date
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#" class="dropdown-item">
+                            <i class="pli-refresh fs-5 me-2"></i> Refresh
+                          </a>
+                        </li>
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                          <a href="#" class="dropdown-item">
+                            <i class="pli-file-csv fs-5 me-2"></i> Save as CSV
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#" class="dropdown-item">
+                            <i class="pli-calendar-4 fs-5 me-2"></i> View Details
+                          </a>
+                        </li>
+                      </ul>
                     </div>
                   </div>
+                </div>
 
+                <!-- Chart -->
+                <div class="col-12" data-ng-if="charts">
+
+                  <div fusioncharts width="100%" height="240" type="area2d" dataSource="#!{ charts.comparativev2 }!#">
+                  </div>
                 </div>
 
 
+                <!-- Chart -->
 
+
+                <div class="card-body mt-4">
+                  <div class="row">
+                    <div class="col-md-8">
+
+                      <!-- CPU Temperature -->
+
+
+                    </div>
+                    <div class="col-md-4">
+
+                      <!-- Bandwidth usage and progress bars -->
+
+
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
             <div class="col-xl-5">
 
               <div class="row">
                 <div class="col-sm-6" data-ng-if="charts">
-                  <div class="h-100 card border-2 border-light overflow-hidden mb-3">
+                  <div class="card border-2 border-light overflow-hidden mb-3">
                     <div class="card-header toolbar" style="z-index: 2;">
                       <h5 class="mb-3"><i class="pli-pie-chart-2 text-reset text-opacity-75 fs-3 me-2"></i> Pizzas </h5>
                     </div>
@@ -128,7 +172,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6">
-                  <div class="h-100 card border-2 border-light overflow-hidden mb-3">
+                  <div class="card border-2 border-light overflow-hidden mb-3">
                     <div class="card-header toolbar">
                       <div class="toolbar-start">
                         <h5 class="mb-3"><i class="pli-bar-chart-2 text-reset text-opacity-75 fs-3 me-2"></i> Dados
@@ -139,8 +183,7 @@
                       <div class="col-12" style="font-size: 1.1em;">
                         <div class="d-flex justify-content-between align-items-center mb-3"
                           style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
-                          <span class="text-truncate" uib-tooltip="Quantidade colaboradores">Quantidade
-                            colaboradores</span>
+                          <span class="text-truncate" uib-tooltip="Quantidade colaboradores">Quantidade Pizzas</span>
                           <span class="d-block badge bg-success ms-auto"
                             style="margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">#!{
                             qtd_collaborators || 0 }!#</span>
@@ -148,8 +191,8 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-3"
                           style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
-                          <span uib-tooltip="Trajetos agendados para o dia" class="text-truncate">Trajetos agendados
-                            para o dia</span>
+                          <span uib-tooltip="Trajetos agendados para o dia" class="text-truncate">Pizzas
+                            agendadas</span>
                           <span class="d-block badge bg-warning ms-auto"
                             style="margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">
                             #!{ qtd_trajetos || 0 }!#</span>
@@ -157,15 +200,15 @@
                         <div class="d-flex justify-content-between align-items-center mb-3"
                           style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
                           <span class="text-truncate" uib-tooltip="Ocorrências pendentes de tratamento"> Ocorrências
-                            pendentes de tratamento</span>
+                            pendentes </span>
                           <span class="d-block badge bg-light ms-auto"
                             style="background-color: #b1b0b0 !important;margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">
                             #!{ ocorrencias_pendente || 0 }!#</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center"
                           style="border-bottom: 1px solid #eeeeee;margin: 0px;padding-bottom: 16px;">
-                          <span class="text-truncate" uib-tooltip="Linhas Ativas sem Veículo Designado"> Linhas Ativas
-                            sem Veículo Designado</span>
+                          <span class="text-truncate" uib-tooltip="Linhas Ativas sem Veículo Designado"> Pizzas
+                            Atrasadas</span>
                           <span class="d-block badge bg-danger ms-auto"
                             style="margin-left: 10px !important;border-radius: 0.2375rem;font-size: 0.9em;min-width: 50px;line-height: 14px;">
                             #!{ linhas_sem_veiculo || 0 }!#</span>
@@ -177,9 +220,72 @@
 
               </div>
 
-            </div>
+              <div class="card">
+                <div class="card-body text-center">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 p-3">
+                      <div class="Stars" style="--rating: #!{ nps_colaboradores.media || 0 }!#;"
+                        aria-label="Rating of this product is 4.3 out of 5."></div>
+                      <div class="h3 display-3">#!{ nps_colaboradores.media || 0 }!#</div>
+                      <span class="h6">Nota média</span>
+                    </div>
+                    <div class="flex-grow-1 text-center ms-3">
+                      <p class="text-muted">O <b>NPS de Colaboradores</b> é baseado nas avaliações dos últimos 3 meses
+                      </p>
 
+                      <div class="mt-4 pt-3 d-flex justify-content-around border-top">
+                        <div class="text-center">
+                          <h4 class="mb-1">#!{ nps_colaboradores.total_avaliacao || 0 }!#</h4>
+                          <small class="text-muted">Qtd. de Avaliações</small>
+                        </div>
+                        <div class="text-center">
+                          <h4 class="mb-1">#!{ nps_colaboradores.total_linhas || 0 }!#</h4>
+                          <small class="text-muted">Qtd. de Linhas</small>
+                        </div>
+                        <div class="text-center">
+                          <h4 class="mb-1">#!{ nps_colaboradores.total_colaboradores || 0 }!#</h4>
+                          <small class="text-muted">Qtd. de Colaboradores</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="card">
+                <div class="card-body text-center">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 p-3">
+                      <div class="Stars" style="--rating: #!{ nps_motoristas.media || 0 }!#;"
+                        aria-label="Rating of this product is 4.3 out of 5."></div>
+                      <div class="h3 display-3">#!{ nps_motoristas.media || 0 }!#</div>
+                      <span class="h6">Nota média</span>
+                    </div>
+                    <div class="flex-grow-1 text-center ms-3">
+                      <p class="text-muted">O <b>NPS de Entregadores</b> é baseado nas avaliações dos últimos 3 meses
+                      </p>
+
+                      <div class="mt-4 pt-3 d-flex justify-content-around border-top">
+                        <div class="text-center">
+                          <h4 class="mb-1">#!{ nps_motoristas.total_avaliacao || 0 }!#</h4>
+                          <small class="text-muted">Qtd. de Avaliações</small>
+                        </div>
+                        <div class="text-center">
+                          <h4 class="mb-1">#!{ nps_motoristas.total_linhas || 0 }!#</h4>
+                          <small class="text-muted">Qtd. de Entregas</small>
+                        </div>
+                        <div class="text-center">
+                          <h4 class="mb-1">#!{ nps_motoristas.total_motoristas || 0 }!#</h4>
+                          <small class="text-muted">Qtd. de Motoristas</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
       </article>
 

@@ -30,6 +30,43 @@ const server = http.createServer((req, res) => {
     // Parse URL
     const parsedUrl = url.parse(req.url, true);
     let pathname = parsedUrl.pathname;
+
+
+    // ✅ Trate imediatamente o endpoint customizado e evite múltiplas respostas
+    if (req.method === 'GET' && pathname === '/context/v1/maptiles.json') {
+        const maptilesData = {
+            "default": {
+                "label": "label.maps.layer.default",
+                "title": "Mapa",
+                "icon": "pli-satellite-2",
+                "url": "https://maps.hereapi.com/v3/base/mc/{z}/{x}/{y}/png8?style=explore.day&apiKey=fmhUDLz4O3ImcTFMd2zzYOeM8R2Vq270nfILPyRPnwk"
+            },
+            "normal.night.mobile": {
+                "label": "label.maps.layer.normal.night.mobile",
+                "title": "Noturno",
+                "icon": "pli-satellite-2",
+                "url": "https://maps.hereapi.com/v3/base/mc/{z}/{x}/{y}/png8?style=explore.night&ppi=400&apiKey=fmhUDLz4O3ImcTFMd2zzYOeM8R2Vq270nfILPyRPnwk"
+            },
+            "satellite": {
+                "label": "label.maps.layer.satellite",
+                "title": "Satelite",
+                "icon": "pli-satellite-2",
+                "url": "https://maps.hereapi.com/v3/base/mc/{z}/{x}/{y}/png8?style=satellite.day&apiKey=fmhUDLz4O3ImcTFMd2zzYOeM8R2Vq270nfILPyRPnwk"
+            },
+            "terrain": {
+                "label": "label.maps.layer.terrain",
+                "title": "Terreno",
+                "icon": "pli-map-2",
+                "url": "https://maps.hereapi.com/v3/base/mc/{z}/{x}/{y}/png8?style=topo.day&apiKey=fmhUDLz4O3ImcTFMd2zzYOeM8R2Vq270nfILPyRPnwk"
+            }
+        };
+
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 200;
+        res.end(JSON.stringify(maptilesData));
+        return;
+    }
+
     
     // Add CORS headers for all requests
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -115,6 +152,8 @@ const server = http.createServer((req, res) => {
             res.end(data);
         });
     });
+
+    
 });
 
 server.listen(PORT, '0.0.0.0', () => {

@@ -1,5 +1,1262 @@
-<div>
-    <h1>Despachos</h1>
-    <p>Conteúdo da página de Despachos.</p>
-</div>
+<style>
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Inter", sans-serif;
+    }
 
+    .content__wrap span {
+        font-family: "Inter", sans-serif;
+    }
+
+    .content__wrap p {
+        font-family: "Inter", sans-serif;
+    }
+
+    .btn-light {
+        background: inherit;
+    }
+
+    .form-check-input:disabled {
+        cursor: not-allowed !important;
+        pointer-events: auto;
+    }
+
+
+    .btn-light:hover {
+        color: #373c43;
+        background-color: #ffffff;
+        border-color: #e4e9f2;
+    }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .align-right {
+        text-align: right;
+    }
+
+    #map {
+        min-height: calc(100vh - 126px)
+    }
+
+    #mapedit {
+        min-height: calc(100vh - 159px)
+    }
+
+    .loading-backdrop {
+        position: absolute !important;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.6);
+        z-index: 2000;
+        text-align: center;
+        padding-top: calc(25vh - -150px);
+    }
+
+    .ht-100 {
+        height: 100%;
+    }
+
+    .leaflet-control-geocoder {
+        margin-top: 46px !important;
+    }
+
+    .btn-group-map>button>i {
+        color: #000 !important;
+    }
+
+    .leaflet-right .leaflet-control {
+        margin-right: 11px;
+    }
+
+    .leaflet-touch .leaflet-control-geocoder-icon {
+        width: 29.1px;
+        height: 29.1px;
+    }
+
+    .btn-group>.btn-group:not(:first-child),
+    .btn-group>.btn:not(:first-child) {
+        margin-left: 0px;
+    }
+
+    .btn-group>.btn-group:not(:first-child)>.btn,
+    .btn-group>.btn:nth-child(n+3),
+    .btn-group>:not(.btn-check)+.btn {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .btn-group-link:hover {
+        background-color: #f4f4f4 !important;
+    }
+
+    .btn-group-link {
+        background-color: #FFF !important;
+        border-radius: 4px;
+        color: #000 !important;
+        margin: 0;
+        height: 31px;
+        width: 33px;
+        border: 2px solid rgba(0, 0, 0, 0.2) !important;
+        background-clip: padding-box;
+        box-shadow: none !important;
+        padding: 2px;
+    }
+
+    .popup {
+        background-color: #FFF;
+        border-radius: 8px;
+        display: none;
+        height: auto;
+        width: 235px;
+    }
+
+    .popup-header {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        font-weight: 600;
+        padding: 20px 20px 0px;
+    }
+
+    .popup-header>span {
+        background-color: #18385e;
+        border-radius: 3px;
+        color: white;
+        padding: 5px;
+    }
+
+    .btn-vdo {
+        background-color: white !important;
+        border: 1px solid #18385e !important;
+        color: #18385e !important;
+        border-radius: 13px;
+        width: 28px;
+        padding: 5px !important;
+    }
+
+    .leaflet-popup-content,
+    .leaflet-popup-content-wrapper {
+        margin: 0;
+        padding: 0;
+        width: 270px !important;
+    }
+
+    .leaflet-container a.leaflet-popup-close-button {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        border: none;
+        text-align: center;
+        width: 25px;
+        height: 25px;
+        font: 16px/14px Tahoma, Verdana, sans-serif;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        background: #0e478a;
+        padding: 5px;
+        border-radius: 15px;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .popup-content {
+        color: #7a878e;
+        padding: 4px 20px;
+        overflow: hidden;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .popup-content>div {
+        border-bottom: 1px solid grey;
+        margin-bottom: 15px;
+    }
+
+    .popup-content>div>span {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .popup-actions {
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        display: inline;
+        margin-left: 15px;
+    }
+
+    .menu-table {
+        position: absolute;
+        top: -10px;
+        right: 10px;
+    }
+
+    .btn-tableoptions {
+        background-color: #18385d !important;
+        box-shadow: none !important;
+    }
+
+    .dropdown-menu span {
+        color: #7a878e;
+        font-size: 13px;
+        vertical-align: 2px;
+    }
+
+    .dropdown-menu svg {
+        fill: #7a878e;
+    }
+
+    .dropdown-menu a:hover svg {
+        fill: #FFF !important;
+    }
+
+
+    .dropdown.open>.dropdown-toggle,
+    .btn-group.open .dropdown-toggle {
+        box-shadow: none !important;
+    }
+
+    .leaflet-control-measure {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 21px;
+    }
+
+    .leaflet-bar-part-top-and-bottom {
+        -webkit-border-radius: 4px 4px 4px 4px;
+        border-radius: 4px 4px 4px 4px;
+        border-bottom: none;
+    }
+
+    .leaflet-touch .leaflet-bar-part-top-and-bottom {
+        -webkit-border-radius: 7px 7px 7px 7px;
+        border-radius: 7px 7px 7px 7px;
+        border-bottom: none;
+    }
+
+    .leaflet-control-measure-on .leaflet-control-measure {
+        box-shadow: 0 0 8px rgba(10, 10, 10, 1.0);
+    }
+
+    .leaflet-measure-tooltip {
+        font: 9px/1.25 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        background-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 5px #BBB;
+        margin: 0;
+        padding: 2px;
+        width: auto !important;
+        height: auto !important;
+        white-space: nowrap;
+    }
+
+    .leaflet-measure-tooltip-total {
+        font-weight: bold;
+    }
+
+    .leaflet-measure-tooltip-difference {
+        color: #777;
+    }
+
+
+    .map-marker>.map-marker-status {
+        border-radius: 50%;
+        padding: 5px 8.5px;
+        font-size: 21px;
+        color: #fff;
+        line-height: 28px;
+        position: relative;
+    }
+
+    .map-marker>.map-marker-status i {
+        display: inline;
+        vertical-align: -3px;
+    }
+
+
+
+    .map-marker>.map-marker-status.map-marker-status__unsync {
+        background-color: #a0a0a0;
+    }
+
+    .map-marker>.map-marker-status.map-marker-status__on {
+        background-color: green;
+    }
+
+    .map-marker>.map-marker-status.map-marker-status__off {
+        background-color: red;
+    }
+
+    .map-marker>.map-marker-status.map-marker-status__off::after {
+        background-color: #F00;
+        border: 2px solid #fff;
+        display: inline;
+        content: "\f00d";
+        font-family: FontAwesome !important;
+        color: #FFF;
+        position: absolute;
+        top: 1px;
+        right: -6px;
+        font-size: 9px;
+        border-radius: 50px;
+        padding: 0px 1px 0px 1.5px;
+        text-align: center;
+        height: auto;
+        line-height: 10px;
+        z-index: 30;
+        width: 15px;
+        height: 14px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .map-marker-icon_plate {
+        background-color: red;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 12px;
+        margin-top: 3px;
+        padding: 2px 10px;
+        width: auto;
+        margin-left: -14px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .map-marker-icon_plate--unsync {
+        background-color: #a0a0a0;
+    }
+
+    .map-marker-icon_plate--on {
+        background-color: green;
+    }
+
+    .map-marker-icon_plate--off {
+        background-color: #F00;
+    }
+
+    .map-marker-only_plate_off::after {
+        background-color: #F00;
+        border: 2px solid #FFF;
+        display: inline;
+        content: "\f00d";
+        font-family: FontAwesome !important;
+        color: #FFF;
+        position: absolute;
+        top: -4px;
+        right: -24px;
+        font-size: 9px;
+        border-radius: 50px;
+        padding: 0px 1px 2px 1.1px;
+        text-align: center;
+        height: auto;
+        line-height: 10px;
+        z-index: 30;
+        width: 15px;
+        height: 14px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .map-marker-point {
+        width: 27px;
+        height: 27px;
+        border-radius: 50% 50% 50% 0;
+        background-color: #18385e;
+        position: absolute;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        left: 50%;
+        top: 50%;
+        margin: -20px 0 0 -20px;
+    }
+
+    .map-marker-point i {
+        display: inline;
+        vertical-align: -3px;
+        transform: rotate(45deg) !important;
+        position: absolute;
+        padding-left: 9.4px;
+        z-index: 1000000000;
+        font-size: 14px;
+        padding-top: 4px;
+        color: #fff;
+    }
+
+    .dropdown-menu .sub-menu {
+        left: 100%;
+        position: absolute;
+        top: 0;
+        visibility: hidden;
+        margin-top: -1px;
+    }
+
+    .dropdown-menu li:hover>.sub-menu {
+        visibility: visible;
+        display: block;
+    }
+
+    #map .btn-group {
+        display: block;
+        position: absolute;
+        color: #fff;
+        height: 23px;
+        width: auto;
+        z-index: 1001;
+    }
+
+    #mapedit .btn-group {
+        display: block;
+        position: absolute;
+        color: #fff;
+        height: 23px;
+        width: auto;
+        z-index: 1001;
+    }
+
+    .btn-group-map {
+        top: 8px;
+        right: 11px;
+        z-index: 2000;
+    }
+
+    #btn-toggle-map i::after {
+        display: none !important;
+    }
+
+    .dropdown-header {
+        font-weight: 700;
+        font-size: .85em;
+        color: #4d627b;
+        padding: 3px 8px 0px !important;
+        text-transform: uppercase;
+    }
+
+    .dropdown-menu>li>a {
+        display: block;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+        color: #7a878e;
+    }
+
+    button.btn.btn-group-link.dropdown-toggle::after {
+        display: none !important;
+    }
+
+    .leaflet-routing-container {
+        display: none !important;
+    }
+
+    .badge {
+
+        padding: 0.7em 0.65em !important;
+        font-weight: 400;
+        font-size: 0.73em;
+    }
+
+
+    .badgev2 {
+
+        border-radius: 4px !important;
+        font-weight: 500;
+        font-size: 0.83em;
+        position: relative;
+        left: 4px;
+    }
+
+    .bg-light {
+        background-color: rgba(238, 238, 238, 1) !important;
+        color: rgba(183, 183, 183, 1);
+    }
+
+    .bg-success {
+        background-color: rgba(54, 175, 72, 1) !important;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    .bg-warning {
+        background-color: rgba(255, 180, 33, 0.4) !important;
+        color: rgba(165, 144, 0, 1);
+    }
+
+    .bg-active {
+        background-color: rgba(127, 204, 114, 0.26);
+        color: rgba(127, 204, 114, 1);
+    }
+
+    .status-badge {
+        font-size: medium;
+        left: 10px;
+        top: -5px;
+        position: relative;
+        line-height: 6.8px;
+        width: 145px;
+        height: 29px;
+        border: 1px solid;
+    }
+
+    .status-badge-dashed {
+        font-size: medium;
+        left: 10px;
+        top: -4px;
+        position: relative;
+        line-height: 6.8px;
+        width: 145px;
+        height: 29px;
+        border: 1px dashed;
+    }
+
+    .bg-icon-map {
+        width: 38px;
+        height: 37px;
+        flex-shrink: 0;
+        border-radius: 5px;
+        background: linear-gradient(90deg, #AF124C 0%, #9B0F6F 100%);
+    }
+
+    hr {
+        border-bottom: 1px solid rgba(0, 0, 0, .07) !important;
+        height: auto !important;
+        opacity: 0.65;
+    }
+
+    figure img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .fs-5 {
+        font-size: 1.2rem !important;
+    }
+
+    .card-header .btn {
+        font-size: .835rem;
+        border-radius: 4px;
+    }
+
+    .modal-content .btn {
+        font-size: .8925rem;
+        border-radius: 4px;
+    }
+
+    .list-group-borderless {
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+    }
+
+    .accordion-button::after {
+        background-size: 20px;
+        width: 1.2rem;
+        height: 0.88rem;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+        position: relative;
+        top: 5px;
+    }
+
+
+    .detail-item .list-group-item-action:focus,
+    .detail-item .list-group-item-action:hover {
+        background-color: transparent;
+
+    }
+
+    .detail-item {
+        padding: 0px 40px 0px 40px;
+    }
+
+    .custom-col {
+        width: 94.66667%;
+    }
+
+    .cursor-p {
+        cursor: pointer;
+    }
+
+    .border-header {
+        border-bottom: 1px solid rgba(0, 0, 0, .07) !important;
+    }
+
+    .center-img {
+        justify-content: center;
+        display: flex;
+    }
+
+    @media (min-width: 1200px) {
+        .modal-xl {
+            max-width: 1215px !important;
+        }
+    }
+
+    .timeline .tl-time:not(:empty) {
+        min-width: 3.4rem !important;
+
+    }
+
+    .timeline .list-group-item-action:focus,
+    .timeline .list-group-item-action:hover {
+
+        background-color: #fff !important;
+    }
+
+    .timeline .list-group-item-action {
+        width: inherit !important;
+    }
+
+    .hidden-icon {
+        display: none;
+    }
+
+    .custom-btn1 {
+        min-width: 50%;
+        max-width: 50%;
+        border-radius: 6px 0px 0px 6px;
+    }
+
+    .custom-btn2 {
+        border-radius: 0px 0px 6px 0px;
+        background-color: #e1e7f0;
+        border-color: #e1e7f0;
+        min-width: 50%;
+        max-width: 50%;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+
+    .cursor-not {
+        cursor: not-allowed;
+    }
+
+    .popup-container {
+        padding: 17px;
+    }
+
+    .ml-01 {
+        margin-left: 1px;
+    }
+
+    .popup-title {
+        font-weight: 400;
+    }
+
+    .ml-1 {
+        margin-left: 2px !important;
+    }
+
+    .popup-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .min-h-170 {
+        min-height: max-content;
+    }
+
+    .min-h-50 {
+        min-height: 50px;
+        text-align: center;
+
+    }
+
+    .max-h-200 {
+        overflow-x: hidden;
+        max-height: 214px;
+        overflow-y: auto;
+    }
+
+    ol#list-item li {
+        padding: 4px 10px;
+        margin-bottom: 10px;
+        border: 1px solid #c3c5c7;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    ol#list-item {
+        padding-left: 0;
+    }
+
+    .custom-icon-remove {
+        font-size: .6rem !important;
+        font-weight: bolder;
+        position: relative;
+        right: -4px;
+        cursor: pointer;
+    }
+
+
+    ol#list-item li .remove {
+        position: absolute;
+        right: 0;
+        top: -2px;
+        background: #df5645;
+        border: none;
+        padding: 1px 1px;
+        border-radius: 5px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        margin: 5px;
+    }
+
+    .accordion-body {
+        padding: 0.3rem 1.25rem;
+    }
+
+
+    ol#list-item li:hover {
+        background-color: #f2f4f8;
+    }
+
+    .active-map {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .custom-table th,
+    .custom-table td {
+        white-space: nowrap;
+        /* Prevent text wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* Display ellipsis (...) for overflowing text */
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    @media (max-width: 767px) {
+
+        .custom-table th,
+        .custom-table td {
+            display: block;
+            /* Stack cells vertically on small screens */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .custom-table th {
+            text-align: left;
+            background-color: #f8f9fa;
+            /* Optional: Highlight header background on small screens */
+        }
+    }
+
+    .leaflet-draw-toolbar a {
+        background-image: linear-gradient(transparent, transparent), url(https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/images/spritesheet.svg) !important;
+    }
+
+    .leaflet-editing-icon {
+        height: 18px !important;
+        width: 18px !important;
+    }
+
+    .badge-custom {
+        display: inline-block;
+        padding: 0.27em 0.45em !important;
+        font-size: .7em;
+        font-weight: 600;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 4px !important;
+    }
+
+    .leaflet-draw-draw-marker {
+        z-index: 400;
+        position: relative;
+        bottom: -3.8em;
+    }
+
+
+
+
+    .leaflet-draw-edit-edit {
+
+        position: relative;
+        top: -3.82em;
+    }
+
+    @media (max-width: 1664px) {
+        .button-text {
+            display: none;
+        }
+
+        .icon-btn-map {
+            margin-left: .5rem !important;
+        }
+    }
+
+
+
+    @media (max-width: 1440px) {
+        .hstack {
+            font-size: 12px !important;
+        }
+
+        .text-info-route {
+            position: relative;
+            right: 23px;
+        }
+
+        .fs-5 {
+            font-size: 1rem !important;
+        }
+
+        figure .d-flex {
+            font-size: 0.67rem !important;
+            ;
+        }
+    }
+
+
+
+    @media (min-width: 992px) {
+
+        .modal-lg,
+        .modal-xl {
+            max-width: 1000px;
+        }
+    }
+
+    .btn-primary.disabled,
+    .btn-primary:disabled {
+        cursor: not-allowed;
+    }
+
+    .disabled-option {
+        color: #b3afaf;
+
+    }
+
+    .padrao-filter {
+        font-size: .755rem !important;
+        color: #7a878e !important;
+        font-weight: 500;
+    }
+
+    .dad-joke-button-main {
+        padding-top: 0.375rem;
+        padding-bottom: 0.375rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        background-color: #F75404;
+        color: #FFFFFF;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: bold;
+        border-radius: 0.375rem;
+        border: none;
+        left: 10px;
+        top: -2px;
+        position: relative;
+        line-height: 6.8px;
+        width: 145px;
+        height: 29px;
+    }
+
+    .dad-joke-button-main:hover {
+        background-color: #D1410C;
+    }
+
+    .estimated_hour {
+        margin-left: auto;
+        width: 51%;
+        padding: 0.25rem 1.2rem !important;
+    }
+
+    .estimated_label {
+        font-family: "Inter", sans-serif;
+        padding-left: 2px;
+        font-size: 12px;
+    }
+
+    .horario-container {
+        align-items: baseline;
+        border-bottom: 1px solid #eeeeeeee;
+        padding: 1px 0px 6px 0px;
+    }
+
+
+    .sidebar-left {
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        position: absolute;
+        left: 11px;
+        width: 260px;
+        height: calc(100vh - 240px);
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.93);
+        border-right: 1px solid #ccc;
+        z-index: 1000;
+        bottom: 10px;
+    }
+
+    /* Lista à direita */
+    .sidebar-right {
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        position: absolute;
+        right: 11px;
+        width: 260px;
+        height: calc(100vh - 240px);
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.93);
+        border-right: 1px solid #ccc;
+        z-index: 1000;
+        bottom: 10px;
+    }
+
+    .header-sidebar-right {
+        width: 100%;
+        margin-left: 0px;
+        justify-content: space-around;
+        padding: 7px 14px 7px 14px;
+        align-items: center;
+        display: flex;
+        color: #fff;
+        background-color: #333333fa;
+    }
+
+
+    .header-sidebar-left {
+        width: 100%;
+        margin-left: 0px;
+        justify-content: space-around;
+        padding: 7px 14px 7px 14px;
+        align-items: center;
+        display: flex;
+        color: #fff;
+        background-color: #333333fa;
+    }
+
+    .bg-badge-white {
+        min-width: 23px;
+        font-weight: 600;
+        color: black;
+        background-color: #ffffff !important;
+    }
+
+    .bg-badge-green {
+        min-width: 23px;
+        font-size: 8px;
+        font-weight: 600;
+        color: #fff;
+        background-color: #257832 !important;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    .li-list {
+        flex-wrap: wrap;
+        display: flex;
+        height: 45px;
+        border-bottom: 1px solid #ccccccad;
+        align-content: center;
+        justify-content: space-between;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .li-list-left {
+        flex-wrap: wrap;
+        display: flex;
+        height: 65px;
+        border-bottom: 1px solid #ccccccad;
+        align-content: center;
+        justify-content: space-around;
+
+    }
+
+    .bg- {
+        font-weight: 600;
+        color: black;
+        background-color: #ffffff !important;
+    }
+
+
+    .bg-default-v2 {
+        padding: .35em .65em;
+        font-weight: 700;
+        text-align: center;
+        background-color: #c9c7cb;
+        color: rgb(26 24 24);
+    }
+
+    .label-horario {
+        line-height: 23px;
+        font-size: 0.87em;
+        color: rgb(26 24 24);
+        font-weight: 600;
+        text-align: center;
+    }
+</style>
+
+<section id="content" class="content">
+    <div class="content__header content__boxed overlapping">
+        <div class="content__wrap">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" style="margin-top: 18.57px;">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/#!/home">Início</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Despachos</li>
+                </ol>
+            </nav>
+            <!-- END : Breadcrumb -->
+            <h1 class="page-title mb-0 mt-2"></h1>
+
+            <p class="lead">
+
+            </p>
+        </div>
+    </div>
+    <div class="content__boxed">
+        <div class="content__wrap" data-ng-show="!vm.active.id">
+            <article class="d-md-flex gap-4">
+                <div class="flex-fill">
+                    <div class="row">
+                        <div class="col-md-12 mb-12">
+                            <div class="card border-2 border-light" style="min-height: 330px;">
+                                <div>
+                                    <div class="ht-100" data-ng-controller="MapLayerController as $maplayer">
+                                        <div class="col-md-12 pad-no ht-100">
+
+
+
+                                            <div class="sidebar-left">
+                                                <div class="header-sidebar-left row">
+                                                    <div class="col-md-2">
+                                                        <i class="psi-receipt "
+                                                            style="font-size: 1rem !important;position: relative;bottom: 1px;"></i>
+
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <h4
+                                                            style="color: #FFF;margin-bottom: 0px;text-align: center;font-size: 16px;">
+                                                            Pedidos </h4>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+
+                                                        <span class="badge bg-badge-white rounded-pill"><span
+                                                                style="font-size: 12px;">4</span></span>
+                                                    </div>
+
+                                                </div>
+
+                                                <div>
+                                                    <ul style="padding: 0px 0px 10px 0px;">
+                                                        <li class="li-list-left" ng-repeat="pedido in pedidos">
+
+
+                                                            <span class="badge bg-badge-green rounded-pill"
+                                                                style=" border-radius: 3px !important;min-width: 40px;"><span
+                                                                    style="font-size: 12px;">#!{ pedido.id }!#
+                                                                </span></span>
+                                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                                width="24" height="24">
+                                                                <path
+                                                                    d="M 0 0 C 7.26 0 14.52 0 22 0 C 22 7.26 22 14.52 22 22 C 14.74 22 7.48 22 0 22 C 0 14.74 0 7.48 0 0 Z"
+                                                                    fill="#FEFEFE" style="" />
+                                                                <path
+                                                                    d="M 5.833 4.286 C 5.88 4.286 5.927 4.286 5.973 4.285 C 6.1 4.285 6.227 4.285 6.353 4.286 C 6.491 4.286 6.629 4.286 6.765 4.285 C 7.019 4.285 7.272 4.285 7.526 4.286 C 7.76 4.286 7.995 4.286 8.229 4.286 C 8.252 4.286 8.252 4.286 8.276 4.286 C 8.339 4.286 8.402 4.286 8.465 4.286 C 9.056 4.286 9.647 4.286 10.241 4.287 C 10.766 4.287 11.291 4.287 11.817 4.287 C 11.951 4.287 12.085 4.287 12.221 4.287 C 12.244 4.287 12.244 4.287 12.269 4.287 C 12.709 4.287 13.148 4.287 13.587 4.287 C 13.635 4.287 13.682 4.287 13.73 4.287 C 13.761 4.287 13.793 4.287 13.825 4.287 C 14.058 4.287 14.292 4.287 14.526 4.287 C 14.792 4.287 15.059 4.287 15.323 4.288 C 15.459 4.288 15.595 4.288 15.731 4.288 C 15.855 4.288 15.98 4.288 16.104 4.288 C 16.148 4.289 16.194 4.288 16.239 4.288 C 16.633 4.287 16.994 4.327 17.294 4.614 C 17.493 4.835 17.598 5.093 17.598 5.39 C 17.598 5.412 17.598 5.412 17.598 5.434 C 17.598 5.482 17.598 5.531 17.598 5.579 C 17.598 5.614 17.598 5.649 17.598 5.684 C 17.599 5.78 17.599 5.877 17.599 5.973 C 17.599 6.077 17.599 6.18 17.599 6.285 C 17.6 6.512 17.6 6.739 17.6 6.966 C 17.6 7.108 17.6 7.249 17.6 7.391 C 17.6 7.784 17.601 8.176 17.601 8.569 C 17.601 8.594 17.601 8.62 17.601 8.646 C 17.601 8.671 17.601 8.697 17.601 8.722 C 17.601 8.772 17.601 8.824 17.601 8.876 C 17.601 8.9 17.601 8.925 17.601 8.951 C 17.601 9.361 17.601 9.772 17.602 10.182 C 17.603 10.603 17.603 11.025 17.603 11.446 C 17.603 11.683 17.603 11.918 17.604 12.155 C 17.604 12.356 17.604 12.558 17.604 12.759 C 17.604 12.862 17.604 12.965 17.604 13.068 C 17.604 13.162 17.604 13.256 17.604 13.349 C 17.604 13.384 17.604 13.418 17.604 13.453 C 17.605 13.698 17.599 13.915 17.421 14.1 C 17.313 14.197 17.199 14.246 17.055 14.247 C 17.038 14.247 17.019 14.247 17.001 14.247 C 16.973 14.247 16.973 14.247 16.942 14.247 C 16.922 14.247 16.901 14.247 16.879 14.247 C 16.809 14.247 16.738 14.247 16.668 14.247 C 16.618 14.247 16.567 14.247 16.515 14.247 C 16.391 14.248 16.267 14.248 16.14 14.248 C 15.991 14.248 15.841 14.248 15.692 14.249 C 15.329 14.249 14.968 14.25 14.605 14.25 C 14.486 14.25 14.366 14.25 14.245 14.25 C 13.608 14.251 12.97 14.251 12.332 14.252 C 12.185 14.252 12.039 14.252 11.891 14.252 C 11.871 14.252 11.853 14.252 11.834 14.252 C 11.24 14.252 10.644 14.253 10.049 14.254 C 9.438 14.255 8.827 14.255 8.215 14.255 C 8.129 14.255 8.041 14.255 7.954 14.255 C 7.931 14.255 7.931 14.255 7.905 14.255 C 7.63 14.255 7.357 14.255 7.083 14.256 C 6.809 14.256 6.533 14.257 6.259 14.256 C 6.108 14.256 5.96 14.256 5.811 14.257 C 5.675 14.257 5.538 14.257 5.401 14.257 C 5.353 14.257 5.303 14.257 5.254 14.257 C 5.186 14.258 5.119 14.257 5.052 14.257 C 5.032 14.257 5.014 14.258 4.994 14.258 C 4.829 14.255 4.695 14.199 4.566 14.093 C 4.556 14.079 4.544 14.067 4.534 14.051 C 4.521 14.039 4.511 14.025 4.499 14.011 C 4.433 13.908 4.42 13.806 4.42 13.686 C 4.42 13.664 4.42 13.664 4.419 13.642 C 4.419 13.593 4.419 13.543 4.419 13.495 C 4.419 13.459 4.419 13.423 4.419 13.388 C 4.419 13.29 4.419 13.192 4.419 13.095 C 4.419 12.99 4.419 12.884 4.419 12.779 C 4.419 12.573 4.419 12.367 4.419 12.16 C 4.419 11.992 4.419 11.825 4.418 11.656 C 4.418 11.181 4.418 10.705 4.418 10.229 C 4.418 10.203 4.418 10.177 4.418 10.152 C 4.418 10.127 4.418 10.101 4.418 10.074 C 4.418 9.657 4.417 9.242 4.417 8.826 C 4.416 8.398 4.415 7.972 4.415 7.543 C 4.415 7.304 4.415 7.065 4.415 6.824 C 4.414 6.62 4.414 6.415 4.415 6.212 C 4.415 6.107 4.415 6.003 4.414 5.899 C 4.414 5.803 4.414 5.708 4.414 5.613 C 4.414 5.578 4.414 5.544 4.414 5.51 C 4.411 5.159 4.49 4.867 4.731 4.603 C 5.049 4.308 5.423 4.284 5.833 4.286 Z"
+                                                                    fill="#373737" style="" />
+                                                                <path
+                                                                    d="M 3.52 14.905 C 3.54 14.905 3.561 14.905 3.583 14.905 C 3.654 14.904 3.726 14.904 3.795 14.904 C 3.846 14.904 3.898 14.904 3.949 14.904 C 4.085 14.903 4.224 14.903 4.362 14.903 C 4.448 14.903 4.534 14.903 4.619 14.903 C 4.904 14.903 5.189 14.902 5.474 14.903 C 5.489 14.903 5.506 14.903 5.521 14.903 C 5.544 14.903 5.544 14.903 5.568 14.903 C 5.817 14.903 6.065 14.902 6.315 14.901 C 6.57 14.901 6.827 14.9 7.082 14.9 C 7.226 14.9 7.37 14.9 7.513 14.9 C 7.647 14.899 7.783 14.899 7.918 14.9 C 7.969 14.9 8.018 14.9 8.067 14.899 C 8.134 14.899 8.202 14.899 8.27 14.9 C 8.289 14.899 8.308 14.899 8.328 14.899 C 8.474 14.901 8.591 14.933 8.699 15.035 C 8.707 15.048 8.717 15.06 8.725 15.074 C 8.742 15.096 8.742 15.096 8.757 15.119 C 8.789 15.17 8.818 15.223 8.848 15.276 C 8.943 15.436 9.063 15.547 9.241 15.606 C 9.369 15.634 9.499 15.629 9.628 15.628 C 9.662 15.628 9.693 15.628 9.727 15.629 C 9.815 15.629 9.903 15.629 9.992 15.629 C 10.065 15.629 10.138 15.629 10.214 15.629 C 10.388 15.629 10.562 15.629 10.736 15.629 C 10.916 15.629 11.096 15.629 11.275 15.63 C 11.429 15.63 11.583 15.63 11.738 15.63 C 11.83 15.63 11.922 15.63 12.015 15.631 C 12.101 15.631 12.188 15.631 12.274 15.631 C 12.307 15.63 12.337 15.631 12.369 15.631 C 12.629 15.632 12.844 15.6 13.037 15.415 C 13.111 15.328 13.161 15.232 13.211 15.131 C 13.28 15.02 13.365 14.949 13.493 14.91 C 13.563 14.904 13.631 14.905 13.701 14.905 C 13.733 14.905 13.733 14.905 13.765 14.905 C 13.836 14.904 13.908 14.904 13.979 14.904 C 14.029 14.904 14.081 14.904 14.132 14.904 C 14.255 14.904 14.379 14.903 14.505 14.903 C 14.605 14.903 14.707 14.903 14.806 14.903 C 15.093 14.903 15.379 14.902 15.665 14.903 C 15.68 14.903 15.697 14.903 15.712 14.903 C 15.735 14.903 15.735 14.903 15.759 14.903 C 16.009 14.903 16.259 14.902 16.51 14.901 C 16.767 14.901 17.023 14.9 17.281 14.9 C 17.425 14.9 17.568 14.9 17.714 14.9 C 17.85 14.899 17.985 14.899 18.12 14.9 C 18.171 14.9 18.22 14.9 18.271 14.899 C 18.337 14.899 18.405 14.899 18.473 14.9 C 18.492 14.899 18.513 14.899 18.534 14.899 C 18.682 14.901 18.796 14.936 18.908 15.035 C 18.917 15.048 18.928 15.059 18.937 15.072 C 18.947 15.085 18.957 15.097 18.969 15.11 C 19.014 15.178 19.017 15.237 19.018 15.316 C 19.018 15.338 19.018 15.359 19.018 15.381 C 19.018 15.404 19.019 15.428 19.019 15.452 C 19.019 15.476 19.019 15.499 19.019 15.524 C 19.019 15.574 19.019 15.626 19.019 15.676 C 19.019 15.753 19.019 15.83 19.02 15.908 C 19.021 16.252 19.009 16.555 18.842 16.864 C 18.831 16.885 18.821 16.904 18.81 16.924 C 18.594 17.292 18.231 17.555 17.824 17.676 C 17.632 17.722 17.435 17.727 17.237 17.727 C 17.215 17.727 17.193 17.727 17.171 17.727 C 17.096 17.727 17.021 17.727 16.948 17.727 C 16.893 17.727 16.84 17.727 16.785 17.727 C 16.653 17.727 16.521 17.727 16.388 17.727 C 16.23 17.727 16.071 17.728 15.913 17.728 C 15.529 17.728 15.147 17.728 14.763 17.728 C 14.582 17.728 14.399 17.728 14.22 17.729 C 13.598 17.729 12.977 17.729 12.356 17.729 C 12.317 17.729 12.278 17.729 12.24 17.729 C 12.199 17.729 12.161 17.729 12.123 17.729 C 12.045 17.729 11.965 17.729 11.888 17.729 C 11.858 17.729 11.858 17.729 11.828 17.729 C 11.199 17.729 10.569 17.73 9.938 17.73 C 9.273 17.731 8.606 17.731 7.94 17.731 C 7.866 17.731 7.794 17.731 7.721 17.731 C 7.703 17.731 7.685 17.731 7.667 17.731 C 7.377 17.731 7.087 17.732 6.797 17.732 C 6.505 17.732 6.215 17.732 5.924 17.732 C 5.752 17.732 5.577 17.732 5.404 17.732 C 5.275 17.733 5.147 17.733 5.017 17.732 C 4.964 17.732 4.913 17.732 4.861 17.733 C 4.273 17.735 3.808 17.635 3.374 17.209 C 3.361 17.197 3.35 17.186 3.337 17.174 C 3.074 16.893 2.972 16.533 2.975 16.156 C 2.975 16.128 2.975 16.101 2.975 16.072 C 2.975 16.016 2.975 15.958 2.976 15.901 C 2.976 15.828 2.976 15.755 2.975 15.682 C 2.975 15.612 2.975 15.542 2.975 15.471 C 2.975 15.445 2.975 15.418 2.975 15.391 C 2.977 15.248 2.985 15.155 3.071 15.039 C 3.204 14.911 3.345 14.904 3.52 14.905 Z"
+                                                                    fill="#373737" style="" />
+                                                                <path
+                                                                    d="M 13.922 6.617 C 13.96 6.643 13.96 6.643 13.999 6.678 C 14.021 6.699 14.021 6.699 14.044 6.72 C 14.135 6.807 14.225 6.896 14.315 6.985 C 14.349 7.019 14.383 7.052 14.417 7.086 C 14.439 7.108 14.461 7.129 14.482 7.151 C 14.501 7.17 14.521 7.189 14.54 7.208 C 14.614 7.291 14.638 7.352 14.642 7.46 C 14.644 7.49 14.644 7.49 14.646 7.518 C 14.607 7.68 14.423 7.815 14.308 7.931 C 14.291 7.948 14.275 7.964 14.258 7.98 C 14.203 8.036 14.15 8.089 14.095 8.143 C 14.058 8.181 14.02 8.219 13.981 8.257 C 13.893 8.347 13.804 8.436 13.714 8.525 C 13.643 8.596 13.572 8.667 13.5 8.739 C 13.403 8.836 13.303 8.935 13.206 9.033 C 13.167 9.071 13.13 9.108 13.094 9.146 C 13.041 9.198 12.99 9.251 12.936 9.302 C 12.922 9.317 12.905 9.333 12.89 9.349 C 12.807 9.431 12.721 9.511 12.632 9.587 C 12.56 9.65 12.494 9.718 12.427 9.786 C 12.412 9.801 12.397 9.816 12.38 9.832 C 12.348 9.865 12.314 9.898 12.283 9.931 C 12.23 9.983 12.177 10.036 12.127 10.087 C 12.016 10.197 11.906 10.308 11.795 10.42 C 11.667 10.549 11.539 10.677 11.409 10.806 C 11.36 10.857 11.309 10.908 11.256 10.96 C 11.227 10.99 11.194 11.023 11.164 11.055 C 11.149 11.068 11.134 11.082 11.121 11.098 C 11.038 11.179 10.954 11.256 10.866 11.331 C 10.807 11.384 10.751 11.44 10.698 11.495 C 10.674 11.519 10.65 11.543 10.626 11.567 C 10.591 11.604 10.553 11.641 10.518 11.678 C 10.483 11.715 10.446 11.75 10.411 11.785 C 10.395 11.803 10.395 11.803 10.377 11.82 C 10.29 11.908 10.227 11.952 10.102 11.954 C 10.085 11.954 10.066 11.955 10.048 11.956 C 9.879 11.927 9.767 11.795 9.652 11.677 C 9.635 11.66 9.617 11.643 9.6 11.624 C 9.543 11.568 9.489 11.511 9.432 11.455 C 9.378 11.399 9.322 11.343 9.267 11.286 C 9.232 11.253 9.198 11.217 9.163 11.183 C 9.094 11.111 9.022 11.04 8.945 10.975 C 8.8 10.851 8.666 10.711 8.529 10.575 C 8.499 10.544 8.467 10.512 8.437 10.482 C 8.372 10.417 8.307 10.353 8.243 10.287 C 8.16 10.205 8.077 10.123 7.995 10.04 C 7.931 9.976 7.866 9.912 7.802 9.848 C 7.772 9.818 7.741 9.787 7.711 9.757 C 7.667 9.714 7.624 9.672 7.582 9.628 C 7.57 9.617 7.557 9.604 7.544 9.591 C 7.454 9.5 7.43 9.444 7.426 9.317 C 7.428 9.206 7.441 9.151 7.519 9.066 C 7.574 9.02 7.628 8.976 7.685 8.933 C 7.788 8.849 7.885 8.754 7.979 8.661 C 8.173 8.477 8.173 8.477 8.302 8.477 C 8.316 8.476 8.331 8.476 8.348 8.476 C 8.499 8.506 8.603 8.615 8.706 8.722 C 8.722 8.738 8.736 8.752 8.75 8.767 C 8.783 8.8 8.814 8.833 8.847 8.864 C 8.897 8.916 8.946 8.966 8.997 9.017 C 9.141 9.162 9.283 9.307 9.427 9.452 C 9.515 9.541 9.602 9.629 9.69 9.718 C 9.723 9.752 9.756 9.786 9.789 9.82 C 9.836 9.867 9.882 9.914 9.93 9.961 C 9.942 9.976 9.955 9.99 9.97 10.004 C 9.983 10.017 9.996 10.03 10.008 10.043 C 10.021 10.054 10.03 10.065 10.043 10.077 C 10.076 10.102 10.076 10.102 10.117 10.096 C 10.175 10.07 10.209 10.036 10.254 9.992 C 10.272 9.974 10.29 9.955 10.308 9.937 C 10.329 9.917 10.35 9.897 10.37 9.877 C 10.391 9.855 10.412 9.833 10.433 9.812 C 10.49 9.755 10.549 9.697 10.605 9.639 C 10.665 9.579 10.725 9.518 10.787 9.458 C 10.901 9.343 11.014 9.229 11.128 9.114 C 11.257 8.985 11.386 8.855 11.517 8.723 C 11.738 8.502 11.96 8.28 12.181 8.058 C 12.218 8.021 12.253 7.986 12.287 7.95 C 12.314 7.925 12.34 7.898 12.367 7.871 C 12.43 7.808 12.496 7.746 12.563 7.686 C 12.702 7.56 12.837 7.432 12.959 7.291 C 13.127 7.094 13.317 6.912 13.514 6.746 C 13.527 6.734 13.541 6.722 13.556 6.709 C 13.575 6.692 13.575 6.692 13.595 6.674 C 13.607 6.663 13.618 6.654 13.63 6.642 C 13.719 6.574 13.82 6.589 13.922 6.617 Z"
+                                                                    fill="#FDFEFE" style="" />
+                                                            </svg>
+
+                                                            <span class="badgev2 ng-binding bg-default-v2"
+                                                                ng-class="{'bg-default-v2': pedido.source === 'LOCAL', 'bg-warning': pedido.source === 'SITE'}">LOCAL</span>
+                                                            <span class="label-horario">20:49</span>
+                                                            <i class="psi-pencil"
+                                                                style="font-size: 1rem !important;position: relative;bottom: 0px;color:#454444;"></i>
+                                                            <svg style="position: relative;bottom: 5px;"
+                                                                xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" fill="#454444">
+                                                                <path
+                                                                    d="M9.993 19.421 3.286 12.58l1.428-1.401 5.293 5.4 9.286-9.286 1.414 1.414L9.993 19.421z" />
+                                                            </svg>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div id="map">
+
+                                                <!-- map layer -->
+
+                                                <!-- map options dropdown -->
+                                                <div class="btn-group btn-group-map" uib-dropdown
+                                                    is-open="drpdwnconfig.isopen">
+                                                    <button type="button" class="btn btn-group-link dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="psi-dot-vertical" style="font-size: 13px;"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="">
+                                                        <li>
+                                                            <p class="fw-bold nowrap dropdown-header">VISUALIZAÇÃO</p>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;"
+                                                                data-ng-click="mapToggleFullScreen()"><i
+                                                                    class="pli-full-screen-2 fs-5 me-2"></i>Tela
+                                                                Cheia</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;"
+                                                                data-ng-click="openGoogleMaps()"><i
+                                                                    class="pli-globe fs-5 me-2"></i>Google Maps</a></li>
+                                                        <li>
+                                                            <p class="fw-bold nowrap dropdown-header">MAPA</p>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li role="menuitem" data-ng-repeat="layer in $maplayer.layers"
+                                                            data-ng-class="layer.active ? 'text-bold' : ''">
+                                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                                data-ng-click="$maplayer.activate(layer, $map)">
+                                                                <i class="#!{ layer.icon }!# fs-5 me-2"></i>
+                                                                #!{ layer.title }!#
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="btn-group btn-group-map" uib-dropdown
+                                                    is-open="drpdwnconfig.isopen">
+                                                    <button type="button" class="btn btn-group-link dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="psi-dot-vertical" style="font-size: 13px;"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="">
+                                                        <li>
+                                                            <p class="fw-bold nowrap dropdown-header">VISUALIZAÇÃO</p>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;"
+                                                                data-ng-click="mapToggleFullScreen()"><i
+                                                                    class="pli-full-screen-2 fs-5 me-2"></i>Tela
+                                                                Cheia</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;"
+                                                                data-ng-click="openGoogleMaps()"><i
+                                                                    class="pli-globe fs-5 me-2"></i>Google Maps</a></li>
+                                                        <li>
+                                                            <p class="fw-bold nowrap dropdown-header">MAPA</p>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li role="menuitem" data-ng-repeat="layer in $maplayer.layers"
+                                                            data-ng-class="layer.active ? 'text-bold' : ''">
+                                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                                data-ng-click="$maplayer.activate(layer, $map)">
+                                                                <i class="#!{ layer.icon }!# fs-5 me-2"></i>
+                                                                #!{ layer.title }!#
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="sidebar-right">
+
+                                                <div class="header-sidebar-right row">
+                                                    <div class="col-md-2">
+                                                        <i class="psi-conference"
+                                                            style="font-size: 1rem !important;position: relative;bottom: 1px;"></i>
+
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <h4
+                                                            style="color: #FFF;margin-bottom: 0px;text-align: center;font-size: 16px;">
+                                                            Entregadores </h4>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+
+                                                        <span class="badge bg-badge-white rounded-pill"><span
+                                                                style="font-size: 12px;">13</span></span>
+                                                    </div>
+
+
+
+                                                </div>
+
+
+                                                <div>
+                                                    <ul style="padding: 00px 0px 10px 0px;">
+                                                        <li class="li-list" ng-repeat="entregador in entregadores">
+                                                            <div>
+                                                                <i class="psi-motorcycle"
+                                                                    style="padding-right: 7px;font-size: 1.1rem !important;position: relative;bottom: 0px;color:#454444;"></i>
+                                                                <span style="color: #2c2c2c;font-size: 0.8rem;">#!{
+                                                                    entregador.nome }!#<span>
+
+                                                            </div>
+
+
+                                                            <div>
+
+                                                                <span class="badge bg-badge-green rounded-pill"><span
+                                                                        style="font-size: 12px;">0</span></span>
+                                                                <i class="fa fa-angle-right"
+                                                                    style="padding-left: 9px;font-size: 1.3rem !important;position: relative;top: 2px;color: #454444;"></i>
+                                                            </div>
+
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <!-- /map -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="loading-backdrop" style="border-radius: 6px" data-ng-if="loadingPositions">
+                                    <i class="fa fa-2x fa-fw fa-pulse fa-spinner"></i>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+    </div>
+</section>
